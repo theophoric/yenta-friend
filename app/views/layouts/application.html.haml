@@ -19,9 +19,18 @@
           .nav-collapse
             %ul.nav
               %li{}
-                = link_to "profiles", profiles_path
+                = link_to "profile", profiles_path
               %li{}
                 = link_to "matches", matches_path
+              %li.dropdown
+                = link_to '#', :class => "dropdown-toggle", "data-toggle" => "dropdown" do
+                  browse
+                  %b.carat
+                %ul.dropdown-menu
+                  %a{:href => '#'} chicks
+                  %a{:href => '#'} studs
+                  %a{:href => '#'} both?
+                
             %ul.nav.pull-right    
               %li.divider-vertical  
               %li{}
