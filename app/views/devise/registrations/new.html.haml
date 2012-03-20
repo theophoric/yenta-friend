@@ -1,0 +1,15 @@
+= content_for :main do
+  .hero-unit
+    %h1 Become a Yenta!
+    %p Register with Yenta Friend and start setting up your friends today!
+    .well
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+        = devise_error_messages!
+        = f.label :email
+        = f.email_field :email, :placeholder => "email address"
+        = f.label :password
+        = f.password_field :password, :placeholder => "password"
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, :placeholder => "confirm password"
+        = f.submit "Sign up", :class => "btn"
+      = render "links"

@@ -1,0 +1,22 @@
+= content_for :subhead do
+  %h1 Chicks and Studs
+  %p.lead
+    Check em out!
+
+= content_for :main do
+  
+  %table
+    %tr
+      %th
+      %th
+      %th
+
+    - @chickstuds.each do |chickstud|
+      %tr
+        %td= link_to 'Show', chickstud
+        %td= link_to 'Edit', edit_chickstud_path(chickstud)
+        %td= link_to 'Destroy', chickstud, :confirm => 'Are you sure?', :method => :delete
+
+  %br
+
+  = link_to 'New Chickstud', new_chickstud_path

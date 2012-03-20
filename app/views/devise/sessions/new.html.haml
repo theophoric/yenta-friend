@@ -1,0 +1,22 @@
+= content_for :main do
+  .hero-unit
+    %h1 Yenta Friend
+    %p HBS Matchmaking Site.
+    %p
+      %ul.nav.nav-pills
+        %li.dropdown
+          %a.dropdown-toggle.btn.btn-large{"data-toggle" => "dropdown", :href => "#"}
+            Learn More
+            %b.caret
+          %ul.dropdown-menu
+            = link_to "the project", project_path
+            = link_to "the team", team_path
+  .well.form-inline
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      = f.email_field :email, :placeholder => "email address", :class => "span3 input-medium"
+      = f.password_field :password
+      - if devise_mapping.rememberable?
+        = f.check_box :remember_me
+        = f.label :remember_me
+      = f.submit "Sign in", :class => "btn"
+    = render "links"
