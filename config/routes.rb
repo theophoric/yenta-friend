@@ -1,6 +1,6 @@
 YentaFriend::Application.routes.draw do
   
-  mount RailsAdmin::Engine => '/admin', :as => 'admin'
+  mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
 
   devise_for :admins
   devise_for :users
@@ -12,7 +12,7 @@ YentaFriend::Application.routes.draw do
   match "project" => 'static_pages#project'
   match "team" => 'static_pages#team'
   
-  root :to => 'profiles#index'
+  root :to => 'static_pages#project'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
