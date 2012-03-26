@@ -51,3 +51,4 @@ gem 'mongo', '=1.3.1'
 gem "fastercsv"
 gem "rails_admin", :git => "git://github.com/sferik/rails_admin.git"
 gem "redis"
+gem "omniauth-facebook"

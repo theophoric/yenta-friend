@@ -1,0 +1,4 @@
+= content_for :main do
+  .hero-unit
+    %h1 Join Yenta-Friend
+    %p=link_to "Sign In With Facebook", user_omniauth_authorize_path(:facebook)
