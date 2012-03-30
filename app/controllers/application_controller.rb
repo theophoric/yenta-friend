@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
   
   def yenta_user?
-    user_signed_in? && current_user._role["yentum"]
+    user_signed_in? && current_user._role == "yentum"
   end
   
   def current_profile
