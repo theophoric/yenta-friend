@@ -1,4 +1,4 @@
-class User
+class Yentum
   include Mongoid::Document
   
   has_one :profile, :as => :profilable
@@ -62,19 +62,19 @@ class User
       data = access_token.extra.raw_info
       info = access_token.info
       puts "[FB USER DATA]: " + data.inspect  
-      if user = User.where(:email => data.email).first
-        user
-      else # Create a user with a stub password. 
-        user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :name_first => data.first_name, :name_last => data.last_name,  :fb_uid => access_token.uid, :image_url => info.image) 
-        user.create_profile(user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location.name, :hometown => data.hometown.name))
-        return user
+      if yentum = Yentum.where(:email => data.email).first
+        yentum
+      else # Create a yentum with a stub password. 
+        yentum = Yentum.create!(:email => data.email, :password => Devise.friendly_token[0,20], :name_first => data.first_name, :name_last => data.last_name,  :fb_uid => access_token.uid, :image_url => info.image) 
+        yentum.create_profile(yentum.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location.name, :hometown => data.hometown.name))
+        return yentum
       end
     end
     
     def new_with_session(params, session)
-      super.tap do |user|
+      super.tap do |yentum|
         if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-          user.email = data["email"]
+          yentum.email = data["email"]
         end
       end
     end

@@ -1,6 +1,8 @@
-%p#notice= notice
-
-
-= link_to 'Edit', edit_profile_path(@profile)
-\|
-= link_to 'Back', profiles_path
+= content_for :main do
+  .hero-unit
+    .well.profile
+      %h1
+        = image_tag profile.image_url, :size => "100x100"
+        = profile.fullname
+        %p= "Yenta-ing since #{profile.created_at}"
+  

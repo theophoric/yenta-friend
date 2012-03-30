@@ -1,4 +1,4 @@
-= form_for @chickstud do |f|
+= form_for @chickstud, :class => "well" do |f|
   -if @chickstud.errors.any?
     #error_explanation
       %h2= "#{pluralize(@chickstud.errors.count, "error")} prohibited this chickstud from being saved:"
@@ -6,5 +6,5 @@
         - @chickstud.errors.full_messages.each do |msg|
           %li= msg
 
-  .actions
+
     = f.submit 'Save'

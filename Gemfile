@@ -16,7 +16,7 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
-
+ 
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -52,3 +52,4 @@ gem "fastercsv"
 gem "rails_admin", :git => "git://github.com/sferik/rails_admin.git"
 gem "redis"
 gem "omniauth-facebook"
+gem "awesome_print"

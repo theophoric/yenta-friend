@@ -18,7 +18,11 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
   require "omniauth-facebook"
-  config.omniauth :facebook, "343761419009220", "edbeba31148b80d944797a7dd91311bc"
+  # dep.
+  # config.omniauth :facebook, "343761419009220", "edbeba31148b80d944797a7dd91311bc"
+
+  # dev
+  config.omniauth :facebook, "323215734404423", "5b607eb4fce2d8999b45ff85119fa542"
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for

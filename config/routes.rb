@@ -1,5 +1,9 @@
 YentaFriend::Application.routes.draw do
   
+  devise_for :chickstuds, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  devise_for :yenta, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
 
   devise_for :admins
@@ -13,7 +17,7 @@ YentaFriend::Application.routes.draw do
   match "team" => 'static_pages#team'
   match "login" => 'static_pages#login'
   
-  root :to => 'static_pages#project'
+  root :to => 'static_pages#login'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

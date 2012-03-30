@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  helper_method :profile, :profiles
   # GET /profiles
   # GET /profiles.json
   def index
@@ -13,8 +14,9 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @chickstud = Chickstud.new
     @profile = Profile.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @profile }
@@ -80,4 +82,13 @@ class ProfilesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def profile
+    @profile ||= params[:id] ? Profile.find(params[:id]) : Profile.new(params[:profile])
+  end
+  
+  def profiles
+    @profiles ||= 
+  end
+  
 end
