@@ -2,12 +2,32 @@
   %head
     %title Yenta Friend
     %meta{"name" => "viewport","content" => "width=device-width, initial-scale=1.0"}
+    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"
+
     = javascript_include_tag "application"
     = stylesheet_link_tag "application"
     = csrf_meta_tag
-
+    %script
     = yield :head
+  #fb-root
+  %script
+    window.fbAsyncInit = function() {
+    FB.init({
+    appId      : '323215734404423',
+    status     : true,
+    cookie     : true,
+    xfbml      : true 
+    });
+    };
+    (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+    }(document));
   %body{"data-spy" => "scroll", "data-target" => ".subnav", "data-offset" => 100}
+    #fb-root
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -20,11 +40,11 @@
           .nav-collapse
             %ul.nav
               %li{}
-                = link_to "dashboard", "#"
+                = link_to "dashboard", dashboard_path
               %li{}
-                = link_to "matches", matches_path
+                = link_to "browse", browse_path
               %li{}
-                = link_to 'browse', profiles_path
+                = link_to 'explore', ''
 
             %ul.nav.pull-right    
 
@@ -37,16 +57,22 @@
                   %ul.dropdown-menu
                     = link_to 'profile', profile_path(current_user.profile)
                     = link_to "logout", '#'
-    %header
+    / %header.jumbotron.subhead
+    /   %h1= yield :title
+    /   %p.lead= yield :lead
     %hr.soften  
-    .container-fluid
+    
+    .container-fluid{:style => "position:relative;top:40px"}
+      %header.jumbotron.subhead
+        %h1= yield :title
+        %p.lead= yield :subtitle
       - if error
         .span12.alert.alert-info.well
           %h1 Notice
           %hr.soften
           = error
         
-      .span4
+      .span8#main
         = yield :main
-      .span8
+      .span4#sidebar
         = yield :sidebar

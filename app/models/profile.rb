@@ -2,7 +2,7 @@ class Profile
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  belongs_to :profilable, :polymorphic => true
+  belongs_to :user
   
   field :name_first
   field :name_last
@@ -12,9 +12,10 @@ class Profile
   field :location
   field :hometown
   field :image_url
-  field :gender
-
-  delegate :chickstuds, :to => :user
+  field :gender, :default => 'na'
+  field :privacy, :default => 'private'
+  
+  # delegate :retrieve_fb_data, :to => :user
 
   def fullname
     name_first + " " + name_last

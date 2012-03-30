@@ -1,21 +1,25 @@
 YentaFriend::Application.routes.draw do
   
-  devise_for :chickstuds, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  devise_for :yenta, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   devise_for :admins
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+  mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
+
+
+  match '/fb_handler/request_callback' => 'fb_handler#request_callback', :as => 'fb_callback'
+
   resources :matches
-  resources :chickstuds
   resources :profiles
   
   match "project" => 'static_pages#project'
   match "team" => 'static_pages#team'
   match "login" => 'static_pages#login'
+  
+  match 'dashboard' => 'yenta_friend#dashboard'
+  match 'browse' => 'yenta_friend#browse'
+  
   
   root :to => 'static_pages#login'
   # The priority is based upon order of creation:

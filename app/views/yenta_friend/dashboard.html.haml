@@ -1,0 +1,60 @@
+= content_for :title, "Dashboard"
+= content_for :subtitle, "Manage your connections."
+
+= content_for :main do
+
+  .well
+    %h2 Notices
+    %hr.soften
+    .subnav.subnav-fixed
+      %ul.nav.nav-pills#filters
+        %li= link_to 'All', '#'             , "data-filter" => '*'
+        %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
+        %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
+        %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
+        %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
+    #notices
+      - for notice in current_user.notices do
+        = render :partial => 'partials/notice', :locals => {:notice => notice}
+= content_for :sidebar do
+  .well
+    %h1 Stable
+    %hr.soften
+    = link_to 'Invite Friends', '#', :id => 'invite_fb_friends'
+    .subnav.subnav-fixed
+      %ul.nav.nav-pills#filters
+        %li= link_to 'All', '#'       , "data-filter" => "*"
+        %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
+        %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
+        %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
+        %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
+    %table
+      %tbody#stable
+        - for profile in current_stable do
+          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
+  #response.well 
+= content_for :head do
+  %script
+    $(document).ready(function(){
+    var $container = $('#notices');
+    $container.isotope({
+    itemSelector: '.notice'
+    });
+    $('#filters li a').click(function(){
+    var selector = $(this).attr('data-filter');
+    $container.isotope({filter: selector});
+    return false;
+    });
+    $("a#invite_fb_friends").click(function() {
+    FB.init({ 
+    appId:'323215734404423', 
+    cookie:false, 
+    status:true
+    });
+    FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
+    });
+    function fbRequestCallback(response){
+    $.post('/fb_handler/request_callback', response)
+    $('#stable').append("works?");
+    }
+    });

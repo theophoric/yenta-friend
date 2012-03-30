@@ -88,7 +88,7 @@ class ProfilesController < ApplicationController
   end
   
   def profiles
-    @profiles ||= 
+
   end
   
 end
