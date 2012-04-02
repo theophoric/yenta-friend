@@ -9,9 +9,9 @@
         %h4 This profile has not been made public.
         %p Until you make this profile public no one else can recommend matches for pat.
         %hr.soften
-          = form_for profile, :url => profile_path do |f|
-            = f.hidden_field :privacy, :value => "public"
-            = f.submit "Make Profile Public", :class => "btn btn-primary"
+        = link_to "Make Profile Public", "#update_profile", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
+    - else
+      = link_to "Match!", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary'
     %hr.soften
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
@@ -22,6 +22,32 @@
       %tbody#stable
         - for match in profile.matches do
           = render :partial => 'matches/match', :locals => {:match => match}
+  .modal#new_match.fade
+    = form_for :match do |f|
+      = hidden_field_tag :partner1, profile._id
+      = hidden_field_tag :partner2
+    .modal-header
+      = "Select a match for #{profile.first_name}"
+    .modal-body
+      %table.table.table-striped
+        %tbody#stable 
+          - for _profile in current_stable do
+            %tr[_profile]{:class => "gender-#{_profile.gender} privacy-#{_profile.privacy}"}
+              %td= image_tag _profile.image_url, :size => "40x40"
+              %td{:colspan => 2}
+                %h4= _profile.name
+              %td
+                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"partner2\"]').val(#{_profile._id});$('#new_match form').submit();"
+                
+  .modal#update_profile.fade
+    = form_for profile, :url => profile_path do |f|
+      .modal-header
+        Update
+      .modal-body
+        = f.hidden_field :privacy, :value => "public"
+        = f.label :recommendation
+        = f.text_field :recommendation  
+        = f.submit "Make Profile Public", :class => "btn btn-primary"
 = content_for :sidebar do
   .well.span4
     %h2 Information
@@ -44,6 +70,8 @@
           %td= link_to "View more information", "http://facebook.com/#{profile.username}", :target => "_blank"
 = content_for :head do
   %script
+    $('#update_profile').modal();      
+    $('#new_match').modal();
     $(document).ready(function(){
     var $container = $('#notices');
     $container.isotope({

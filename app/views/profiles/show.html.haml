@@ -14,7 +14,7 @@
   
 = content_for :sidebar do
   .well
-    %h1 Stable
+    %h1 Matches
     %hr.soften
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
@@ -29,6 +29,7 @@
 = content_for :head do
   %script
     $(document).ready(function(){
+
     var $container = $('#notices');
     $container.isotope({
     itemSelector: '.notice'

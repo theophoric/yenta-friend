@@ -60,7 +60,7 @@ class ProfilesController < ApplicationController
   def update
     @profile = Profile.find(params[:id])
     respond_to do |format|
-      if @profile.update_attributes(params[:profile])
+      if @profile.update_attributes(params[@profile._type.underscore.to_s])
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
         format.json { head :no_content }
       else

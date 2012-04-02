@@ -16,4 +16,12 @@ class YentaFriendController < ApplicationController
   def profiles
     
   end
+  
+  def create_match
+    puts params[:match]
+    match = Match.new
+    chickstuds = Chickstuds.find([params[:partner1], params[:partner2]])
+    match.chickstuds << chickstuds
+    match.save
+  end
 end

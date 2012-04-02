@@ -19,6 +19,7 @@ YentaFriend::Application.routes.draw do
   
   match 'dashboard' => 'yenta_friend#dashboard'
   match 'browse' => 'yenta_friend#browse'
+  match 'create_match' => 'yenta_friend#create_match'
   
   
   root :to => 'static_pages#login'
