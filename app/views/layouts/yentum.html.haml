@@ -15,7 +15,6 @@
     window.fbAsyncInit = function() {
     FB.init({
     appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
-    channelUrl : "#{request.host}/channel.html",
     status     : true,
     cookie     : true,
     xfbml      : true 
