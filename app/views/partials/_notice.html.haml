@@ -1,5 +1,6 @@
 - notice ||= @notice
-.well[notice]{:class => "type-#{notice.notice_type}"}
-  %td
-    %h4= notice.header
-    %p= notice.body.html_safe
+.row[notice]{:class => "type-#{notice.notice_type}"}
+  - if notice.icon_url
+    = image_tag notice.icon_url
+  %h4= notice.header
+  %p= notice.body.html_safe

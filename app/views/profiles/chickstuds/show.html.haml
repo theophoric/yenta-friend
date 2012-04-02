@@ -1,25 +1,10 @@
-= content_for :title, "Dashboard"
-= content_for :subtitle, "Manage your connections."
+= content_for :title, profile.name
+= content_for :subtitle, "Help #{profile.first_name} find friends."
 
 = content_for :main do
   .well
-    %h2= profile.name
+    %h1 Matches
     %hr.soften
-    .subnav.subnav-fixed
-      %ul.nav.nav-pills#filters
-        %li= link_to 'All', '#'             , "data-filter" => '*'
-        %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
-        %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
-        %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
-        %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
-    #notices
-      - for notice in current_user.notices do
-        = render :partial => 'partials/notice', :locals => {:notice => notice}
-= content_for :sidebar do
-  .well
-    %h1 Stable
-    %hr.soften
-    = link_to 'Invite Friends', '#', :id => 'invite_fb_friends'
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
         %li= link_to 'All', '#'       , "data-filter" => "*"
@@ -27,9 +12,28 @@
         %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
     %table
       %tbody#stable
-        - for profile in current_stable do
-          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
-  #response.well 
+        - for match in profile.matches do
+          = render :partial => 'matches/match', :locals => {:match => match}
+= content_for :sidebar do
+  .well
+    %h2 Information
+    %hr.soften
+    %table.table.table-striped
+      %tbody
+        %tr
+          %td
+            %b Name
+          %td= profile.name
+        %tr
+          %td
+            %b Picture
+          %td= image_tag profile.image_url
+        %tr
+          %td
+            %b Age
+          %td= profile.age
+        %tr{:colspan => 2}
+          %td= link_to "View more information", "http://facebook.com/#{profile.username}"
 = content_for :head do
   %script
     $(document).ready(function(){
@@ -51,7 +55,6 @@
     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
     });
     function fbRequestCallback(response){
-    $.post('/fb_handler/request_callback', response)
-    $('#stable').append("works?");
+    $.post('/fb_handler/request_callback', response);
     }
     });

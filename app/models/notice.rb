@@ -8,7 +8,8 @@ class Notice
   field :body     ,:default => ''
   field :notice_type, :default => "info"
   field :new, :default => true
-
+  field :icon_url
+  field :link_to, :default => ''
   validates_inclusion_of :notice_type, :in => %w{info match social announcement}
   
 end

@@ -11,7 +11,7 @@ class Profile
   field :description
   field :location
   field :hometown
-  field :image_url
+  field :image_url, :default => "http://www.neuromance.co.za/wp-content/uploads/2009/05/defaulticon.jpg"
   field :gender, :default => 'na'
   field :privacy, :default => 'private'
   

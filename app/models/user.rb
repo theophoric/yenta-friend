@@ -72,7 +72,10 @@ class User
       fb_uid = access_token.uid
       puts "[FB USER DATA]: " + data.inspect  
       if user = User.where(:email => data.email).first
-        user
+        if !user.profile
+          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location.name, :hometown => data.hometown.name, :_type => user._role))
+        end
+        return user
       else # Create a user with a stub password. 
         role = Chickstud.where(:fb_uid => fb_uid).exists? ? "chickstud" : "yentum"
         user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :name_first => data.first_name, :name_last => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :_role => role)

@@ -14,11 +14,8 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    @chickstud = Chickstud.new
-    @profile = Profile.find(params[:id])
-    
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {render "profiles/#{profile._type.tableize}/show"}
       format.json { render :json => @profile }
     end
   end

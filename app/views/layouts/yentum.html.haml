@@ -2,9 +2,10 @@
   %head
     %title Yenta Friend
     %meta{"name" => "viewport","content" => "width=device-width, initial-scale=1.0"}
-    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"
+
 
     = javascript_include_tag "application"
+    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"    
     = stylesheet_link_tag "application"
     = csrf_meta_tag
     %script
@@ -14,6 +15,7 @@
     window.fbAsyncInit = function() {
     FB.init({
     appId      : '323215734404423',
+    channelUrl : "#{request.host}/channel.html",
     status     : true,
     cookie     : true,
     xfbml      : true 
@@ -47,7 +49,6 @@
                 = link_to 'explore', ''
 
             %ul.nav.pull-right    
-
               %li.divider-vertical  
               %li.dropdown
                 = link_to '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' do

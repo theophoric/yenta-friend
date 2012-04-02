@@ -47,7 +47,6 @@
     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
     });
     function fbRequestCallback(response){
-    $.post('/fb_handler/request_callback', response)
-    $('#stable').append("works?");
+    $.post('/fb_handler/request_callback', response);
     }
     });
