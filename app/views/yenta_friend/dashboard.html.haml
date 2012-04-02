@@ -2,7 +2,7 @@
 = content_for :subtitle, "Manage your connections."
 
 = content_for :main do
-  .well.span8
+  .well.span6
     %h2 Notices
     %hr.soften
     .subnav
@@ -18,7 +18,7 @@
           - for notice in current_user.notices do
             = render :partial => 'partials/notice', :locals => {:notice => notice}
 = content_for :sidebar do
-  .well.span4
+  .well.span6
     %ul.nav
       %li
         %h2 Stable
