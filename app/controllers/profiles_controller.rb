@@ -58,9 +58,15 @@ class ProfilesController < ApplicationController
   # PUT /profiles/1
   # PUT /profiles/1.json
   def update
+
     @profile = Profile.find(params[:id])
+    _privacy = @profile.privacy
     respond_to do |format|
       if @profile.update_attributes(params[@profile._type.underscore.to_s])
+        if( _privacy == "private" && _privacy != @profile.privacy)
+          # send letter to user
+          Notifier.invite_chickstud(profile)
+        end
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,6 +87,17 @@ class ProfilesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def create_match
+    chickstuds = Chickstud.find(params[:partner1], params[:partner2])
+    @match = Match.create()
+    @match.chickstuds << chickstuds
+    @match.save
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   
   def profile
     @profile ||= params[:id] ? Profile.find(params[:id]) : Profile.new(params[:profile])

@@ -19,11 +19,11 @@
         %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
         %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
     %table
-      %tbody#stable
+      %tbody#matches
         - for match in profile.matches do
           = render :partial => 'matches/match', :locals => {:match => match}
   .modal#new_match.fade
-    = form_for :match do |f|
+    = form_for :match, :url => create_match_path, :remote => true do |f|
       = hidden_field_tag :partner1, profile._id
       = hidden_field_tag :partner2
     .modal-header
@@ -31,13 +31,13 @@
     .modal-body
       %table.table.table-striped
         %tbody#stable 
-          - for _profile in current_stable do
+          - for _profile in (current_stable - [profile]) do
             %tr[_profile]{:class => "gender-#{_profile.gender} privacy-#{_profile.privacy}"}
               %td= image_tag _profile.image_url, :size => "40x40"
               %td{:colspan => 2}
                 %h4= _profile.name
               %td
-                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"partner2\"]').val(#{_profile._id});$('#new_match form').submit();"
+                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"partner2\"]').val('#{_profile._id}');$('#new_match form').submit();"
                 
   .modal#update_profile.fade
     = form_for profile, :url => profile_path do |f|

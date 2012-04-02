@@ -3,7 +3,7 @@ class Match
   include Mongoid::Timestamps
   
   has_and_belongs_to_many :chickstuds
-  embeds_many :matches
+  embeds_many :chickstud_references
   
 end
 

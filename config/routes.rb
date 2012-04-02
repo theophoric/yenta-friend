@@ -10,8 +10,8 @@ YentaFriend::Application.routes.draw do
 
   match '/fb_handler/request_callback' => 'fb_handler#request_callback', :as => 'fb_callback'
 
-  resources :matches
   resources :profiles
+  match 'create_match' => 'profiles#create_match'
   
   match "project" => 'static_pages#project'
   match "team" => 'static_pages#team'
@@ -19,7 +19,8 @@ YentaFriend::Application.routes.draw do
   
   match 'dashboard' => 'yenta_friend#dashboard'
   match 'browse' => 'yenta_friend#browse'
-  match 'create_match' => 'yenta_friend#create_match'
+  
+  
   
   
   root :to => 'static_pages#login'
