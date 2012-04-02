@@ -14,9 +14,13 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    respond_to do |format|
-      format.html {render "profiles/#{profile._type.tableize}/show"}
-      format.json { render :json => @profile }
+    if( profile.is_a?(Chickstud) && profile.private? && yenta_user? && !current_profile.chickstuds.include?( profile))
+      redirect_to dashboard_path 
+    else
+      respond_to do |format|
+        format.html {render "profiles/#{profile._type.tableize}/show"}
+        format.json { render :json => @profile }
+      end
     end
   end
 
@@ -40,7 +44,7 @@ class ProfilesController < ApplicationController
   # POST /profiles.json
   def create
     @profile = Profile.new(params[:profile])
-
+    
     respond_to do |format|
       if @profile.save
         format.html { redirect_to @profile, :notice => 'Profile was successfully created.' }
@@ -59,7 +63,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
-        format.html { redirect_to @profile, :notice => 'Profile was successfully updated.' }
+        format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

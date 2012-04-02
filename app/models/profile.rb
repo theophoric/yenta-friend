@@ -2,6 +2,9 @@ class Profile
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  scope :_private, where(:privacy => "private")
+  scope :_public, where(:privacy => "public")
+  
   belongs_to :user
   
   field :name_first
@@ -15,7 +18,12 @@ class Profile
   field :gender, :default => 'na'
   field :privacy, :default => 'private'
   
+  validates_inclusion_of :privacy, :in => %w{public private}
+  
   # delegate :retrieve_fb_data, :to => :user
+  def private?
+    privacy == "private"
+  end
 
   def fullname
     name_first + " " + name_last

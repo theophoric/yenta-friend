@@ -2,8 +2,17 @@
 = content_for :subtitle, "Help #{profile.first_name} find friends."
 
 = content_for :main do
-  .well
+  .well.span8
     %h1 Matches
+    - if profile.private?
+      .well.alert-info
+        %h4 This profile has not been made public.
+        %p Until you make this profile public no one else can recommend matches for pat.
+        %hr.soften
+          = form_for profile, :url => profile_path do |f|
+            = f.hidden_field :privacy, :value => "public"
+            = f.submit "Make Profile Public", :class => "btn btn-primary"
+            
     %hr.soften
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
@@ -15,7 +24,7 @@
         - for match in profile.matches do
           = render :partial => 'matches/match', :locals => {:match => match}
 = content_for :sidebar do
-  .well
+  .well.span4
     %h2 Information
     %hr.soften
     %table.table.table-striped
@@ -33,7 +42,7 @@
             %b Age
           %td= profile.age
         %tr{:colspan => 2}
-          %td= link_to "View more information", "http://facebook.com/#{profile.username}"
+          %td= link_to "View more information", "http://facebook.com/#{profile.username}", :target => "_blank"
 = content_for :head do
   %script
     $(document).ready(function(){
