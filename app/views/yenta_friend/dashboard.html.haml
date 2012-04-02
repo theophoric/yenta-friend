@@ -42,11 +42,6 @@
   %script
     $(document).ready(function(){
     $("a#invite_fb_friends").click(function() {
-    FB.init({ 
-    appId:'323215734404423', 
-    cookie:false, 
-    status:true
-    });
     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
     });
     function fbRequestCallback(response){
