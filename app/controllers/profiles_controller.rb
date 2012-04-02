@@ -4,7 +4,6 @@ class ProfilesController < ApplicationController
   # GET /profiles.json
   def index
     @profiles = Profile.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @profiles }
@@ -60,7 +59,6 @@ class ProfilesController < ApplicationController
   # PUT /profiles/1.json
   def update
     @profile = Profile.find(params[:id])
-
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }

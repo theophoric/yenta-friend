@@ -4,7 +4,6 @@ class FbHandlerController < ApplicationController
   def request_callback
     fb_uids = params["to"]
     puts '[FB_UID]: ' + fb_uids.inspect
-
     chickstuds = []
     if user_signed_in? && current_user._role["yentum"]      
       fb_uids.each do |fb_uid|

@@ -3,10 +3,10 @@
   %td{:colspan => 2}
     %h4= profile.name 
   = link_to profile_path(profile) do
-      - if profile._type[/Chickstud/]
-        %span.badge.badge-info= profile.matches.count
-      - else
-        %span.badge.badge-info= profile.chickstuds.count
+    - if profile._type[/Chickstud/]
+      %span.badge.badge-info= profile.matches.count
+    - else
+      %span.badge.badge-info= profile.chickstuds.count
 
 
 
