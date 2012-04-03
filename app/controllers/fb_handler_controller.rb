@@ -13,7 +13,7 @@ class FbHandlerController < ApplicationController
           puts "FBUSER" + fb_user_data.inspect
           chickstud = Chickstud.find_or_initialize_by(fb_user_data.except("id").merge(:fb_uid => fb_user_data["id"], :image_url => "http://graph.facebook.com/#{fb_user_data["username"]}/picture?type=square",  :yentum_id => current_profile._id))
           if chickstud.save
-            current_user.notices.create!(:header => "#{chickstud.name} has been added to your stable.", :icon_url => chickstud.image_url, :body => "Try to set him/her up!", :notice_type => "social", :link_to => profile_path(chickstud))
+            current_user.notices.create!(:header => "#{chickstud.name} has been added to your stable.", :icon_url => chickstud.image_url, :body => "Try to set #{chickstud.gender[/male/] ? "him" : "her"} up!", :notice_type => "social", :link_to => profile_path(chickstud))
             chickstuds << chickstud
           end
         end

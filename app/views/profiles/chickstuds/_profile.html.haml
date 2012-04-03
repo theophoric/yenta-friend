@@ -1,12 +1,15 @@
 %tr[profile]{:class => "gender-#{profile.gender} privacy-#{profile.privacy}"}
-  %td= image_tag profile.image_url, :size => "40x40"
+  %td= link_to image_tag( profile.image_url, :size => "40x40"), profile_path(profile) 
   %td{:colspan => 2}
     %h4= profile.name 
-  = link_to profile_path(profile) do
-    - if profile._type[/Chickstud/]
-      %span.badge.badge-info= profile.matches.count
-    - else
-      %span.badge.badge-info= profile.chickstuds.count
-
+    %p= profile.endorsement
+  %td.divider-vertical
+  %td
+    = link_to profile_path(profile) do
+      - if profile._type[/Chickstud/]
+        %span.badge.badge-info= profile.matches.count
+      - else
+        %span.badge.badge-info= profile.chickstuds.count
+      profile
 
 
