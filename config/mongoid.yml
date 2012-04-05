@@ -8,7 +8,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: yenta-friend_staging
+  uri: mongodb://root:password@staff.mongohq.com:10009/till_dawn
 
 test:
   <<: *defaults

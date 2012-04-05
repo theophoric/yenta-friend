@@ -89,10 +89,8 @@ class ProfilesController < ApplicationController
   end
   
   def create_match
-    chickstuds = Chickstud.find(params[:partner1], params[:partner2])
-    @match = Match.create()
-    @match.chickstuds << chickstuds
-    @match.save
+    @match = Match.create(params[:match])
+    @match.save!
     respond_to do |format|
       format.js
     end
