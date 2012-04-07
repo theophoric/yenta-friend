@@ -16,7 +16,7 @@
       %table.table.table-bordered
         %tbody#notices
           - for notice in current_user.notices do
-            = render :partial => 'partials/notice', :locals => {:notice => notice}
+            = render :partial => 'shared/notice', :locals => {:notice => notice}
 = content_for :sidebar do
   .well.span6
     %ul.nav
@@ -42,6 +42,13 @@
   %script
     $(document).ready(function(){
     $("a#invite_fb_friends").click(function() {
+    FB.init({
+    appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
+    channelUrl : "#{request.host}/channel.html",
+    status     : true,
+    cookie     : true,
+    xfbml      : true 
+    });
     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
     });
     function fbRequestCallback(response){

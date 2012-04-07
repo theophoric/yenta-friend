@@ -7,7 +7,7 @@
     - if profile.private?
       .well.alert-info
         %h4 This profile has not been made public.
-        %p Until you make this profile public no one else can recommend matches for pat.
+        %p= "Until you make this profile public no one else can recommend matches for #{profile.first_name}."
         %hr.soften
         = link_to "Make Profile Public", "#update_profile", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
     - else
@@ -65,8 +65,12 @@
           %td= image_tag profile.image_url
         %tr
           %td
-            %b Age
-          %td= profile.age
+            %b Gender
+          %td= profile.gender.capitalize
+        %tr
+          %td
+            %b Interested In
+          %td= profile.interested_in
         %tr{:colspan => 2}
           %td= link_to "View more information", "http://facebook.com/#{profile.username}", :target => "_blank"
 = content_for :head do

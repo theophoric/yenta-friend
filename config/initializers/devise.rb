@@ -21,7 +21,7 @@ Devise.setup do |config|
   
   if Rails.env.development?
     # dev configuration
-    config.omniauth :facebook, "323215734404423", "5b607eb4fce2d8999b45ff85119fa542"    
+    config.omniauth :facebook, "323215734404423", "5b607eb4fce2d8999b45ff85119fa542"
   else
     # dep configuration
     config.omniauth :facebook, "343761419009220", "edbeba31148b80d944797a7dd91311bc"  

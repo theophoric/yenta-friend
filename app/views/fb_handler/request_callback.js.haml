@@ -1,2 +1,2 @@
-- for chickstud in @chickstuds do
-  $('#stable').append('#{escape_javascript(render :partial => "profiles/chickstuds/profile", :locals => {:chickstud => chickstud})}');
+- for profile in @profiles.to_a do
+  $('#stable').append('#{escape_javascript(render :partial => "profiles/chickstuds/profile", :locals => {:profile => profile})}');

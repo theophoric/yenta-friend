@@ -3,31 +3,13 @@
     %title Yenta Friend
     %meta{"name" => "viewport","content" => "width=device-width, initial-scale=1.0"}
 
-
+    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"
     = javascript_include_tag "application"
-    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"    
     = stylesheet_link_tag "application"
     = csrf_meta_tag
     %script
     = yield :head
   #fb-root
-  %script
-    window.fbAsyncInit = function() {
-    FB.init({
-    appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
-    channelUrl : "#{request.host}/channel.html",
-    status     : true,
-    cookie     : true,
-    xfbml      : true 
-    });
-    };
-    (function(d){
-    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); js.id = id; js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    ref.parentNode.insertBefore(js, ref);
-    }(document));
   %body{"data-spy" => "scroll", "data-target" => ".subnav", "data-offset" => 100}
     #fb-root
     .navbar.navbar-fixed-top
@@ -50,13 +32,13 @@
             %ul.nav.pull-right    
               %li.divider-vertical  
               %li.dropdown
-                = link_to '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
                   = image_tag current_user.image_url, :size => "25x25"
                   = current_user.name_first + " " + current_user.name_last
-                  %b.carat
-                  %ul.dropdown-menu
-                    = link_to 'profile', profile_path(current_user.profile)
-                    = link_to "logout", '#'
+                  %b.caret
+                %ul.dropdown-menu
+                  = link_to 'profile', profile_path(current_user.profile)
+                  = link_to "logout", '#', {:id => "logout_link"}
     / %header.jumbotron.subhead
     /   %h1= yield :title
     /   %p.lead= yield :lead

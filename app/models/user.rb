@@ -80,7 +80,7 @@ class User
         role = Chickstud.where(:fb_uid => fb_uid).exists? ? "chickstud" : "yentum"
         user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :name_first => data.first_name, :name_last => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :_role => role)
         user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location.name, :hometown => data.hometown.name, :_type => role))
-        user.notices.create!(:header => "Welcome to Yenta Friend!", :body => "Check out this video to see how it all works! <video><source src='http://www.youtube.com/watch?v=oHg5SJYRHA0'/></video>")
+        user.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
         return user
       end
     end
