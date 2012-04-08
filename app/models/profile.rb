@@ -7,9 +7,9 @@ class Profile
   
   belongs_to :user
   
-  field :name_first
-  field :name_last
-  field :age, :default => 18
+  field :first_name
+  field :last_name
+  field :age
   field :occupation
   field :description
   field :location
@@ -26,7 +26,7 @@ class Profile
   end
 
   def fullname
-    name_first + " " + name_last
+    first_name + " " + last_name
   end
   
 end
