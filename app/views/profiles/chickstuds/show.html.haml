@@ -1,34 +1,47 @@
+= content_for :subnav do
+  %ul.nav.nav-pills
+    %li= link_to "matches", '#matches', :class => 'anchorLink'
+    %li= link_to "connections", '#connections', :class => 'anchorLink'
 = content_for :title, profile.name
-= content_for :subtitle, "Help #{profile.first_name} find friends."
+= content_for :subtitle do
+  %em= "\"#{profile.endorsement}\"" unless profile.endorsement.blank?
+  = link_to "About #{profile.first_name}", '#information', "data-toggle".to_sym => "modal"
 
 = content_for :main do
-  .well.span8
-    %h1 Matches
-    - if profile.private?
+  .container
+
+    %section#matches
+      .page-header
+        %h1 Suggest Matches
+        %small= "Help #{profile.first_name} find friends."
+    - if profile.private? && current_profile == profile.yentum
       .well.alert-info
         %h4 This profile has not been made public.
         %p= "Until you make this profile public no one else can recommend matches for #{profile.first_name}."
         %hr.soften
-        = link_to "Make Profile Public", "#update_profile", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
+        = link_to "Make Profile Public", "#make_public", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
     - else
       = link_to "Match!", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'
-    %hr.soften
-    .subnav.subnav-fixed
-      %ul.nav.nav-pills#filters
-        %li= link_to 'All', '#'       , "data-filter" => "*"
-        %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
-        %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
-    %table
-      %tbody#matches
+      .row
         - for match in profile.matches do
           = render :partial => 'matches/match', :locals => {:match => match}
+    %section#connections
+      .page-header
+        %h1 Connections
+        %small= "See the people that #{profile.first_name} has been connecting with."
+      .row
+        - for connection in profile.connections do
+          = render :partial => 'connections/_connection', :locals => {:connection => connection}
+  .modal#information.fade
+    = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}
   .modal#new_match.fade
     = form_for :match, :url => create_match_path, :remote => true do |f|
-      = f.fields_for :chickstuds do |chickstud_fields|
+      = fields_for :chickstuds do |chickstud_fields|
         = chickstud_fields.hidden_field :profile_1, :value => profile._id
         = chickstud_fields.hidden_field :profile_2
     .modal-header
-      = "Select a match for #{profile.first_name}"
+      %h2= "Suggest a match for #{profile.first_name}"
+      %a.close{"data-dismiss".to_sym => "modal"} x
     .modal-body
       %table.table.table-striped
         %tbody#stable 
@@ -38,12 +51,21 @@
               %td{:colspan => 2}
                 %h4= _profile.name
               %td
-                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"match[chickstuds][profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
-                
+                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"chickstuds[profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
+  .modal#make_public.fade
+    .modal-header
+      %h2= "Make #{profile.first_name}'s profile public."
+      %p This will enable other yenta to view this profile and recommend matches.
+      %a.close{"data-dismiss".to_sym => "modal"} x
+    .modal-body
+      = form_for profile, :url => profile_path, :class => "well form" do |f|
+        = f.hidden_field :privacy, :value => "public"
+        = link_to_function "Cancel", '$(".modal").modal("hide");', :class => "btn"
+        = f.submit "Make Profile Public"
   .modal#update_profile.fade
     .modal-header
       %h2= "Update #{profile.first_name}'s Information"
+      %a.close{"data-dismiss".to_sym => "modal"} x
     .modal-body
       = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
-= content_for :sidebar do
-  = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}
+

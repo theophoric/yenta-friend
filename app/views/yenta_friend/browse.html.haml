@@ -1,36 +1,57 @@
 = content_for :title, "Browse"
-= content_for :subtitle, "Find people."
-
+= content_for :subtitle, "Find People."
+= content_for :subnav do
+  %ul.nav.nav-pills
+    %li= link_to "ChickStuds", '#chickstuds', :class => 'anchorLink'
+    %li= link_to "Yenta", '#yenta', :class => 'anchorLink'
 = content_for :main do
+  .container
+    %section#chickstuds
+      .page-header
+        %h1
+          Chickstuds
+          %small Find new profiles.
+      .row
+        - for profile in (@profiles["Chickstud"] || []) do
+          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
+        / .subnav
+        /   %ul.nav.nav-pills#filters
+        /     %li= link_to 'All', '#'             , "data-filter" => '*'
+        /     %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
+        /     %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
+        /     %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
+        /     %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
+  
 
-  .well
-    %h2 People
-    %hr.soften
-    .subnav.subnav-fixed
-      %ul.nav.nav-pills#filters
-        %li= link_to 'All', '#'       , "data-filter" => "*"
-        %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
-        %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
-    #profile_list
-      - for profile in @profiles do
-        = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
-= content_for :head do
-  %script
-    $(document).ready(function(){
-    var $container = $('#notices');
-    $container.isotope({
-    itemSelector: '.notice'
-    });
-    $('#filters li a').click(function(){
-    FB.init({
-    appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
-    channelUrl : "#{request.host}/channel.html",
-    status     : true,
-    cookie     : true,
-    xfbml      : true 
-    });
-    var selector = $(this).attr('data-filter');
-    $container.isotope({filter: selector});
-    return false;
-    });
-    });
+    %section#yenta
+      .page-header
+        %h1
+          Yenta
+          %small Check out other Yenta's stables
+      / .subnav.subnav-fixed
+      /   %ul.nav.nav-pills#filters
+      /     %li= link_to 'All', '#'       , "data-filter" => "*"
+      /     %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
+      /     %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
+      /     %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
+      /     %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
+      .row
+        - for profile in (@profiles["Yentum"] || []) do
+          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
+/ = content_for :head do
+/   %script
+/     $(document).ready(function(){
+/     $("a#invite_fb_friends").click(function() {
+/     FB.init({
+/     appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
+/     channelUrl : "#{request.host}/channel.html",
+/     status     : true,
+/     cookie     : true,
+/     xfbml      : true 
+/     });
+/     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
+/     });
+/     function fbRequestCallback(response){
+/     $.post('/fb_handler/request_callback', response);
+/     }
+/     });

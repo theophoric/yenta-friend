@@ -65,7 +65,8 @@ class ProfilesController < ApplicationController
       if @profile.update_attributes(params[@profile._type.underscore.to_s])
         if( _privacy == "private" && _privacy != @profile.privacy)
           # send letter to user
-          Notifier.invite_chickstud(profile)
+          # Notifier.invite_chickstud(profile)
+
         end
         format.js
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
@@ -90,7 +91,9 @@ class ProfilesController < ApplicationController
   end
   
   def create_match
-    @match = Match.create(params[:match])
+    @profiles = Profile.find(params[:chickstuds].collect{|c| c[1]})
+    @match = Match.new(params[:match])
+    @match.chickstuds << @profiles
     @match.save!
     respond_to do |format|
       format.js

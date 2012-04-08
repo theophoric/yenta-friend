@@ -2,11 +2,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
   layout :set_layout
-  helper_method :notice, :error, :usertype, :current_stable
+  helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?
   
   
   def facebook_friends
     
+  end
+  
+  def chickstud_belongs_to_yentum?(profile, yentum = nil)
+    yentum ||= current_profile
+    profile.yentum_id == yentum._id
+  end
+  
+  def current_user_notices
+    user_signed_in? ? current_user.notices : []
   end
   
   def notice

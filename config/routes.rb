@@ -7,7 +7,6 @@ YentaFriend::Application.routes.draw do
   devise_for :admins
   mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
 
-
   match '/fb_handler/request_callback' => 'fb_handler#request_callback', :as => 'fb_callback'
 
   resources :profiles

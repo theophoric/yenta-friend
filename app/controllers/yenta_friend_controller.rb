@@ -2,11 +2,10 @@ class YentaFriendController < ApplicationController
   helper_method :profiles
   def dashboard
     @profiles = current_profile.chickstuds
-    @notices = current_user.notices
   end
   
   def browse
-    @profiles ||= Profile._public    
+    @profiles ||= Profile._public.group_by(&:_type)
   end
   
   def explore

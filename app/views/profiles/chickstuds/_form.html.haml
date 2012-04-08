@@ -1,13 +1,19 @@
 - profile ||= @profile
-= form_for profile, :url => profile_path, :class => "well" do |f|
-  = f.label 
-  = f.text_field
-  = f.label
-  = f.text_field
-  = f.label
-  = f.text_field
-  = f.label
-  = f.text_field
-  = f.label :endorsement
-  = f.text_field :endorsement
-  = f.submit "Update Information", :class => "btn btn-primary"
+.page-header 
+  %h1
+    Edit Information
+    %small
+      = link_to_function "Cancel", '$("#information").html("#{escape_javascript(render :partial => "profiles/chickstuds/information", :locals => {:profile => profile})}");'
+.row
+  = form_for profile, :url => profile_path, :class => "well form", :remote => true do |f|
+    = f.label :first_name
+    = f.text_field :first_name, :class => "span3"
+    = f.label :last_name
+    = f.text_field :last_name, :class => "span3"
+    = f.label :gender
+    = f.select :gender, options_for_select(%w{male female}.map{|gender| [gender.humanize, gender]}, profile.gender), :class => "span3"
+    = f.label :interested_in
+    = f.select :interested_in, options_for_select(%w{men women men_and_women}.map{|interested_in| [interested_in.humanize, interested_in]}, profile.interested_in), :class => "span3"
+    = f.label :endorsement
+    = f.text_field :endorsement, :class => "span3"
+    = f.submit "Update Information", :class => "btn btn-primary span3"

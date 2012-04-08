@@ -1,6 +1,10 @@
 - notice ||= @notice
-%tr[notice]{:class => "type-#{notice.notice_type}"}
-  %td= image_tag notice.icon_url, :size => "100x100"
-  %td{:colspan=>3}
-    %h3= notice.header
-    %p= notice.body.html_safe
+.span10.offset1.well[notice]{:class => "type-#{notice.notice_type}"}
+  .row
+    .span2= image_tag notice.icon_url, :size => "100x100"
+    .span6
+      %h2= notice.header
+      %p= notice.body
+    .span2
+      = link_to notice.href do
+        %i.icon-chevron-right

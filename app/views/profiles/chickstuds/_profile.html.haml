@@ -1,15 +1,4 @@
-%tr[profile]{:class => "gender-#{profile.gender} privacy-#{profile.privacy}"}
-  %td= link_to image_tag( profile.image_url, :size => "40x40"), profile_path(profile) 
-  %td{:colspan => 2}
-    %h4= profile.name 
-    %p= profile.endorsement
-  %td.divider-vertical
-  %td
-    = link_to profile_path(profile) do
-      - if profile._type[/Chickstud/]
-        %span.badge.badge-info= profile.matches.count
-      - else
-        %span.badge.badge-info= profile.chickstuds.count
-      profile
-
-
+.portthumb.span3[profile]{:class => "gender-#{profile.gender} privacy-#{profile.privacy}"}
+  = link_to profile_path(profile), :rel => "tooltip", :title => profile.endorsement, :class => "thumbnail" do
+    = image_tag( profile.image_url, :size => "160x160")
+    %h2= profile.first_name

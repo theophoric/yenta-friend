@@ -78,22 +78,19 @@
                 %ul.dropdown-menu
                   = link_to 'profile', profile_path(current_user.profile)
                   = link_to "logout", '#', {:id => "logout_link"}
-    / %header.jumbotron.subhead
-    /   %h1= yield :title
-    /   %p.lead= yield :lead
-    %hr.soften  
-    
-    .container-fluid{:style => "position:relative;top:40px"}
+    .container
       %header.jumbotron.subhead
         %h1= yield :title
         %p.lead= yield :subtitle
+        .subnav= yield :subnav
       - if error
-        .span12.alert.alert-info.well
+        .span12.alert.alert-error.well
           %h1 Notice
           %hr.soften
           = error
-        
-      #main
-        = yield :main
-      #sidebar
-        = yield :sidebar
+      - if notice
+        .span12.alert.alert-info.well
+          %h1 Notice
+          %hr.soften
+          = notice
+      = yield :main

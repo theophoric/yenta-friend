@@ -54,3 +54,5 @@ gem "omniauth-facebook"
 gem "awesome_print"
 gem 'typhoeus'
 gem 'coffee-filter'
+gem 'geocoder'
+gem 'fb_graph'

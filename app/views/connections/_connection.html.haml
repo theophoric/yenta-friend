@@ -1,0 +1,3 @@
+%li.span2[connection]{:class => "gender-#{connection.gender} privacy-#{connection.privacy}"}
+  = link_to connection_path(connection), :rel => "tooltip", :class => "thumbnail" do
+    = image_tag( connection.image_url, :size => "80x80")

@@ -1,40 +1,42 @@
 = content_for :title, "Dashboard"
 = content_for :subtitle, "Manage your connections."
-
+= content_for :subnav do
+  %ul.nav.nav-pills
+    %li= link_to "notices", '#notices', :class => 'anchorLink'
+    %li= link_to "stable", '#stable', :class => 'anchorLink'
 = content_for :main do
-  .well.span6
-    %h2 Notices
-    %hr.soften
-    .subnav
-      %ul.nav.nav-pills#filters
-        %li= link_to 'All', '#'             , "data-filter" => '*'
-        %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
-        %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
-        %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
-        %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
-    .well
-      %table.table.table-bordered
-        %tbody
-          - for notice in current_user.notices do
-            = render :partial => 'shared/notice', :locals => {:notice => notice}
-= content_for :sidebar do
-  .well.span6
-    %ul.nav
-      %li
-        %h2 Stable
-      %li.divider-vertical  
-      %li
-        = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
-    %hr.soften
-    .subnav.subnav-fixed
-      %ul.nav.nav-pills#filters
-        %li= link_to 'All', '#'       , "data-filter" => "*"
-        %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
-        %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
-        %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
-        %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
-    %table.table.table-striped
-      %tbody#stable
+  .container
+    %section#notices
+      .page-header
+        %h1
+          Notices
+          %small See what's been going on since you've been away.
+      .row
+        - for notice in current_user_notices do
+          = render :partial => 'shared/notice', :locals => {:notice => notice}
+        / .subnav
+        /   %ul.nav.nav-pills#filters
+        /     %li= link_to 'All', '#'             , "data-filter" => '*'
+        /     %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
+        /     %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
+        /     %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
+        /     %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
+  
+
+    %section#stable
+      .page-header
+        %h1
+          Stable 
+          %small Manage your chicks and studs
+          = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
+      / .subnav.subnav-fixed
+      /   %ul.nav.nav-pills#filters
+      /     %li= link_to 'All', '#'       , "data-filter" => "*"
+      /     %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
+      /     %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
+      /     %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
+      /     %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
+      .row
         - for profile in current_stable do
           = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
 / = content_for :head do
