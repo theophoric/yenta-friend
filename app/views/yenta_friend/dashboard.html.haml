@@ -14,7 +14,7 @@
         %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
     .well
       %table.table.table-bordered
-        %tbody#notices
+        %tbody
           - for notice in current_user.notices do
             = render :partial => 'shared/notice', :locals => {:notice => notice}
 = content_for :sidebar do
@@ -24,9 +24,8 @@
         %h2 Stable
       %li.divider-vertical  
       %li
-        = link_to 'Add to Stable', '#', :id => 'invite_fb_friends', :class => 'btn btn-primary'
+        = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
     %hr.soften
-
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
         %li= link_to 'All', '#'       , "data-filter" => "*"
@@ -38,20 +37,20 @@
       %tbody#stable
         - for profile in current_stable do
           = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
-= content_for :head do
-  %script
-    $(document).ready(function(){
-    $("a#invite_fb_friends").click(function() {
-    FB.init({
-    appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
-    channelUrl : "#{request.host}/channel.html",
-    status     : true,
-    cookie     : true,
-    xfbml      : true 
-    });
-    FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
-    });
-    function fbRequestCallback(response){
-    $.post('/fb_handler/request_callback', response);
-    }
-    });
+/ = content_for :head do
+/   %script
+/     $(document).ready(function(){
+/     $("a#invite_fb_friends").click(function() {
+/     FB.init({
+/     appId      : "#{Rails.env.production? ? '343761419009220' : '323215734404423'}",
+/     channelUrl : "#{request.host}/channel.html",
+/     status     : true,
+/     cookie     : true,
+/     xfbml      : true 
+/     });
+/     FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
+/     });
+/     function fbRequestCallback(response){
+/     $.post('/fb_handler/request_callback', response);
+/     }
+/     });

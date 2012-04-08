@@ -2,8 +2,6 @@
   %head
     %title Yenta Friend
     %meta{"name" => "viewport","content" => "width=device-width, initial-scale=1.0"}
-
-    = javascript_include_tag "http://connect.facebook.net/en_US/all.js"
     = javascript_include_tag "application"
     = stylesheet_link_tag "application"
     = csrf_meta_tag
@@ -12,6 +10,47 @@
   #fb-root
   %body{"data-spy" => "scroll", "data-target" => ".subnav", "data-offset" => 100}
     #fb-root
+    %script
+      var attachInviteButton, fbRequestCallback, sendRequestViaMultiFriendSelector;
+      window.fbAsyncInit = function() {
+      var _ref;
+      FB.init({
+      appId: "#{Rails.env.production? ? '343761419009220': '323215734404423'}",
+      channelUrl: "#{request.host_with_port}" + "/channel.html",
+      frictionlessRequests: true,
+      status: true,
+      cookie: true,
+      xfbml: true
+      });
+      attachInviteButton();
+      };
+      (function(d) {
+      var id, js, ref;
+      js = void 0;
+      id = "facebook-jssdk";
+      ref = d.getElementsByTagName("script")[0];
+      if (d.getElementById(id)) {
+      return;
+      }
+      js = d.createElement("script");
+      js.id = id;
+      js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      return ref.parentNode.insertBefore(js, ref);
+      })(document);
+      attachInviteButton = function() {
+      return $("a#invite").click(sendRequestViaMultiFriendSelector);
+      };
+      sendRequestViaMultiFriendSelector = function() {
+      return FB.ui({
+      method: "apprequests",
+      message: "Select friends for your stable* (working term)"
+      }, fbRequestCallback);
+      };
+      fbRequestCallback = function(response) {
+      return $.post("/fb_handler/request_callback", response);
+      };
+
     .navbar.navbar-fixed-top
       .navbar-inner
         .container

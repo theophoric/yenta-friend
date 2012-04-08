@@ -67,6 +67,7 @@ class ProfilesController < ApplicationController
           # send letter to user
           Notifier.invite_chickstud(profile)
         end
+        format.js
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
         format.json { head :no_content }
       else

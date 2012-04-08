@@ -1,0 +1,24 @@
+.well.span4
+  %h2 Information
+  = link_to 'Edit', '#update_profile', "data-toggle".to_sym => "modal", :class => "btn btn-primary"
+  %hr.soften
+  %table.table.table-striped
+    %tbody
+      %tr
+        %td
+          %b Name
+        %td= profile.name
+      %tr
+        %td
+          %b Picture
+        %td= image_tag profile.image_url
+      %tr
+        %td
+          %b Gender
+        %td= profile.gender.capitalize
+      %tr
+        %td
+          %b Interested In
+        %td= profile.interested_in
+      %tr{:colspan => 2}
+        %td= link_to "View more information", "http://facebook.com/#{profile.username}", :target => "_blank"

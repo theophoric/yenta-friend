@@ -53,3 +53,4 @@ gem "rails_admin", :git => "git://github.com/sferik/rails_admin.git"
 gem "omniauth-facebook"
 gem "awesome_print"
 gem 'typhoeus'
+gem 'coffee-filter'

@@ -11,7 +11,7 @@
         %hr.soften
         = link_to "Make Profile Public", "#update_profile", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
     - else
-      = link_to "Match!", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary'
+      = link_to "Match!", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'
     %hr.soften
     .subnav.subnav-fixed
       %ul.nav.nav-pills#filters
@@ -41,61 +41,14 @@
                 = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"match[chickstuds][profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
                 
   .modal#update_profile.fade
-    = form_for profile, :url => profile_path do |f|
-      .modal-header
-        Update
-      .modal-body
-        = f.hidden_field :privacy, :value => "public"
+    .modal-header
+      %h2= "Update #{profile.first_name}'s Information"
+    .modal-body
+      = form_for profile, :url => profile_path, :class => "well" do |f|
+        = f.label
+        = f.text_field
         = f.label :endorsement
         = f.text_field :endorsement
-        = f.submit "Make Profile Public", :class => "btn btn-primary"
+        = f.submit "Update Information", :class => "btn btn-primary"
 = content_for :sidebar do
-  .well.span4
-    %h2 Information
-    %hr.soften
-    %table.table.table-striped
-      %tbody
-        %tr
-          %td
-            %b Name
-          %td= profile.name
-        %tr
-          %td
-            %b Picture
-          %td= image_tag profile.image_url
-        %tr
-          %td
-            %b Gender
-          %td= profile.gender.capitalize
-        %tr
-          %td
-            %b Interested In
-          %td= profile.interested_in
-        %tr{:colspan => 2}
-          %td= link_to "View more information", "http://facebook.com/#{profile.username}", :target => "_blank"
-= content_for :head do
-  %script
-    $('#update_profile').modal();      
-    $('#new_match').modal();
-    $(document).ready(function(){
-    var $container = $('#notices');
-    $container.isotope({
-    itemSelector: '.notice'
-    });
-    $('#filters li a').click(function(){
-    var selector = $(this).attr('data-filter');
-    $container.isotope({filter: selector});
-    return false;
-    });
-    $("a#invite_fb_friends").click(function() {
-    FB.init({ 
-    appId:'323215734404423', 
-    cookie:false, 
-    status:true
-    });
-    FB.ui({ method: 'apprequests', message: 'Select friends for your stable* (working term)'}, fbRequestCallback);
-    });
-    function fbRequestCallback(response){
-    $.post('/fb_handler/request_callback', response);
-    }
-    });
+  = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}
