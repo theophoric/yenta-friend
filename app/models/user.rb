@@ -73,7 +73,7 @@ class User
       puts "[FB USER DATA]: " + data.inspect  
       if user = User.where(:email => data.email).first
         if !user.profile
-          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location.name, :hometown => data.hometown.name, :_type => user._role))
+          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => data.location["name"], :hometown => data.hometown["name"], :_type => user._role))
         end
         return user
       else # Create a user with a stub password. 

@@ -44,11 +44,6 @@
     .modal-header
       %h2= "Update #{profile.first_name}'s Information"
     .modal-body
-      = form_for profile, :url => profile_path, :class => "well" do |f|
-        = f.label
-        = f.text_field
-        = f.label :endorsement
-        = f.text_field :endorsement
-        = f.submit "Update Information", :class => "btn btn-primary"
+      = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
 = content_for :sidebar do
   = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}

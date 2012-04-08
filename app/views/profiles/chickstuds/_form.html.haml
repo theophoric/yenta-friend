@@ -1,9 +1,13 @@
-= form_for @profile, :class => "form-inline" do |f|
-  -if @profile.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@profile.errors.count, "error")} prohibited this profile from being saved:"
-      %ul
-        - @profile.errors.full_messages.each do |msg|
-          %li= msg
-  .actions
-    = f.submit 'Save'
+- profile ||= @profile
+= form_for profile, :url => profile_path, :class => "well" do |f|
+  = f.label 
+  = f.text_field
+  = f.label
+  = f.text_field
+  = f.label
+  = f.text_field
+  = f.label
+  = f.text_field
+  = f.label :endorsement
+  = f.text_field :endorsement
+  = f.submit "Update Information", :class => "btn btn-primary"
