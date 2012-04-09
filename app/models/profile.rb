@@ -9,6 +9,7 @@ class Profile
   scope :men_and_women, all
   
   belongs_to :user
+  has_one :inbox
   
   field :first_name
   field :last_name
@@ -25,11 +26,27 @@ class Profile
   field :privacy, :default => 'private'
   
   validates_inclusion_of :privacy, :in => %w{public private}
+  after_create :create_inbox
 
   # delegate :retrieve_fb_data, :to => :user
   def private?
     privacy == "private"
   end
   
+  def pronoun_obj
+    is_male? ? "him" : "her"
+  end
+  
+  def pronoun_subj
+    is_male? ? "he" : "she"
+  end
+  
+  def is_male?
+    gender == "male"
+  end
+  
+  def is_female?
+    !is_male?
+  end
 end
 

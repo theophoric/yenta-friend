@@ -6,6 +6,7 @@ class Chickstud < Profile
   field :endorsement
   field :interested_in
   field :about
+  field :invited, :default => false
   
   validates_length_of :endorsement, :maximum => 140
   

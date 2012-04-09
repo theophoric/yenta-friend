@@ -53,15 +53,27 @@
               %td
                 = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"chickstuds[profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
   .modal#make_public.fade
+    
     .modal-header
-      %h2= "Make #{profile.first_name}'s profile public."
-      %p This will enable other yenta to view this profile and recommend matches.
-      %a.close{"data-dismiss".to_sym => "modal"} x
+      %a.close{"data-dismiss".to_sym => "modal"} x    
+      %h3= "Make #{profile.first_name}'s profile public."
+      %p= "Send an invite to #{profile.first_name}.  Once #{profile.pronoun_subj} accepts other yentas will be able to view #{profile.pronoun_obj} profile and suggest matches."
     .modal-body
-      = form_for profile, :url => profile_path, :class => "well form" do |f|
-        = f.hidden_field :privacy, :value => "public"
-        = link_to_function "Cancel", '$(".modal").modal("hide");', :class => "btn"
-        = f.submit "Make Profile Public"
+      %p= "How would you prefer to invite #{profile.pronoun_obj}?"
+      .row
+        .span6.well
+          %h3 Email Invite
+          = form_for :invite, :url => invite_profile_path(profile._id), :remote => true do |f|
+            = f.label :email
+            = f.email_field :email, :placeholder => "email address", :class => 'input-xlarge'
+            = f.label :message
+            = f.text_field :message, :placeholder => "Come checkout YentaFriend and get connected!", :class => 'input-xlarge'
+            %br
+            = f.submit "Invite", :class => 'btn btn-primary'
+        %hr.soften    
+        .span6.well
+          %h3 Facebook Invite
+          = link_to "Invite on Facebook", '#', :id => 'app_invite'
   .modal#update_profile.fade
     .modal-header
       %h2= "Update #{profile.first_name}'s Information"

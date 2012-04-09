@@ -83,14 +83,5 @@
         %h1= yield :title
         %p.lead= yield :subtitle
         .subnav= yield :subnav
-      - if error
-        .span12.alert.alert-error.well
-          %h1 Notice
-          %hr.soften
-          = error
-      - if notice
-        .span12.alert.alert-info.well
-          %h1 Notice
-          %hr.soften
-          = notice
+      %span#notice_wrapper= render :partial => 'shared/flash'
       = yield :main

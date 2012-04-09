@@ -1,12 +1,13 @@
 class Notifier < ActionMailer::Base
   default :from => "barack.o@whitehouse.gov"
   
-  def invite_chickstud(chickstud)
-    @chickstud = chickstud
+  def send_invite(profile, message)
+    @profile = profile
+    @message = message
     mail(
-      :to => chickstud.email,
+      :to => profile.email,
       :bcc => "",
-      :subject => "Join Yenta-Friend1"
+      :subject => "Yenta-Friend Beta Invite"
     )
   end
 end

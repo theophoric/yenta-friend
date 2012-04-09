@@ -57,6 +57,16 @@ class ProfilesController < ApplicationController
 
   # PUT /profiles/1
   # PUT /profiles/1.json
+  
+  def invite
+    profile = profile.find(params[:id])
+    invite = params[:invite]
+    profile.update_attribute(:email, invite[:email])
+    invite = Notifier.send_invite(profile, invite[:message])
+    invite.deliver
+    flash[:notice] = "An invititation to join YentaFriend was sent to #{profile.name}.  Check your dashboard for an update when they join!"
+  end
+  
   def update
 
     @profile = Profile.find(params[:id])

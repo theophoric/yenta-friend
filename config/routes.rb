@@ -9,7 +9,13 @@ YentaFriend::Application.routes.draw do
 
   match '/fb_handler/request_callback' => 'fb_handler#request_callback', :as => 'fb_callback'
 
-  resources :profiles
+  resources :profiles do
+    member do
+      post 'invite'
+    end
+  end
+  
+  
   match 'create_match' => 'profiles#create_match'
   
   match "project" => 'static_pages#project'
