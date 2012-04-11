@@ -11,7 +11,11 @@
       .page-header
         %h1
           Notices
-          %small See what's been going on since you've been away.
+          %small
+            See what's been going on since you've been away.
+            .pull-right
+              %span.badge= current_user_notices.count
+              notices
       .row
         - for notice in current_user_notices do
           = render :partial => 'shared/notice', :locals => {:notice => notice}
@@ -28,7 +32,11 @@
       .page-header
         %h1
           Stable 
-          %small Manage your chicks and studs
+          %small
+            Manage your chicks and studs
+            .pull-right
+              %span.badge= current_stable.count
+              studs
           = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
       / .subnav.subnav-fixed
       /   %ul.nav.nav-pills#filters

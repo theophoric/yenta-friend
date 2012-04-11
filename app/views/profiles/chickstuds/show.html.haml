@@ -28,8 +28,9 @@
   .container
     %section#about
       .page-header
-        %h1= "About #{profile.first_name}"
-        %small= "Find out more about #{profile.pronoun_obj}!"
+        %h1
+          = "About #{profile.first_name}"
+          %small= "Find out more about #{profile.pronoun_obj}!"
       .page-body
         .row
           .span3
@@ -62,8 +63,13 @@
                     %span.muted (external link)
     %section#connections
       .page-header
-        %h1 Connections
-        %small= "See the people that #{profile.first_name} has been connecting with."
+        %h1 
+          Connections
+          %small
+            = "See the people that #{profile.first_name} has been connecting with."
+            .pull-right
+              %span.badge= profile.connections.count
+              Connections
       .page-body  
         - if profile.private? && chickstud_belongs_to_yentum?(profile)
           .well.alert-info
@@ -76,13 +82,10 @@
         .row
           - for connection in profile.connections do
             = render :partial => 'connections/_connection', :locals => {:connection => connection}
-  .modal#information.fade
-    = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}
   .modal#new_connection.fade
     = form_for :connection, :url => connections_path, :remote => true do |f|
       = fields_for :chickstuds do |chickstud_fields|
-        = chickstud_fields.hidden_field :profile_1, :value => profile._id
-        = chickstud_fields.hidden_field :profile_2
+        %span.current-profile= chickstud_fields.text_field profile, :value => profile._id
     .modal-header
       %h2= "Suggest a match for #{profile.first_name}"
       %a.close{"data-dismiss".to_sym => "modal"} x
