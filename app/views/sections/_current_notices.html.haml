@@ -1,0 +1,19 @@
+%section#notices
+  .page-header
+    %h1
+      Notices
+      %small
+        See what's been going on since you've been away.
+        .pull-right
+          %span.badge= current_user_notices.count
+          notices
+  .row
+    - for notice in current_user_notices do
+      = render :partial => 'shared/notice', :locals => {:notice => notice}
+    / .subnav
+    /   %ul.nav.nav-pills#filters
+    /     %li= link_to 'All', '#'             , "data-filter" => '*'
+    /     %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
+    /     %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
+    /     %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
+    /     %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'

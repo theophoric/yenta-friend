@@ -7,47 +7,13 @@
     %li= link_to "stable", '#stable', :class => 'anchorLink'
 = content_for :main do
   .container
-    %section#notices
-      .page-header
-        %h1
-          Notices
-          %small
-            See what's been going on since you've been away.
-            .pull-right
-              %span.badge= current_user_notices.count
-              notices
-      .row
-        - for notice in current_user_notices do
-          = render :partial => 'shared/notice', :locals => {:notice => notice}
-        / .subnav
-        /   %ul.nav.nav-pills#filters
-        /     %li= link_to 'All', '#'             , "data-filter" => '*'
-        /     %li= link_to 'Info', '#'            , "data-filter" => '.notice .type-info'
-        /     %li= link_to 'Matches', '#'         , "data-filter" => '.notice .type-match'
-        /     %li= link_to 'Social', '#'          , "data-filter" => '.notice .type-social'
-        /     %li= link_to 'Announcements', '#'   , "data-filter" => '.notice .type-announcement'
-  
+    = render :partial => 'sections/current_notices'
+    - if yenta_user?
+      = render :partial => 'sections/current_stable'
+      
+    - else
+      = render :partial => 'sections/connections'
 
-    %section#stable
-      .page-header
-        %h1
-          Stable 
-          %small
-            Manage your chicks and studs
-            .pull-right
-              %span.badge= current_stable.count
-              studs
-          = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
-      / .subnav.subnav-fixed
-      /   %ul.nav.nav-pills#filters
-      /     %li= link_to 'All', '#'       , "data-filter" => "*"
-      /     %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
-      /     %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
-      /     %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
-      /     %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
-      .row
-        - for profile in current_stable do
-          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
 / = content_for :head do
 /   %script
 /     $(document).ready(function(){

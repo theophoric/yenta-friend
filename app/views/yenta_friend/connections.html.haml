@@ -8,15 +8,4 @@
 = content_for :main do
   .container
     - for profile in @profiles do
-      - connections = profile.connections
-      %section[profile]
-        .page-header
-          %h1
-            = image_tag profile.image_url
-            = profile.name
-            .pull-right
-              %span.badge= " #{connections.length}"
-              connections
-        .row
-          - for connection in connections
-            = render :partial => 'connections/connection', :locals => {:connection => connection}
+      = render :partial => 'sections/connections', :locals => {:profile => profile}

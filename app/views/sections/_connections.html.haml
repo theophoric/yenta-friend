@@ -1,0 +1,12 @@
+- connections ||= profile.connections
+%section.connections{:id => "profile_#{profile._id}_connections"}
+  .page-header
+    %h1
+      = image_tag profile.image_url
+      = profile.name
+      .pull-right
+        %span.badge= " #{connections.length}"
+        connections
+  .row
+    - for connection in connections
+      = render :partial => 'connections/connection', :locals => {:connection => connection}

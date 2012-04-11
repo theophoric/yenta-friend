@@ -1,0 +1,21 @@
+- profiles ||= @profiles
+%section#stable
+  .page-header
+    %h1
+      Stable 
+      %small
+        Manage your chicks and studs
+        .pull-right
+          %span.badge= profiles.count
+          studs
+      = link_to 'Add to Stable', '#', :id => 'invite', :class => 'btn btn-primary'
+  / .subnav.subnav-fixed
+  /   %ul.nav.nav-pills#filters
+  /     %li= link_to 'All', '#'       , "data-filter" => "*"
+  /     %li= link_to 'Chicks', '#'    , "data-filter" => ".profile .gender-female"
+  /     %li= link_to 'Studs', '#'     , "data-filter" => ".profile .gender-male"
+  /     %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
+  /     %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
+  .row
+    - for profile in profiles do
+      = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
