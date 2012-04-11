@@ -1,41 +1,84 @@
+- yentum ||= profile.yentum
 = content_for :subnav do
   %ul.nav.nav-pills
-    %li= link_to "matches", '#matches', :class => 'anchorLink'
+    %li= link_to "about", '#about', :class => 'anchorLink'
     %li= link_to "connections", '#connections', :class => 'anchorLink'
-= content_for :title, profile.name
-= content_for :subtitle do
-  %em= "\"#{profile.endorsement}\"" unless profile.endorsement.blank?
-  = link_to "About #{profile.first_name}", '#information', "data-toggle".to_sym => "modal"
-
+= content_for :pageheader do
+  .row
+    .span12
+      .row
+        .span7
+          %h1
+            = profile.name
+        .span5
+          %h2
+            %blockquote
+              - if !chickstud_belongs_to_yentum?(profile)
+                = form_for profile, :url => profile_path, :remote => true do |f|
+                  = f.text_field :endorsement, :placeholder => "endorsement", :type => 'input-search'
+              - else
+                %em= "\"#{profile.endorsement}\"" unless profile.endorsement.blank?
+                %small
+                  = link_to "#{yentum.name}", profile_path(yentum)
+                  \, Yenta      
+  %p.lead
+      
 = content_for :main do
   .container
-
-    %section#matches
+    %section#about
       .page-header
-        %h1 Suggest Matches
-        %small= "Help #{profile.first_name} find friends."
-    - if profile.private? && current_profile == profile.yentum
-      .well.alert-info
-        %h4 This profile has not been made public.
-        %p= "Until you make this profile public no one else can recommend matches for #{profile.first_name}."
-        %hr.soften
-        = link_to "Make Profile Public", "#make_public", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
-    - else
-      = link_to "Match!", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'
-      .row
-        - for match in profile.matches do
-          = render :partial => 'matches/match', :locals => {:match => match}
+        %h1= "About #{profile.first_name}"
+        %small= "Find out more about #{profile.pronoun_obj}!"
+      .page-body
+        .row
+          .span3
+            = image_tag profile.image_url("large")
+          .span9
+            %table.span9.table-striped
+              %tbody
+                %tr
+                  %th Name
+                  %td= profile.name
+                %tr
+                  %th Yenta
+                  %td= link_to yentum.name, profile_path(yentum)
+                %tr
+                  %th Member Since
+                  %td= profile.member_since
+                %tr
+                  %th Gender
+                  %td= profile.gender.humanize
+                %tr
+                  %th Interested In
+                  %td= profile.interested_in.humanize            
+                %tr
+                  %th Connections
+                  %td= link_to "#{profile.connections.count} connections", '#connections', :class => 'badge anchorLink'
+
+                %tr
+                  %td.pull-right{:colspan => 2}
+                    = link_to 'Learn more', "http://facebook.com/#{profile.fb_uid}", :target => "_blank"
+                    %span.muted (external link)
     %section#connections
       .page-header
         %h1 Connections
         %small= "See the people that #{profile.first_name} has been connecting with."
-      .row
-        - for connection in profile.connections do
-          = render :partial => 'connections/_connection', :locals => {:connection => connection}
+      .page-body  
+        - if profile.private? && chickstud_belongs_to_yentum?(profile)
+          .well.alert-info
+            %h4 This profile has not been made public.
+            %p= "Until you make this profile public no one else can recommend matches for #{profile.first_name}."
+            %hr.soften
+            = link_to "Make Profile Public", "#make_public", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
+        - else
+          = link_to "Suggest Connection", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'        
+        .row
+          - for connection in profile.connections do
+            = render :partial => 'connections/_connection', :locals => {:connection => connection}
   .modal#information.fade
     = render :partial => 'profiles/chickstuds/information', :locals => {:profile => profile}
-  .modal#new_match.fade
-    = form_for :match, :url => create_match_path, :remote => true do |f|
+  .modal#new_connection.fade
+    = form_for :connection, :url => connections_path, :remote => true do |f|
       = fields_for :chickstuds do |chickstud_fields|
         = chickstud_fields.hidden_field :profile_1, :value => profile._id
         = chickstud_fields.hidden_field :profile_2
@@ -53,7 +96,6 @@
               %td
                 = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"chickstuds[profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
   .modal#make_public.fade
-    
     .modal-header
       %a.close{"data-dismiss".to_sym => "modal"} x    
       %h3= "Make #{profile.first_name}'s profile public."
@@ -65,9 +107,9 @@
           %h3 Email Invite
           = form_for :invite, :url => invite_profile_path(profile._id), :remote => true do |f|
             = f.label :email
-            = f.email_field :email, :placeholder => "email address", :class => 'input-xlarge'
+            = f.email_field :email, :placeholder => "#{profile.first_name}'s Email Address", :class => 'input-xlarge span5'
             = f.label :message
-            = f.text_field :message, :placeholder => "Come checkout YentaFriend and get connected!", :class => 'input-xlarge'
+            = f.text_field :message, :placeholder => "Come checkout YentaFriend and get connected!", :class => 'input-xlarge span5'
             %br
             = f.submit "Invite", :class => 'btn btn-primary'
         %hr.soften    

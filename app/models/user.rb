@@ -29,8 +29,8 @@ class User
   field :last_sign_in_ip,    :type => String
 
   # PERSONAL DATA (from fb)
-  field :name_first
-  field :name_last
+  field :first_name
+  field :last_name
   
   field :hometown
   field :fb_link 
@@ -82,8 +82,8 @@ class User
         return user
       else # Create a user with a stub password. 
         role = Chickstud.where(:fb_uid => fb_uid).exists? ? "chickstud" : "yentum"
-        user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :name_first => data.first_name, :name_last => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :_role => role, :fb_token => fb_token)
-        user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => role.classify))
+        user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :_role => role, :fb_token => fb_token)
+        user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => role.classify))
         user.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
         return user
       end

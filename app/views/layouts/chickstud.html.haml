@@ -28,7 +28,7 @@
               %li.dropdown
                 = link_to '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' do
                   = image_tag current_user.image_url, :size => "25x25"
-                  = current_user.name_first + " " + current_user.name_last
+                  = current_user.first_name + " " + current_user.last_name
                   %b.carat
                   %ul.dropdown-menu
                     = link_to 'profile', profile_path(current_user.profile)

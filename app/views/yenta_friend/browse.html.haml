@@ -1,5 +1,6 @@
-= content_for :title, "Browse"
-= content_for :subtitle, "Find People."
+= content_for :pageheader do
+  %h1 Browse
+  %p.lead Find other YentaFriend users!
 = content_for :subnav do
   %ul.nav.nav-pills
     %li= link_to "ChickStuds", '#chickstuds', :class => 'anchorLink'

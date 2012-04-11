@@ -10,6 +10,9 @@ class Profile
   
   belongs_to :user
   has_one :inbox
+  has_many :suggestions, :as => :owner  
+  embeds_many :pictures
+
   
   field :first_name
   field :last_name
@@ -21,12 +24,21 @@ class Profile
   field :hometown
   field :interested_in
   field :username
-  field :image_url, :default => "http://www.neuromance.co.za/wp-content/uploads/2009/05/defaulticon.jpg"
+  field :image_url
+  field :fb_uid
   field :gender, :default => 'na'
   field :privacy, :default => 'private'
   
   validates_inclusion_of :privacy, :in => %w{public private}
   after_create :create_inbox
+
+  def image_url(size = "square")
+    "https://graph.facebook.com/#{fb_uid}/picture?type=#{size}"
+  end
+
+  def member_since
+    "#{Date::MONTHNAMES[created_at.month]} #{created_at.mday}, #{created_at.year}"
+  end
 
   # delegate :retrieve_fb_data, :to => :user
   def private?

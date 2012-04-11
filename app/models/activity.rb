@@ -1,12 +1,12 @@
-class Suggestion
+class Activity
   include Mongoid::Document
   
-  embedded_in :suggestable, :polymorphic => true
+  belongs_to :connection
+  
+  embeds_many :comments, :as => :commentable
   
   field :activity
   field :location
   field :time
-  
-  
   
 end

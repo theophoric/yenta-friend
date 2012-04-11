@@ -1,0 +1,2 @@
+class YentaController < ApplicationController
+end

@@ -1,0 +1,23 @@
+= content_for :pageheader do
+  %h1 Connections
+  %p.lead Explore your chickstuds' connections!
+= content_for :subnav do
+  %ul.nav.nav-pills
+    - for profile in @profiles
+      %li= link_to profile.first_name, "##{profile._type.underscore}_#{profile.id}", :class => 'anchorLink'
+= content_for :main do
+  .container
+    - for profile in @profiles do
+      - connections = profile.connections
+      %section[profile]
+        .page-header
+          %h1
+            = image_tag profile.image_url
+            = profile.name
+          %small
+            = "#{profile.first_name} has"
+            %span.badge= " #{connections.length}"
+            connections
+        .row
+          - for connection in connections
+            = render :partial => 'connections/connection', :locals => {:connection => connection}

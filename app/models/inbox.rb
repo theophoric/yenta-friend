@@ -4,5 +4,4 @@ class Inbox
   belongs_to :profile
   embeds_many :messages, :as => :messageable
   
-  
 end

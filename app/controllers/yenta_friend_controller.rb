@@ -12,6 +12,10 @@ class YentaFriendController < ApplicationController
     
   end
   
+  def connections
+    @profiles = current_profile.chickstuds
+  end
+  
   def profiles
     
   end

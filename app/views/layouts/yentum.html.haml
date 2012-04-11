@@ -66,22 +66,21 @@
               %li{}
                 = link_to "browse", browse_path
               %li{}
-                = link_to 'explore', ''
+                = link_to 'connections', connections_path
 
             %ul.nav.pull-right    
               %li.divider-vertical  
               %li.dropdown
                 = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
                   = image_tag current_user.image_url, :size => "25x25"
-                  = current_user.name_first + " " + current_user.name_last
+                  = current_user.first_name + " " + current_user.last_name
                   %b.caret
                 %ul.dropdown-menu
                   = link_to 'profile', profile_path(current_user.profile)
                   = link_to "logout", '#', {:id => "logout_link"}
     .container
       %header.jumbotron.subhead
-        %h1= yield :title
-        %p.lead= yield :subtitle
+        = yield :pageheader
         .subnav= yield :subnav
       %span#notice_wrapper= render :partial => 'shared/flash'
       = yield :main

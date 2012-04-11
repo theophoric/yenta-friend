@@ -24,6 +24,7 @@ YentaFriend::Application.routes.draw do
   
   match 'dashboard' => 'yenta_friend#dashboard'
   match 'browse' => 'yenta_friend#browse'
+  match 'connections' => 'yenta_friend#connections'
   
   
   
