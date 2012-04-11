@@ -12,7 +12,7 @@
   .container
     = render :partial => 'sections/current_notices'
     - if yenta_user?
-      = render :partial => 'sections/current_stable'
+      = render :partial => 'sections/current_stable', :locals => {:profiles => current_stable}
       
     - elsif user_signed_in?
       = render :partial => 'sections/connections'
