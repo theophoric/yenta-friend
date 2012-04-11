@@ -1,9 +1,11 @@
+- profile ||= current_profile
 - connections ||= profile.connections
 %section.connections{:id => "profile_#{profile._id}_connections"}
   .page-header
     %h1
-      = image_tag profile.image_url
-      = profile.name
+      = link_to chickstud_connections_path(profile._id) do
+        = image_tag(profile.image_url)
+        = profile.name
       .pull-right
         %span.badge= " #{connections.length}"
         connections

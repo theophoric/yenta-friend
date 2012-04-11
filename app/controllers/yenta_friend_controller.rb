@@ -1,7 +1,8 @@
 class YentaFriendController < ApplicationController
   helper_method :profiles
   def dashboard
-    @profiles = current_profile.chickstuds
+    @profiles = current_stable
+    puts request.location
   end
   
   def browse
@@ -13,19 +14,21 @@ class YentaFriendController < ApplicationController
     
   end
   
+  def inbox
+    
+  end
+  
   def connections
-    @profiles = current_profile.chickstuds
+    @profiles = current_stable
+  end
+  
+  def chickstud_connections
+    @profile = params[:id].nil? ? current_profile : Profile.find(params[:id])
+    @connections_array = @profile.connections
   end
   
   def profiles
     
   end
   
-  def create_match
-    puts params[:match]
-    match = Match.new
-    chickstuds = Chickstuds.find([params[:partner1], params[:partner2]])
-    match.chickstuds << chickstuds
-    match.save
-  end
 end

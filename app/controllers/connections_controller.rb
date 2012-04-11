@@ -3,6 +3,9 @@ class ConnectionsController < ApplicationController
     
   end
   
+  def create
+    
+  end
   
   def connections
     @connections ||= current_profile.connections

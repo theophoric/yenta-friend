@@ -1,4 +1,4 @@
-class ConenctionSuggestion < Suggestion
+class ConnectionSuggestion < Suggestion
   belongs_to :connection
   
 end

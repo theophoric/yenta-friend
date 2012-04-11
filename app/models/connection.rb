@@ -5,7 +5,8 @@ class Connection
   has_and_belongs_to_many :chickstuds
   has_and_belongs_to_many :yenta
   
-  has_many :activities, :as => :suggestable
+  has_one :connection_suggestion
+  has_many :activities
   embeds_many :messages, :as => :messageable
   embeds_many :comments, :as => :commentable
   

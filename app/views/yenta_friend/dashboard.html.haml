@@ -4,7 +4,10 @@
 = content_for :subnav do
   %ul.nav.nav-pills
     %li= link_to "notices", '#notices', :class => 'anchorLink'
-    %li= link_to "stable", '#stable', :class => 'anchorLink'
+    - if yenta_user?
+      %li= link_to "stable", '#stable', :class => 'anchorLink'
+    - else
+      %li= link_to "connections", "#profile_#{current_profile.id}_connections", :class => 'anchorLink'
 = content_for :main do
   .container
     = render :partial => 'sections/current_notices'

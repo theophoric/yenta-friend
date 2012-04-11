@@ -5,9 +5,52 @@
     = javascript_include_tag "application"
     = stylesheet_link_tag "application"
     = csrf_meta_tag
-
+    %script
     = yield :head
+  #fb-root
   %body{"data-spy" => "scroll", "data-target" => ".subnav", "data-offset" => 100}
+    #fb-root
+    %script
+      var attachInviteButton, fbRequestCallback, sendRequestViaMultiFriendSelector;
+      window.fbAsyncInit = function() {
+      var _ref;
+      FB.init({
+      appId: "#{Rails.env.production? ? '343761419009220': '323215734404423'}",
+      channelUrl: "#{request.host_with_port}" + "/channel.html",
+      frictionlessRequests: true,
+      status: true,
+      cookie: true,
+      xfbml: true
+      });
+      attachInviteButton();
+      };
+      (function(d) {
+      var id, js, ref;
+      js = void 0;
+      id = "facebook-jssdk";
+      ref = d.getElementsByTagName("script")[0];
+      if (d.getElementById(id)) {
+      return;
+      }
+      js = d.createElement("script");
+      js.id = id;
+      js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      return ref.parentNode.insertBefore(js, ref);
+      })(document);
+      attachInviteButton = function() {
+      return $("a#invite").click(sendRequestViaMultiFriendSelector);
+      };
+      sendRequestViaMultiFriendSelector = function() {
+      return FB.ui({
+      method: "apprequests",
+      message: "Select friends for your stable* (working term)"
+      }, fbRequestCallback);
+      };
+      fbRequestCallback = function(response) {
+      return $.post("/fb_handler/request_callback", response);
+      };
+
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -15,34 +58,26 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-  
           = link_to "Yenta Friend", root_path, :class => "brand"
           .nav-collapse
             %ul.nav
               %li{}
-                = link_to "dashboard", "#"
-                
+                = link_to "dashboard", dashboard_path
+              %li{}
+                = link_to 'connections', chickstud_connections_path
             %ul.nav.pull-right    
-
               %li.divider-vertical  
               %li.dropdown
-                = link_to '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
                   = image_tag current_user.image_url, :size => "25x25"
                   = current_user.first_name + " " + current_user.last_name
-                  %b.carat
-                  %ul.dropdown-menu
-                    = link_to 'profile', profile_path(current_user.profile)
-                    = link_to "logout", '#'
-    %header
-    %hr.soften  
-    .container-fluid
-      - if error
-        .span12.alert.alert-info.well
-          %h1 Notice
-          %hr.soften
-          = error
-        
-      .span4
-        = yield :main
-      .span8
-        = yield :sidebar
+                  %b.caret
+                %ul.dropdown-menu
+                  = link_to 'profile', profile_path(current_user.profile)
+                  = link_to "logout", '#', {:id => "logout_link"}
+    .container
+      %header.jumbotron.subhead
+        = yield :pageheader
+        .subnav= yield :subnav
+      %span#notice_wrapper= render :partial => 'shared/flash'
+      = yield :main

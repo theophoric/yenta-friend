@@ -1,11 +1,12 @@
 = content_for :pageheader do
   %h1 Connections
-  %p.lead Explore your chickstuds' connections!
+  %p.lead Explore your connections!
 = content_for :subnav do
   %ul.nav.nav-pills
     - for profile in @profiles
-      %li= link_to profile.first_name, "##{profile._type.underscore}_#{profile.id}", :class => 'anchorLink'
+      %li= link_to profile.first_name, "#profile_#{profile.id}_connections", :class => 'anchorLink'
 = content_for :main do
   .container
-    - for profile in @profiles do
-      = render :partial => 'sections/connections', :locals => {:profile => profile}
+    - if yenta_user?
+      - for profile in @profiles do
+        = render :partial => 'sections/connections', :locals => {:profile => profile}

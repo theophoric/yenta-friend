@@ -3,7 +3,6 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Paranoia
   
-  
   has_one :profile, :dependent => "destroy"
   has_many :notices, :dependent => "destroy"
   # Include default devise modules. Others available are:
@@ -81,9 +80,16 @@ class User
         end
         return user
       else # Create a user with a stub password. 
-        role = Chickstud.where(:fb_uid => fb_uid).exists? ? "chickstud" : "yentum"
-        user = User.create!(:email => data.email, :password => Devise.friendly_token[0,20], :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :_role => role, :fb_token => fb_token)
-        user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => role.classify))
+        user = User.new(:email => data.email, :password => Devise.friendly_token[0,20], :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :fb_token => fb_token)
+        if Chickstud.where(:fb_uid => fb_uid).exists?
+          profile = Chickstud.first(:conditions => {:fb_uid => fb_uid})
+          user.profile = profile
+          user._role = "chickstud"
+        else
+          user.build_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => role.classify))
+          user._role = "yentum"
+        end
+        user.save!
         user.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
         return user
       end

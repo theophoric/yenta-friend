@@ -1,0 +1,12 @@
+- profile ||= @profile
+= content_for :pageheader do
+  %h1 Connections
+  %p.lead Explore your connections!
+= content_for :subnav do
+  / %ul.nav.nav-pills
+  /   - for connection in @connections
+  /     %li= link_to profile.first_name, "#profile_#{profile.id}_connections", :class => 'anchorLink'
+= content_for :main do
+  .container
+    - for connection in @connections do
+      = render :partial => 'connections/connection', :locals => {:connection => connection}
