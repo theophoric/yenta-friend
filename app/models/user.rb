@@ -1,7 +1,6 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Paranoia
   
   has_one :profile, :dependent => "destroy"
   has_many :notices, :dependent => "destroy"
@@ -86,7 +85,7 @@ class User
           user.profile = profile
           user._role = "chickstud"
         else
-          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => 'yentum'))
+          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => 'Yentum'))
           user._role = "yentum"
         end
         user.save!
