@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   layout :set_layout
   helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?, :is_current_profile?, :yenta_user?
   
-  
   def facebook_friends
     
   end

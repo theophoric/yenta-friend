@@ -86,7 +86,7 @@ class User
           user.profile = profile
           user._role = "chickstud"
         else
-          user.build_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => role.classify))
+          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => 'yentum'))
           user._role = "yentum"
         end
         user.save!
