@@ -1,5 +1,6 @@
-= content_for :title, "Dashboard"
-= content_for :subtitle, "Manage your connections."
+= content_for :pageheader do
+  %h1 Dashboard
+  %p.lead Notices, stable
 = content_for :subnav do
   %ul.nav.nav-pills
     %li= link_to "notices", '#notices', :class => 'anchorLink'

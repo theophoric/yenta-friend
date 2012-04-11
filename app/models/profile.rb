@@ -13,6 +13,7 @@ class Profile
   has_many :suggestions, :as => :owner  
   embeds_many :pictures
 
+  default_scope asc(:first_name)
   
   field :first_name
   field :last_name

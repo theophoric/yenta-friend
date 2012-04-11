@@ -3,6 +3,7 @@ class Notice
   include Mongoid::Timestamps
   
   belongs_to :user
+  default_scope desc(:created_at)
   
   field :header   ,:default => ''
   field :body     ,:default => ''

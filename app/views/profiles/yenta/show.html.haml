@@ -1,0 +1,72 @@
+- chickstuds = is_current_profile?(profile) ? profile.chickstuds : profile.chickstuds._public
+
+= content_for :subnav do
+  %ul.nav.nav-pills
+    %li= link_to "about", '#about', :class => 'anchorLink'
+    %li= link_to "stable", '#stable', :class => 'anchorLink'
+= content_for :pageheader do
+  .row
+    .span12
+      .row
+        .span7
+          %h1
+            = profile.name
+        .span5
+          %h2
+            / %blockquote
+            /   - if profile == current_profile
+            /     / = form_for profile, :url => profile_path, :remote => true do |f|
+            /     /   = f.text_field :endorsement, :placeholder => "endorsement", :type => 'input-search'
+            /   - else
+            /     %em= "\"#{profile.endorsement}\"" unless profile.endorsement.blank?
+            /     %small
+            /       = link_to "#{yentum.name}", profile_path(yentum)
+            /       \, Yenta      
+  %p.lead
+      
+= content_for :main do
+  .container
+    %section#about
+      .page-header
+        %h1
+          = "About #{profile.first_name}"
+          %small= "Find out more about #{profile.pronoun_obj}!"
+      .page-body
+        .row
+          .span3
+            = image_tag profile.image_url("large")
+          .span9
+            %table.span9.table-striped
+              %tbody
+                %tr
+                  %th Name
+                  %td= profile.name
+                %tr
+                  %th Member Since
+                  %td= profile.member_since
+                %tr
+                  %th Gender
+                  %td= profile.gender.humanize
+                %tr
+                  %th Size of Stable
+                  %td
+                    %span.badge= chickstuds.count
+                %tr
+                  %th Connections Facilitated
+                  %td
+                    %span.badge= connections.count
+    %section#stable
+      .page-header
+        %h1 
+          Stable
+          %small
+            = "#{profile.first_name}'s stable"
+            %span.pull-right
+              %span.badge= chickstuds.count
+              Studs in the Stable
+          
+      .page-body  
+        .row
+          - for chickstud in chickstuds
+            = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => chickstud}
+

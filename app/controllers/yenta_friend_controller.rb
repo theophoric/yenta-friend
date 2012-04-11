@@ -5,7 +5,8 @@ class YentaFriendController < ApplicationController
   end
   
   def browse
-    @profiles ||= Profile._public.group_by(&:_type)
+    @chickstud_profiles = Chickstud._public
+    @yenta_profiles = Yentum.all
   end
   
   def explore

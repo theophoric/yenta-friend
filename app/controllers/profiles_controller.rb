@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  helper_method :profile, :profiles
+  helper_method :profile, :profiles, :connections
   # GET /profiles
   # GET /profiles.json
   def index
@@ -73,12 +73,8 @@ class ProfilesController < ApplicationController
     _privacy = @profile.privacy
     respond_to do |format|
       if @profile.update_attributes(params[@profile._type.underscore.to_s])
-        if( _privacy == "private" && _privacy != @profile.privacy)
-          # send letter to user
-          # Notifier.invite_chickstud(profile)
-
-        end
-        format.js
+        flash[:notice] = 'Profile was successfully updated.'
+        format.js 
         format.html { redirect_to profile_path(@profile), :notice => 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
@@ -117,6 +113,10 @@ class ProfilesController < ApplicationController
   
   def profiles
 
+  end
+  
+  def connections
+    @connections ||= profile.connections
   end
   
 end

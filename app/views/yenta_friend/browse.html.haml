@@ -12,8 +12,11 @@
         %h1
           Chickstuds
           %small Find new profiles.
+          %span.pull-right
+            %span.badge= @chickstud_profiles.count
+            Profiles
       .row
-        - for profile in (@profiles["Chickstud"] || []) do
+        - for profile in @chickstud_profiles do
           = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
         / .subnav
         /   %ul.nav.nav-pills#filters
@@ -29,6 +32,9 @@
         %h1
           Yenta
           %small Check out other Yenta's stables
+          %span.pull-right
+            %span.badge= @yenta_profiles.count
+            Profiles          
       / .subnav.subnav-fixed
       /   %ul.nav.nav-pills#filters
       /     %li= link_to 'All', '#'       , "data-filter" => "*"
@@ -37,8 +43,8 @@
       /     %li= link_to 'Public', '#'    , "data-filter" => ".profile .privacy-public"
       /     %li= link_to 'Private', '#'   , "data-filter" => ".profile .privacy-private"
       .row
-        - for profile in (@profiles["Yentum"] || []) do
-          = render :partial => 'profiles/chickstuds/profile', :locals => {:profile => profile}
+        - for profile in @yenta_profiles do
+          = render :partial => 'profiles/yenta/profile', :locals => {:profile => profile}
 / = content_for :head do
 /   %script
 /     $(document).ready(function(){

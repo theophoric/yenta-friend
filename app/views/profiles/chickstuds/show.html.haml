@@ -13,9 +13,10 @@
         .span5
           %h2
             %blockquote
-              - if !chickstud_belongs_to_yentum?(profile)
+              - if chickstud_belongs_to_yentum?(profile)
                 = form_for profile, :url => profile_path, :remote => true do |f|
                   = f.text_field :endorsement, :placeholder => "endorsement", :type => 'input-search'
+                  = f.submit "Save"
               - else
                 %em= "\"#{profile.endorsement}\"" unless profile.endorsement.blank?
                 %small

@@ -5,6 +5,8 @@ class Suggestion
   belongs_to :owner, :polymorphic => true
   has_and_belongs_to_many :chickstuds, :inverse_of => nil
   
+  default_scope desc(:created_at)
+  
 end
 
 

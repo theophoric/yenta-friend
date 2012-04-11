@@ -14,10 +14,9 @@
           %h1
             = image_tag profile.image_url
             = profile.name
-          %small
-            = "#{profile.first_name} has"
-            %span.badge= " #{connections.length}"
-            connections
+            %small.pull-right
+              %span.badge= " #{connections.length}"
+              connections
         .row
           - for connection in connections
             = render :partial => 'connections/connection', :locals => {:connection => connection}
