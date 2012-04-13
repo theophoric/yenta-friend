@@ -24,7 +24,7 @@ Devise.setup do |config|
     config.omniauth :facebook, "323215734404423", "5b607eb4fce2d8999b45ff85119fa542",:scope => 'friends_about_me,friends_interests,friends_location,friends_photos,user_photos,publish_stream,friends_relationship_details, manage_notifications'
   else
     # dep configuration
-    config.omniauth :facebook, "343761419009220", "edbeba31148b80d944797a7dd91311bc",:scope => 'friends_about_me,friends_interests,friends_location,friends_photos,user_photos,publish_stream,friends_relationship_details, manage_notifications'  
+    config.omniauth :facebook, "344670002256425", "7d6eea2fe0d0125bd8579ecb1be72030",:scope => 'friends_about_me,friends_interests,friends_location,friends_photos,user_photos,publish_stream,friends_relationship_details, manage_notifications'  
   end
 
   # ==> Configuration for any authentication mechanism
