@@ -59,7 +59,6 @@ class ProfilesController < ApplicationController
   # PUT /profiles/1.json
   
   def invite
-    profile = profile.find(params[:id])
     invite = params[:invite]
     profile.update_attribute(:email, invite[:email])
     invite = Notifier.send_invite(profile, invite[:message])
@@ -68,7 +67,6 @@ class ProfilesController < ApplicationController
   end
   
   def update
-
     @profile = Profile.find(params[:id])
     _privacy = @profile.privacy
     respond_to do |format|
