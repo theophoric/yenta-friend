@@ -3,7 +3,7 @@ rails_admin/colorpicker/colorpicker_select.gif: rails_admin/colorpicker/colorpic
 rails_admin/colorpicker/colorpicker_indic.gif: rails_admin/colorpicker/colorpicker_indic-0d080292300de6a4cd361be98052b0ec.gif
 rails_admin/colorpicker/custom_hsb_s.png: rails_admin/colorpicker/custom_hsb_s-f3d312e99cd392dae4e204ff44247e7a.png
 rails_admin/colorpicker/colorpicker_hex.png: rails_admin/colorpicker/colorpicker_hex-3373a79b43ac902fde21e97e6f34160c.png
-application.js: application-9ef68938380c1cc583f1142ea32a8aa3.js
+application.js: application-10f8cdc30e396671ac11f989c9069c6b.js
 rails_admin/colorpicker/select2.png: rails_admin/colorpicker/select2-b7236e040080c96324574ae80b26ecb3.png
 rails_admin/colorpicker/colorpicker_overlay.png: rails_admin/colorpicker/colorpicker_overlay-32116457424e9e243332894aef679798.png
 images/icons-18-white.png: images/icons-18-white-d6d6610919e3bbb4acd1544e851d3551.png
@@ -34,7 +34,7 @@ rails_admin/colorpicker/custom_background.png: rails_admin/colorpicker/custom_ba
 rails_admin/colorpicker/custom_hex.png: rails_admin/colorpicker/custom_hex-07d2a92b30ced081f0194b9e6dd6c5f5.png
 rails_admin/multiselect/ui-icon-circle-triangle-n-dark.png: rails_admin/multiselect/ui-icon-circle-triangle-n-dark-586957aed964bb1715194be6a285b6c5.png
 rails_admin/rails_admin.js: rails_admin/rails_admin-049b330379af843182a6e6edcfe24b73.js
-application.css: application-4856a21cc60d8b405854e036a45ddd9d.css
+application.css: application-655aeb4e9807ef60ee4d991b9f679964.css
 rails_admin/colorpicker/select.png: rails_admin/colorpicker/select-152494401b99f0b06aa2dc352a909e2c.png
 jquery-ui/ui-icons_222222_256x240.png: jquery-ui/ui-icons_222222_256x240-33e309a68acc45a6b3a066a40aff4abb.png
 rails_admin/colorpicker/custom_hsb_b.png: rails_admin/colorpicker/custom_hsb_b-492da6e2209b588ce70f19d00293d84f.png
