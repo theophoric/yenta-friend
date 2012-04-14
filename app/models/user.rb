@@ -42,7 +42,8 @@ class User
   field :_role
   
   validates_inclusion_of :_role, :in => %w{yentum chickstud}
-  
+  validates_presence_of :email
+  validates_uniqueness_of :email, :fb_uid
   ## Encryptable
   # field :password_salt, :type => String
 
