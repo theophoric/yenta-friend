@@ -1,11 +1,12 @@
 = content_for :pageheader do
-  %h1 Connections
-  %p.lead Explore your connections!
+  %h1 Stable
+  %p.lead Manage your stable
 = content_for :subnav do
   %ul.nav.nav-pills
     - for profile in @profiles
       %li= link_to profile.first_name, "#profile_#{profile.id}_connections", :class => 'anchorLink'
 = content_for :main do
   .container
-    - for connection in current_profile.connections
-      = render :partial => 'connections/connection', :locals => {:connection => connection}
+    - if yenta_user?
+      - for profile in @profiles do
+        = render :partial => 'sections/connections', :locals => {:profile => profile}

@@ -59,7 +59,6 @@
       fbRequestCallback = function(response) {
       return $.post("/fb_handler/request_callback", response);
       };
-
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -76,7 +75,10 @@
                 = link_to "browse", browse_path
               %li{}
                 = link_to 'connections', connections_path
-
+              %li{}
+                = link_to 'stable', stable_path
+              %li
+                %a#invite Invite
             %ul.nav.pull-right    
               %li.divider-vertical  
               %li.dropdown

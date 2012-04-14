@@ -5,6 +5,10 @@ class YentaFriendController < ApplicationController
     puts request.location
   end
   
+  def stable
+    
+  end
+  
   def browse
     @chickstud_profiles = Chickstud._public
     @yenta_profiles = Yentum.all

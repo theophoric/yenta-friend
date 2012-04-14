@@ -27,6 +27,7 @@ YentaFriend::Application.routes.draw do
   match 'connections' => 'yenta_friend#connections'
   match 'chickstud_connections(/:id)' => 'yenta_friend#chickstud_connections', :as => :chickstud_connections
   match 'inbox' => 'yenta_friend#inbox'
+  match 'stable' => 'yenta_friend#stable'
   
   
   

@@ -7,7 +7,7 @@ class Connection
   
   has_one :connection_suggestion
   has_many :activities
-  embeds_many :messages, :as => :messageable
+  has_one :conversation, :as => :conversable
   embeds_many :comments, :as => :commentable
   
   field :privacy

@@ -1,0 +1,13 @@
+= content_for :pageheader do
+  %h1 Dashboard
+  %p.lead Notices, stable
+= content_for :subnav do
+  %ul.nav.nav-pills
+    %li= link_to "notices", '#notices', :class => 'anchorLink'
+    - if yenta_user?
+      %li= link_to "stable", '#stable', :class => 'anchorLink'
+    - elsif user_signed_in?
+      %li= link_to "connections", "#profile_#{current_profile.id}_connections", :class => 'anchorLink'
+= content_for :main do
+  .container
+    = render :partial => 'sections/messages'
