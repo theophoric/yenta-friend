@@ -73,7 +73,7 @@ class User
       fb_uid = access_token.uid
       fb_token = access_token.credentials.token
       puts "[FB USER DATA]: " + data.inspect  
-      if user = User.where(:email => data.email).first
+      if user = User.where(:fb_uid => fb_uid).first
         user.update_attribute(:access_token, access_token.token)
         if !user.profile
           user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => user._role))
