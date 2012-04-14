@@ -8,7 +8,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  uri: mongodb://root:password@staff.mongohq.com:10009/till_dawn
+  uri: mongodb://yenta:yentaballs@staff.mongohq.com:10079/yenta-staging
 
 test:
   <<: *defaults
@@ -16,4 +16,4 @@ test:
 
 # set these environment variables on your prod server
 production:
-  uri: <%= ENV['MONGOHQ_URL'] %>    
+  uri: mongodb://yenta:yentaballs@staff.mongohq.com:10079/yenta-staging

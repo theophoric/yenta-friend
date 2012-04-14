@@ -10,8 +10,7 @@ class Profile
   
   belongs_to :user
   has_one :inbox
-  has_many :suggestions, :as => :owner  
-  has_many :messages
+  has_many :suggestions, :as => :owner
   has_and_belongs_to_many :conversations
   embeds_many :pictures
 
