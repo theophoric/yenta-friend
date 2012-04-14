@@ -1,3 +1,6 @@
-%li.span2[connection]{:class => "gender-#{connection.gender} privacy-#{connection.privacy}"}
-  = link_to connection_path(connection), :rel => "tooltip", :class => "thumbnail" do
-    = image_tag( connection.image_url, :size => "80x80")
+/ - in_profile ||= nil
+/ - profiles = connection.profiles - in_profile.to_a
+%li.span2[connection]
+  - connection.profiles.each_with_index do |profile, index|
+    = image_tag profile.image_url
+  

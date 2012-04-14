@@ -70,7 +70,6 @@
             .pull-right
               %span.badge= profile.connections.count
               Connections
-      .page-body  
         - if profile.private? && chickstud_belongs_to_yentum?(profile)
           .well.alert-info
             %h4 This profile has not been made public.
@@ -78,17 +77,20 @@
             %hr.soften
             = link_to "Make Profile Public", "#make_public", "data-toggle".to_sym => "modal", :class => 'btn btn-primary'
         - else
-          = link_to "Suggest Connection", '#new_match', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'        
+          = link_to "Suggest Connection", '#new_connection', 'data-toggle'=> 'modal', :class => 'btn btn-primary modal-link'      
+      .page-body  
+
         .row
           - for connection in profile.connections do
-            = render :partial => 'connections/_connection', :locals => {:connection => connection}
+            = render :partial => 'connections/connection', :locals => {:connection => connection}
   .modal#new_connection.fade
     = form_for :connection, :url => connections_path, :remote => true do |f|
-      = fields_for :chickstuds do |chickstud_fields|
-        %span.current-profile= chickstud_fields.text_field profile, :value => profile._id
+      = fields_for :profiles do |profile_fields|
+        %span.current-profile= profile_fields.text_field :profile1, :value => profile._id
+        %span.connect-profile= profile_fields.text_field :profile2
     .modal-header
-      %h2= "Suggest a match for #{profile.first_name}"
-      %a.close{"data-dismiss".to_sym => "modal"} x
+      %a.close{"data-dismiss".to_sym => "modal"} x    
+      %h2= "Suggest a Connection for #{profile.first_name}"
     .modal-body
       %table.table.table-striped
         %tbody#stable 
@@ -98,7 +100,7 @@
               %td{:colspan => 2}
                 %h4= _profile.name
               %td
-                = link_to 'Match!', '#', :onclick => "$('#new_match input[name=\"chickstuds[profile_2]\"]').val('#{_profile._id}');$('#new_match form').submit();"
+                = link_to 'Select', '#', :onclick => "$('#new_connection input[name=\"profiles[profile2]\"]').val('#{_profile._id}');$('#new_connection form').submit();", :class => 'btn btn-primary'
   .modal#make_public.fade
     .modal-header
       %a.close{"data-dismiss".to_sym => "modal"} x    
@@ -120,10 +122,10 @@
         .span6.well
           %h3 Facebook Invite
           = link_to "Invite on Facebook", '#', :id => 'app_invite'
-  .modal#update_profile.fade
-    .modal-header
-      %h2= "Update #{profile.first_name}'s Information"
-      %a.close{"data-dismiss".to_sym => "modal"} x
-    .modal-body
-      = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
-
+  / .modal#update_profile.fade
+  /   .modal-header
+  /     %h2= "Update #{profile.first_name}'s Information"
+  /     %a.close{"data-dismiss".to_sym => "modal"} x
+  /   .modal-body
+  /     = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
+  / 

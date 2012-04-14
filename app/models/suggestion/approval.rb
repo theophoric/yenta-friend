@@ -1,7 +1,7 @@
 class Approval
   include Mongoid::Document
   
-  belongs_to :chickstud
+  belongs_to :profile
   embedded_in :suggestion
   
   field :approved_at, :type => DateTime

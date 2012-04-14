@@ -1,7 +1,6 @@
 class Chickstud < Profile
   belongs_to :yentum
   has_and_belongs_to_many :matches
-  has_and_belongs_to_many :connections
   
   field :endorsement
   field :interested_in

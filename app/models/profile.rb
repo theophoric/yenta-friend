@@ -12,6 +12,7 @@ class Profile
   has_one :inbox
   has_many :suggestions, :as => :owner
   has_and_belongs_to_many :conversations
+  has_and_belongs_to_many :connections
   embeds_many :pictures
 
   default_scope asc(:first_name)
