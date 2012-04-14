@@ -1,6 +1,5 @@
 class Notifier < ActionMailer::Base
   default :from => "notice@yenta-friend.com"
-  default :host => "www.yenta-friend.com"
   def send_invite(profile, message)
     @profile = profile
     @message = message
