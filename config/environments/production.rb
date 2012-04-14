@@ -16,6 +16,7 @@ YentaFriend::Application.configure do
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
+  config.action_mailer.default_url_options = { :host => 'http://www.yenta-friend.com' }  
 
   # Generate digests for assets URLs
   config.assets.digest = true
