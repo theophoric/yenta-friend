@@ -1,0 +1,9 @@
+= content_for :pageheader do
+  %h1 Inbox
+  %p.lead See your correspondence with other users
+= content_for :subheader do
+  %ul
+= content_for :main do
+  %section#conversations
+    - for conversation in @conversations do
+      = render :partial => 'conversations/conversation', :locals => {:converstation => conversation}

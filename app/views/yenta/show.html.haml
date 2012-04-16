@@ -1,0 +1,84 @@
+- model_class = @yentum.class
+%h1=t '.title', :default => model_class.model_name.human
+
+%p
+  %strong= model_class.human_attribute_name(:name) + ':'
+  %br
+  = @yentum.name
+%p
+  %strong= model_class.human_attribute_name(:occupation) + ':'
+  %br
+  = @yentum.occupation
+%p
+  %strong= model_class.human_attribute_name(:location) + ':'
+  %br
+  = @yentum.location
+%p
+  %strong= model_class.human_attribute_name(:image_url) + ':'
+  %br
+  = @yentum.image_url
+%p
+  %strong= model_class.human_attribute_name(:connection_ids) + ':'
+  %br
+  = @yentum.connection_ids
+%p
+  %strong= model_class.human_attribute_name(:_id) + ':'
+  %br
+  = @yentum._id
+%p
+  %strong= model_class.human_attribute_name(:username) + ':'
+  %br
+  = @yentum.username
+%p
+  %strong= model_class.human_attribute_name(:fb_uid) + ':'
+  %br
+  = @yentum.fb_uid
+%p
+  %strong= model_class.human_attribute_name(:_type) + ':'
+  %br
+  = @yentum._type
+%p
+  %strong= model_class.human_attribute_name(:gender) + ':'
+  %br
+  = @yentum.gender
+%p
+  %strong= model_class.human_attribute_name(:user_id) + ':'
+  %br
+  = @yentum.user_id
+%p
+  %strong= model_class.human_attribute_name(:last_name) + ':'
+  %br
+  = @yentum.last_name
+%p
+  %strong= model_class.human_attribute_name(:interested_in) + ':'
+  %br
+  = @yentum.interested_in
+%p
+  %strong= model_class.human_attribute_name(:description) + ':'
+  %br
+  = @yentum.description
+%p
+  %strong= model_class.human_attribute_name(:hometown) + ':'
+  %br
+  = @yentum.hometown
+%p
+  %strong= model_class.human_attribute_name(:privacy) + ':'
+  %br
+  = @yentum.privacy
+%p
+  %strong= model_class.human_attribute_name(:age) + ':'
+  %br
+  = @yentum.age
+%p
+  %strong= model_class.human_attribute_name(:conversation_ids) + ':'
+  %br
+  = @yentum.conversation_ids
+%p
+  %strong= model_class.human_attribute_name(:first_name) + ':'
+  %br
+  = @yentum.first_name
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), yenta_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_yentum_path(@yentum), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), yentum_path(@yentum), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'

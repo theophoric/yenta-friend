@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
+  before_filter :authenticate_active!
   layout :set_layout
   helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?, :is_current_profile?, :yenta_user?
   
+  def authenticate_active!
+    redirect_to welcome_path if (user_signed_in? && !current_user.profile.active)
+  end
   
   def facebook_friends
     
@@ -31,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def usertype
-    user_signed_in? ? current_user._role : "guest"
+    (user_signed_in? && current_user.profile) ? current_user.profile._type : "guest"
   end
   
   def yenta_user?
@@ -39,11 +43,15 @@ class ApplicationController < ActionController::Base
   end
   
   def current_profile
-    @current_profile ||= user_signed_in? ? current_user.profile : false
+    @current_profile ||= new_user? ? Profile.new : current_user.profile
   end
   
   def current_stable
     @current_stable ||= yenta_user? ? current_user.profile.chickstuds : []
+  end
+  
+  def new_user?
+    user_signed_in? && current_user.profile.nil?
   end
   
   # def current_yentum
@@ -52,7 +60,7 @@ class ApplicationController < ActionController::Base
   
   private
     def set_layout
-      usertype
+      (user_signed_in? && current_user.profile.active) ? "user" : "guest"
     end
   
     

@@ -1,0 +1,28 @@
+= form_for @connection, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :partner_ids, :class => 'control-label'
+    .controls
+      = f.text_field :partner_ids, :class => 'text_field'
+  .control-group
+    = f.label :_id, :class => 'control-label'
+    .controls
+      = f.text_field :_id, :class => 'text_field'
+  .control-group
+    = f.label :approved, :class => 'control-label'
+    .controls
+      = f.text_field :approved, :class => 'text_field'
+  .control-group
+    = f.label :_type, :class => 'control-label'
+    .controls
+      = f.text_field :_type, :class => 'text_field'
+  .control-group
+    = f.label :observer_ids, :class => 'control-label'
+    .controls
+      = f.text_field :observer_ids, :class => 'text_field'
+  .control-group
+    = f.label :privacy, :class => 'control-label'
+    .controls
+      = f.text_field :privacy, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), connection_path, :class => 'btn'

@@ -1,0 +1,92 @@
+- model_class = @profile.class
+%h1=t '.title', :default => model_class.model_name.human
+
+%p
+  %strong= model_class.human_attribute_name(:occupation) + ':'
+  %br
+  = @profile.occupation
+%p
+  %strong= model_class.human_attribute_name(:name) + ':'
+  %br
+  = @profile.name
+%p
+  %strong= model_class.human_attribute_name(:observer_connection_ids) + ':'
+  %br
+  = @profile.observer_connection_ids
+%p
+  %strong= model_class.human_attribute_name(:location) + ':'
+  %br
+  = @profile.location
+%p
+  %strong= model_class.human_attribute_name(:inbound_link_ids) + ':'
+  %br
+  = @profile.inbound_link_ids
+%p
+  %strong= model_class.human_attribute_name(:fb_uid) + ':'
+  %br
+  = @profile.fb_uid
+%p
+  %strong= model_class.human_attribute_name(:username) + ':'
+  %br
+  = @profile.username
+%p
+  %strong= model_class.human_attribute_name(:_id) + ':'
+  %br
+  = @profile._id
+%p
+  %strong= model_class.human_attribute_name(:gender) + ':'
+  %br
+  = @profile.gender
+%p
+  %strong= model_class.human_attribute_name(:_type) + ':'
+  %br
+  = @profile._type
+%p
+  %strong= model_class.human_attribute_name(:user_id) + ':'
+  %br
+  = @profile.user_id
+%p
+  %strong= model_class.human_attribute_name(:interested_in) + ':'
+  %br
+  = @profile.interested_in
+%p
+  %strong= model_class.human_attribute_name(:last_name) + ':'
+  %br
+  = @profile.last_name
+%p
+  %strong= model_class.human_attribute_name(:partner_connection_ids) + ':'
+  %br
+  = @profile.partner_connection_ids
+%p
+  %strong= model_class.human_attribute_name(:privacy) + ':'
+  %br
+  = @profile.privacy
+%p
+  %strong= model_class.human_attribute_name(:hometown) + ':'
+  %br
+  = @profile.hometown
+%p
+  %strong= model_class.human_attribute_name(:description) + ':'
+  %br
+  = @profile.description
+%p
+  %strong= model_class.human_attribute_name(:link_ids) + ':'
+  %br
+  = @profile.link_ids
+%p
+  %strong= model_class.human_attribute_name(:age) + ':'
+  %br
+  = @profile.age
+%p
+  %strong= model_class.human_attribute_name(:first_name) + ':'
+  %br
+  = @profile.first_name
+%p
+  %strong= model_class.human_attribute_name(:conversation_ids) + ':'
+  %br
+  = @profile.conversation_ids
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), profile_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_profile_path(@profile), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), profile_path(@profile), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'

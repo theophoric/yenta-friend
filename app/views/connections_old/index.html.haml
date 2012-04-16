@@ -1,0 +1,17 @@
+= content_for :title, "Connections"
+= content_for :subtitle, ""
+= content_for :subnav do
+  %ul.nav.nav-pills
+    - for profile in profiles
+      %li= link_to profile.first_name, "#connections_#{profile.id}", :class => 'anchorLink'
+= content_for :main do
+  .container
+    - for profile in profiles
+      - connections = profile.connections
+      %section#connections_#{profile.id}
+        .page-header
+          %h1= profile.name
+          %small= "#{profile.first_name} has #{connections.length} connections"
+        .row
+          - for connection in connections
+            = render :partial => 'connections/connection', :locals => {:connection => connection}

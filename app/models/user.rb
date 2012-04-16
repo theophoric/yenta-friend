@@ -3,6 +3,7 @@ class User
   include Mongoid::Timestamps
   
   has_one :profile, :dependent => "destroy"
+  has_one :fb_friend_list, :dependent => "destroy"
   has_many :notices, :dependent => "destroy"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -26,24 +27,35 @@ class User
   field :current_sign_in_ip, :type => String
   field :last_sign_in_ip,    :type => String
 
-  # PERSONAL DATA (from fb)
   field :first_name
   field :last_name
-  
-  field :hometown
   field :fb_link 
-  field :location
-  field :gender
   
   field :image_url
   field :fb_uid
   field :fb_token
   
-  field :_role
   
-  validates_inclusion_of :_role, :in => %w{yentum chickstud}
+  field :_role, :default => "guest"
+  
   validates_presence_of :email
   validates_uniqueness_of :email, :fb_uid
+  
+  set_callback(:create, :after) do |document|
+    document.create_fb_friend_list(:data => get_fb_friend_list)
+  end
+  
+  def get_fb_friend_list
+ JSON.parse(Typhoeus::Request.get("https://graph.facebook.com/#{fb_uid}/friends?access_token=#{fb_token}").body)["data"]
+  end
+  
+  def get_linked_profiles
+    if fb_friend_list.nil?
+      []
+    else
+      Profile.where(:fb_uid.in => fb_friend_list.data.collect{|i| i["id"]})
+    end
+  end
   ## Encryptable
   # field :password_salt, :type => String
 
@@ -60,7 +72,9 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
-  
+  def fb_user
+    FbGraph::User.me(fb_token)
+  end
   
   class << self
     
@@ -72,27 +86,28 @@ class User
       hometown = (data.hometown || "")
       fb_uid = access_token.uid
       fb_token = access_token.credentials.token
-      puts "[FB USER DATA]: " + data.inspect  
+      puts "[FB USER DATA]: " + data.inspect
       if user = User.where(:fb_uid => fb_uid).first
         user.update_attribute(:access_token, access_token.token)
-        if !user.profile
-          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => user._role))
-        end
-        return user
       else # Create a user with a stub password. 
         user = User.new(:email => data.email, :password => Devise.friendly_token[0,20], :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :image_url => info.image, :fb_token => fb_token)
-        if Chickstud.where(:fb_uid => fb_uid).exists?
-          profile = Chickstud.first(:conditions => {:fb_uid => fb_uid})
-          user.profile = profile
-          user._role = "chickstud"
-        else
-          user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => 'Yentum'))
-          user._role = "yentum"
-        end
+        # if Chickstud.where(:fb_uid => fb_uid).exists?
+        #   profile = Chickstud.first(:conditions => {:fb_uid => fb_uid})
+        #   user.profile = profile
+        #   user._role = "chickstud"
+        # else
+        #   user.create_profile( user.attributes.except("_id","_type", "encrypted_password", "password", "updated_at", "sign_in_count").merge(:name => data.name, :gender => data.gender, :location => location["name"], :hometown => hometown["name"], :_type => 'Yentum'))
+        #   user._role = "yentum"
+        # end
         user.save!
         user.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
-        return user
       end
+      if profile = Profile.where(:fb_uid => fb_uid).first
+        profile.update_attributes(:user => user, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education, :name => data.name, :first_name => data.first_name, :last_name => data.last_name )
+      else
+        user.create_profile(:email => data.email, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
+      end
+      return user
     end
     
     def new_with_session(params, session)

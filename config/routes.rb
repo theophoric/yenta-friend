@@ -15,6 +15,16 @@ YentaFriend::Application.routes.draw do
     end
   end
   
+  scope :controller => :dashboard do
+    match "login"
+    match "dashboard"
+    match "welcome"
+    match "browse"
+    match "inbox"
+    match "matchbook"
+    match "initialize_profile"
+  end
+  
   resources :connections
   match 'create_match' => 'profiles#create_match'
   
@@ -32,7 +42,7 @@ YentaFriend::Application.routes.draw do
   
   
   
-  root :to => 'static_pages#login'
+  root :to => 'dashboard#login'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

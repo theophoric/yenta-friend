@@ -1,0 +1,49 @@
+= content_for :pageheader do
+  %h1 Dashboard
+  %p.lead Where things happen
+= content_for :subnav do
+  %ul.nav.nav-pills
+    - %w{notices friends reserves}.each do |section|
+      %li= link_to section, "##{section}", :class => 'anchorLink'
+    
+  
+= content_for :main do
+  %section#notices
+    .page-header
+      %h1
+        Notices
+        %small
+          See what's been going on since you've been away.
+          .pull-right
+            %span.badge= current_user_notices.count
+            notices
+    .row
+      - for notice in current_user_notices do
+        = render :partial => 'shared/notice', :locals => {:notice => notice}
+  %section#friends
+    - yentum_links = current_profile.links.where(:_type => "Yentum")
+    .page-header
+      %h1
+        Yenta Friends
+        %small
+          See who you're connected to.
+          = link_to 'Invite friends to join your Yenta Network', '#', :class => 'yenta_invite'
+          .pull-right
+            %span.badge= yentum_links.count
+            yenta in your network
+    .row
+      - for profile in yentum_links do
+        = render :partial => 'profiles/profile', :locals => {:profile => profile}
+  %section#reserves
+    - chickstud_links = current_profile.links.where(:_type => "Chickstud")
+    .page-header
+      %h1
+        Chickstud Reserves
+        %small
+          See all the chickstuds that you know
+          .pull-right
+            %span.badge= chickstud_links.count
+            friends
+    .row
+      - for profile in chickstud_links do
+        = render :partial => 'profiles/profile', :locals => {:profile => profile}  

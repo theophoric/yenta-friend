@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/seyhunak/twitter-bootstrap-rails.git
+  revision: 4b10325bea2698c37f1e0aa52e50dd47c73352da
+  specs:
+    twitter-bootstrap-rails (2.0.6)
+      actionpack (>= 3.1)
+      less-rails (~> 2.2.0)
+      railties (>= 3.1)
+
+GIT
   remote: git://github.com/sferik/rails_admin.git
   revision: 1d24bf3c2d0f037e813a00117bff26d1f6e993da
   specs:
@@ -277,5 +286,6 @@ DEPENDENCIES
   rails (= 3.2.2)
   rails_admin!
   sass-rails (~> 3.2.3)
+  twitter-bootstrap-rails!
   typhoeus
   uglifier (>= 1.0.3)

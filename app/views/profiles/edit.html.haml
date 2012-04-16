@@ -1,8 +1,3 @@
-= content_for :main do
-  %h1 Editing profile
-
-  = render 'form'
-
-  = link_to 'Show', @profile
-  \|
-  = link_to 'Back', profiles_path
+- model_class = @profile.class
+%h1=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human, :default => "Edit #{model_class.model_name.human}")
+= render :partial => "form"

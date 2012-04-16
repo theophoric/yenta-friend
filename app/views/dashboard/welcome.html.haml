@@ -1,0 +1,13 @@
+.hero-unit
+  %h1 Welcome to YentaFriend!
+  %p.lead
+    Take a few minutes to set up your new profile.
+    
+%section
+  .page-header
+  .row
+    .span8.offset2#profile_form
+      = form_for :profile, :url => initialize_profile_path, :class => 'form form-inline' do |f|
+        = f.label :_type, "I am a..."
+        = f.select :_type, options_for_select([["Yenta","Yentum"], ["Friend", "Chickstud"]])
+        = f.submit "Confirm"

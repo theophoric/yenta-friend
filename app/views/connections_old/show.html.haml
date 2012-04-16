@@ -1,0 +1,29 @@
+= content_for :subnav do
+  / %ul.nav.nav-pills
+  /   %li= link_to "about", '#about', :class => 'anchorLink'
+  /   %li= link_to "connections", '#connections', :class => 'anchorLink'
+= content_for :pageheader do
+  .row
+    .span12
+      .row
+        .span7
+          %h1
+            = profiles.collect(&:name_first).join(" + ")
+        .span5
+          %h2
+            
+  %p.lead
+= content_for :main do
+  .container
+    %section#messages
+      .page-header
+        %h1
+          %small
+      .page-body
+  / .modal#update_profile.fade
+  /   .modal-header
+  /     %h2= "Update #{profile.first_name}'s Information"
+  /     %a.close{"data-dismiss".to_sym => "modal"} x
+  /   .modal-body
+  /     = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
+  / 

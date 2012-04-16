@@ -1,9 +1,88 @@
-= form_for @profile, :class => "form-inline" do |f|
-  -if @profile.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@profile.errors.count, "error")} prohibited this profile from being saved:"
-      %ul
-        - @profile.errors.full_messages.each do |msg|
-          %li= msg
-  .actions
-    = f.submit 'Save'
+= form_for @profile, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :occupation, :class => 'control-label'
+    .controls
+      = f.text_field :occupation, :class => 'text_field'
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :observer_connection_ids, :class => 'control-label'
+    .controls
+      = f.text_field :observer_connection_ids, :class => 'text_field'
+  .control-group
+    = f.label :location, :class => 'control-label'
+    .controls
+      = f.text_field :location, :class => 'text_field'
+  .control-group
+    = f.label :inbound_link_ids, :class => 'control-label'
+    .controls
+      = f.text_field :inbound_link_ids, :class => 'text_field'
+  .control-group
+    = f.label :fb_uid, :class => 'control-label'
+    .controls
+      = f.text_field :fb_uid, :class => 'text_field'
+  .control-group
+    = f.label :username, :class => 'control-label'
+    .controls
+      = f.text_field :username, :class => 'text_field'
+  .control-group
+    = f.label :_id, :class => 'control-label'
+    .controls
+      = f.text_field :_id, :class => 'text_field'
+  .control-group
+    = f.label :gender, :class => 'control-label'
+    .controls
+      = f.text_field :gender, :class => 'text_field'
+  .control-group
+    = f.label :_type, :class => 'control-label'
+    .controls
+      = f.text_field :_type, :class => 'text_field'
+  .control-group
+    = f.label :user_id, :class => 'control-label'
+    .controls
+      = f.text_field :user_id, :class => 'text_field'
+  .control-group
+    = f.label :interested_in, :class => 'control-label'
+    .controls
+      = f.text_field :interested_in, :class => 'text_field'
+  .control-group
+    = f.label :last_name, :class => 'control-label'
+    .controls
+      = f.text_field :last_name, :class => 'text_field'
+  .control-group
+    = f.label :partner_connection_ids, :class => 'control-label'
+    .controls
+      = f.text_field :partner_connection_ids, :class => 'text_field'
+  .control-group
+    = f.label :privacy, :class => 'control-label'
+    .controls
+      = f.text_field :privacy, :class => 'text_field'
+  .control-group
+    = f.label :hometown, :class => 'control-label'
+    .controls
+      = f.text_field :hometown, :class => 'text_field'
+  .control-group
+    = f.label :description, :class => 'control-label'
+    .controls
+      = f.text_field :description, :class => 'text_field'
+  .control-group
+    = f.label :link_ids, :class => 'control-label'
+    .controls
+      = f.text_field :link_ids, :class => 'text_field'
+  .control-group
+    = f.label :age, :class => 'control-label'
+    .controls
+      = f.text_field :age, :class => 'text_field'
+  .control-group
+    = f.label :first_name, :class => 'control-label'
+    .controls
+      = f.text_field :first_name, :class => 'text_field'
+  .control-group
+    = f.label :conversation_ids, :class => 'control-label'
+    .controls
+      = f.text_field :conversation_ids, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), profile_path, :class => 'btn'

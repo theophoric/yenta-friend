@@ -1,29 +1,32 @@
-= content_for :subnav do
-  / %ul.nav.nav-pills
-  /   %li= link_to "about", '#about', :class => 'anchorLink'
-  /   %li= link_to "connections", '#connections', :class => 'anchorLink'
-= content_for :pageheader do
-  .row
-    .span12
-      .row
-        .span7
-          %h1
-            = profiles.collect(&:name_first).join(" + ")
-        .span5
-          %h2
-            
-  %p.lead
-= content_for :main do
-  .container
-    %section#messages
-      .page-header
-        %h1
-          %small
-      .page-body
-  / .modal#update_profile.fade
-  /   .modal-header
-  /     %h2= "Update #{profile.first_name}'s Information"
-  /     %a.close{"data-dismiss".to_sym => "modal"} x
-  /   .modal-body
-  /     = render :partial => 'profiles/chickstuds/form', :locals => {:profile => profile}
-  / 
+- model_class = @connection.class
+%h1=t '.title', :default => model_class.model_name.human
+
+%p
+  %strong= model_class.human_attribute_name(:partner_ids) + ':'
+  %br
+  = @connection.partner_ids
+%p
+  %strong= model_class.human_attribute_name(:_id) + ':'
+  %br
+  = @connection._id
+%p
+  %strong= model_class.human_attribute_name(:approved) + ':'
+  %br
+  = @connection.approved
+%p
+  %strong= model_class.human_attribute_name(:_type) + ':'
+  %br
+  = @connection._type
+%p
+  %strong= model_class.human_attribute_name(:observer_ids) + ':'
+  %br
+  = @connection.observer_ids
+%p
+  %strong= model_class.human_attribute_name(:privacy) + ':'
+  %br
+  = @connection.privacy
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), connection_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_connection_path(@connection), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), connection_path(@connection), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'
