@@ -1,0 +1,26 @@
+- profile ||= @profile
+.page-header 
+  %h1
+    Information
+    %small
+  %hr.soften
+  %table.table.table-striped
+    %tbody
+      %tr
+        %td
+          %b Name
+        %td= profile.name
+      %tr
+        %td
+          %b Picture
+        %td= image_tag profile.image_url("large")
+      %tr
+        %td
+          %b Gender
+        %td= profile.gender
+      %tr
+        %td
+          %b Interested In
+        %td= profile.interested_in
+      %tr{:colspan => 2}
+        %td= link_to "View more information", "http://facebook.com/#{profile.fb_uid}", :target => "_blank"

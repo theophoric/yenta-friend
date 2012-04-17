@@ -29,6 +29,11 @@
           = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
         = f.submit "Send"
 = content_for :modal do
+  .modal.hide#suggest_match
+    .modal-header
+      Who would you like to match?
+    
+      
   .modal.hide#select_catch
     .modal-header
       Select a profile from your matchbook to share.
