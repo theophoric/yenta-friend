@@ -1,0 +1,16 @@
+.span12[message_reference]{:class => "type-#{message_reference.content_type}", :rel => "tooltip", :title => "@ #{timestamp_readable_with_time(message_reference.created_at)}"}
+  .row-fluid
+    .span2
+      = image_tag message_reference.icon_url, :size => "100x100"
+    .span8 
+      - if messageable = message_reference.messageable
+      = render :partial => "conversations/messages/#{message_reference.messageable_type.underscore}_message", :locals => {:messageable => message_reference.messageable}       
+      - else
+        %p= message_reference.body
+    .span2
+        .span1.pull-right
+          - if notice.href
+            = link_to notice.href do
+              Link
+              %i.icon-chevron-right
+%hr.soften

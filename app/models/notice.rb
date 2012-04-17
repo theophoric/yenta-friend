@@ -10,7 +10,7 @@ class Notice
   field :notice_type, :default => "info"
   field :new, :default => true
   field :icon_url
-  field :href, :default => '#'
+  field :href
   validates_inclusion_of :notice_type, :in => %w{info match social announcement}
   
 end

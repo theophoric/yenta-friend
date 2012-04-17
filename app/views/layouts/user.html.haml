@@ -54,23 +54,35 @@
       js.src = "//connect.facebook.net/en_US/all.js";
       return ref.parentNode.insertBefore(js, ref);
       })(document);
-      attachInviteButton = function() {
-      $("a.yenta_invite").click(sendRequestViaMultiFriendSelector());
+      attachYentaInviteButton = function() {
+      return $("a.yenta_invite").click(sendYentaRequestViaMultiFriendSelector());
       };
-      sendRequestViaMultiFriendSelector = function() {
+      attachChickstudInviteButton = function() {
+      return $("a.chickstud_invite").click(sendChickstudRequestViaMultiFriendSelector());
+      };
+      sendYentaRequestViaMultiFriendSelector = function() {
       return FB.ui({
       method: "apprequests",
       message: "Invite your friends!"
       }, fbRequestCallback);
       };
-      fbRequestCallback = function(response) {
-      return $.post("/fb_handler/request_callback", response);
+      fbYentaRequestCallback = function(response) {
+      return $.post("/fb_handler/request_callback/yentum", response);
+      };
+      sendChickstudRequestViaMultiFriendSelector = function() {
+      return FB.ui({
+      method: "apprequests",
+      message: "Invite your friends!"
+      }, fbChickstudRequestCallback);
+      };
+      fbChickstudRequestCallback = function(response) {
+      return $.post("/fb_handler/request_callback/chickstud", response);
       };
     = render :partial => "shared/#{usertype.underscore}_navigation"
     .container
       %header.jumbotron.subhead
         = yield :pageheader
-        .subnav= yield :subnav
+        = yield :subnav
       %span#notice_wrapper= render :partial => 'shared/flash'
       = yield :main
       = javascript_include_tag "application"

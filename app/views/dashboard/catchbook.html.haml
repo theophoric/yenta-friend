@@ -1,0 +1,42 @@
+= content_for :pageheader do
+  %h1 Catchbook
+  %p.lead
+    you currently have
+    %span{:class => "badge #{"badge-info" if @catchbook.count > 1 }"}= "#{@catchbook.count}/5"
+    friends in your catchbook
+      
+= content_for :subnav do
+  %ul
+= content_for :main do
+  %section
+    .page-header
+      %h3="You have #{@catchbook.count} catches in your matchbook"
+    .row  
+      - for endorsement in @catchbook do
+        - profile = endorsement.chickstud
+        %span10.offset1[endorsement]
+          = link_to profile do
+            %span2=image_tag profile.image_url("normal")
+            %span8
+              .row
+                .span8
+                  %h1= profile.name
+                .span8
+                  %blockquote
+                    = endorsement.message
+                    %small
+                      = endorsement.created_at
+        %hr
+      - for i in (@catchbook.count..4).to_a
+        %span10.offset1.alert-info[endorsement]
+          %span2
+          %span8
+            .row
+              .span8
+                %h1 Empty Endorsement
+              .span8
+                %blockquote
+                  Endorsement goes here
+                  %small
+                    date goes here
+    

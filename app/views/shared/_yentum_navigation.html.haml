@@ -12,21 +12,23 @@
             = link_to "dashboard", dashboard_path
           %li.dropdown{}
             = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
-              matchbook
+              catches
               %b.caret
             %ul.dropdown-menu
-              %li= link_to "all", matchbook_path
+              %li= link_to "catchbook", catchbook_path
+              %li.divider
+              %li.nav-header catches
               - for profile in current_profile.endorsements.collect(&:chickstud)
                 %li
                   = link_to profile_path(profile) do
                     = image_tag profile.default_image_url, :size => "25x25"
                     = profile.name
           %li{}
-            = link_to 'connections', connections_path
+            = link_to 'browse', browse_path
           %li{}
             = link_to 'inbox', inbox_path
           %li
-            %a#invite{:href=>"#"} Invite
+            %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal"} Invite
         %ul.nav.pull-right    
           %li.divider-vertical  
           %li.dropdown

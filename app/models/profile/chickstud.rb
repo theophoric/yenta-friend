@@ -16,7 +16,7 @@ class Chickstud < Profile
   def connections
     partner_connections
   end
-  
+
   def set_name
     self.name = first_name + " " + last_name
   end

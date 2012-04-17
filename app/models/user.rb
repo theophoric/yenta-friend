@@ -5,6 +5,7 @@ class User
   has_one :profile, :dependent => "destroy"
   has_one :fb_friend_list, :dependent => "destroy"
   has_many :notices, :dependent => "destroy"
+  has_many :invites
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable

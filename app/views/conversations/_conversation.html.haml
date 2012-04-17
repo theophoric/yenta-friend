@@ -1,6 +1,6 @@
-.span10.offset1[conversation]{}
+.span12[conversation]{}
   = link_to conversation_path(conversation)
-    .row
+    .row-fluid
       .span10
         %h1= conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
       .span8.well

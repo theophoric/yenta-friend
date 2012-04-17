@@ -1,7 +1,7 @@
 class FbHandlerController < ApplicationController
   respond_to :js
   require('typhoeus')
-  def request_callback
+  def request_callback(profile_type = "yentum")
     puts "[!!!!!]"
     puts params
     fb_uids = params["to"]

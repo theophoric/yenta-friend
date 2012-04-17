@@ -31,8 +31,15 @@ class DashboardController < ApplicationController
     @conversations = current_profile.conversations
   end
   
-  def matchbook
-    @matchbook = current_profile.endorsements.collect(&:chickstud)
+  def send_invite
+    email, message, name = params[:email], prams[:message], params[:name]
+    current_user.invites.create(:email => email, :name => name, :message => message)
+    Notifier.send_invite(email, name, message).deliver
+    flash[:notice] = "Invitation to #{email} has been sent!"
+  end
+  
+  def catchbook
+    @catchbook = current_profile.endorsements
   end
   
   def initialize_profile

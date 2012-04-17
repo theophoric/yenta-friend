@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :authenticate_active!
   layout :set_layout
-  helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?, :is_current_profile?, :yenta_user?
+  helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?, :is_current_profile?, :yenta_user?, :current_inbox
   
   def authenticate_active!
     redirect_to welcome_path if (user_signed_in? && !current_user.profile.active)
@@ -48,6 +48,14 @@ class ApplicationController < ActionController::Base
   
   def current_stable
     @current_stable ||= yenta_user? ? current_user.profile.chickstuds : []
+  end
+  
+  def current_inbox
+    current_profile.inbox
+  end
+  
+  def current_conversations
+    current_profile.conversations
   end
   
   def new_user?

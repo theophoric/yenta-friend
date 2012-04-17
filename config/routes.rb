@@ -7,7 +7,7 @@ YentaFriend::Application.routes.draw do
   devise_for :admins
   mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
 
-  match '/fb_handler/request_callback' => 'fb_handler#request_callback', :as => 'fb_callback'
+  match '/fb_handler/request_callback/:profile_type' => 'fb_handler#request_callback', :as => 'fb_callback'
 
   resources :profiles do
     member do
@@ -21,8 +21,9 @@ YentaFriend::Application.routes.draw do
     match "welcome"
     match "browse"
     match "inbox"
-    match "matchbook"
+    match "catchbook"
     match "initialize_profile"
+    match "send_invite"
   end
   
   resources :connections
