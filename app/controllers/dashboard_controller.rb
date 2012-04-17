@@ -57,7 +57,7 @@ class DashboardController < ApplicationController
       @profile.notices.create(:header => "You have friends on Yenta!", :message => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => contacts_url)
       @linked_profiles.each do |profile|
         profile.links << @profile
-        profile.notices.create(:header => "#{@profile.name} has joined the site as a #{@profile._type}", :message => "Check out #{@profile.pronoun_poss} profile!", :href => profile_url(@profile), :icon_url => @profile.image_url)
+        profile.notices.create(:header => "#{@profile.name} has joined the site as a #{@profile._type[/Yentum/] ? "Yenta" : "Catch" }", :message => "Check out #{@profile.pronoun_poss} profile!", :href => profile_url(@profile), :icon_url => @profile.image_url)
         profile.save
       end
     end
