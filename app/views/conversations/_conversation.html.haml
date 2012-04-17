@@ -1,8 +1,8 @@
 .span12[conversation]{}
-  / = link_to conversation_path(conversation) do
-  .row-fluid
-    .span10
-      %h1= conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
-    .span8.well
-      .span1= conversation.message.last.from_icon
-      %p= conversation.message.last.body
+  = link_to conversation_path(conversation) do
+    .row-fluid
+      .span10
+        %h1= conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
+      .span8.well
+        .span1= image_tag conversation.messages.last.icon_url
+        %p= conversation.messages.last.body

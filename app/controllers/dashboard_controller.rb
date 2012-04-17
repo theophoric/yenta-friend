@@ -48,13 +48,18 @@ class DashboardController < ApplicationController
   
   def initialize_profile
     @profile = current_user.profile
-    @profile.update_attributes(params[:profile].merge(:active => true))
+    @profile.update_attributes(:_type => params[:profile][:_type], :active => true)
     @linked_profiles = current_user.get_linked_profiles
     @profile.links << @linked_profiles
     @profile.save
-    current_user.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type}.")
+    @profile.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type}.")
     if @linked_profiles.any?
-      current_user.notices.create(:header => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => browse_url)
+      @profile.notices.create(:header => "You have friends on Yenta!", :message => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => contacts_url)
+      @linked_profiles.each do |profile|
+        profile.links << @profile
+        profile.notices.create(:header => "#{@profile.name} has joined the site as a #{@profile._type}", :message => "Check out #{@profile.pronoun_poss} profile!", :href => profile_url(@profile), :icon_url => @profile.image_url)
+        profile.save
+      end
     end
     redirect_to dashboard_path
   end

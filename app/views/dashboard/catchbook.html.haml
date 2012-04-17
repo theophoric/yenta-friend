@@ -1,9 +1,9 @@
 = content_for :pageheader do
-  %h1 Catchbook
+  %h1 Matchbook
   %p.lead
     you currently have
     %span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
-    friends in your catchbook
+    friends in your Matchbook
       
 = content_for :subnav do
   .subnav
@@ -29,7 +29,7 @@
 = content_for :modal do
   .modal#add_catch.hide
     .modal-header
-      Pick a friend to add to your catchbook
+      Pick a friend to add to your matchbook
     .modal-body
       - chickstud_links = current_profile.chickstud_links
       - if chickstud_links.any?

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :notice, :error, :usertype, :current_stable, :current_profile, :current_user_notices, :chickstud_belongs_to_yentum?, :is_current_profile?, :yenta_user?, :current_inbox
   
   def authenticate_active!
-    redirect_to welcome_path if (user_signed_in? && !current_user.profile.active)
+    redirect_to welcome_path if (user_signed_in? && current_profile && !current_profile.active)
   end
   
   def facebook_friends
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user_notices
-    user_signed_in? ? current_user.notices : []
+    (user_signed_in? && current_profile) ? current_profile.notices : []
   end
   
   def notice

@@ -11,6 +11,7 @@ class Profile
   scope :active, where(:user_id.ne => nil)
   
   belongs_to :user
+  has_many :notices, :dependent => "destroy"
   has_one :inbox
   
   
@@ -29,9 +30,9 @@ class Profile
 
   default_scope asc(:first_name)
   
-  field :first_name, :default => ""
-  field :last_name, :default => ""
-  field :name, :default => ""
+  field :first_name
+  field :last_name
+  field :name
   field :age
   field :occupation
   field :description
@@ -50,7 +51,7 @@ class Profile
   validates_inclusion_of :privacy, :in => %w{public private}
   
   set_callback(:create, :before) do |document|
-    document.build_inbox
+    document.create_inbox
     document.build_profile_preview(self.attributes.extract!("name", "first_name","last_name","gender").merge(:image_url => image_url))
   end
   
@@ -85,6 +86,10 @@ class Profile
   
   def pronoun_subj
     is_male? ? "he" : "she"
+  end
+  
+  def pronoun_poss
+    is_male? ? "his" : "her"
   end
   
   def is_male?

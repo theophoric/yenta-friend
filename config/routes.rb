@@ -29,6 +29,11 @@ YentaFriend::Application.routes.draw do
     match "message"
   end
   
+  scope :controller => :conversations do
+    match "send_message"
+    match "conversation/:id" => :show, :as => "conversation"
+  end
+  
   resources :connections
   match 'create_match' => 'profiles#create_match'
   

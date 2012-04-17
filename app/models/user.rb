@@ -4,7 +4,6 @@ class User
   
   has_one :profile, :dependent => "destroy"
   has_one :fb_friend_list, :dependent => "destroy"
-  has_many :notices, :dependent => "destroy"
   has_many :invites
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -101,13 +100,13 @@ class User
         #   user._role = "yentum"
         # end
         user.save!
-        user.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
       end
       if profile = Profile.where(:fb_uid => fb_uid).first
         profile.update_attributes(:user => user, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education, :name => data.name, :first_name => data.first_name, :last_name => data.last_name )
       else
-        user.create_profile(:email => data.email, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
+        profile = user.create_profile(:email => data.email, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
       end
+      profile.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
       return user
     end
     

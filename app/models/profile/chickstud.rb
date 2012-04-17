@@ -8,8 +8,6 @@ class Chickstud < Profile
   field :about
   field :invited, :default => false
   
-  validates_length_of :endorsement, :maximum => 140
-  
   after_create :set_defaults
   before_save :set_name
   

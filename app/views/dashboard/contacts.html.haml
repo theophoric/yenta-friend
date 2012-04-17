@@ -19,10 +19,10 @@
           connect with other yentas and set up matches!
     .row-fluid
       - for yentum in current_profile.yenta_links
-        .span3{:height=>"75px"}
+        .span3.thumbnail
           = link_to profile_path(yentum) do
             = image_tag yentum.image_url("large")
-            = yentum.name
+            %h3= yentum.name
   %section#chickstud_connections
     .page-header
       %h1
