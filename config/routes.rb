@@ -26,6 +26,7 @@ YentaFriend::Application.routes.draw do
     match "initialize_profile"
     match "send_invite"
     match "add_catch"
+    match "message"
   end
   
   resources :connections

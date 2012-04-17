@@ -10,16 +10,17 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def message
+    @conversation = Conversation.find(params[:conversation_id])
+  end
+  
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    if( profile.is_a?(Chickstud) && profile.private? && yenta_user? && !current_profile.chickstuds.include?( profile))
-      redirect_to dashboard_path 
-    else
-      respond_to do |format|
-        format.html {render "profiles/show"}
-        format.json { render :json => @profile }
-      end
+    @conversation = Conversation.find_or_create_by(:participant_ids => [current_profile._id, profile._id])
+    respond_to do |format|
+      format.html {render "profiles/show"}
+      format.json { render :json => @profile }
     end
   end
 
