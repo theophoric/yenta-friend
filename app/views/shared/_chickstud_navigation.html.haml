@@ -10,14 +10,26 @@
         %ul.nav
           %li{}
             = link_to "dashboard", dashboard_path
+
+          - if current_profile.endorsements.any?            
+            %li.dropdown{}
+              = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
+                endorsements 
+                %b.caret
+              %ul.dropdown-menu
+                %li.divider
+                - for profile in current_profile.endorsements.collect(&:yentum)
+                  %li
+                    = link_to profile_path(profile) do
+                      = image_tag profile.default_image_url, :size => "25x25"
+                      = profile.name
+                
           %li{}
-            = link_to "browse", browse_path
+            = link_to 'contacts', contacts_path
           %li{}
-            = link_to 'connections', connections_path
-          %li{}
-            = link_to 'inbox', conversations_path
+            = link_to 'inbox', inbox_path
           %li
-            %a#invite{:href=>"#"} Invite
+            %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal", :onclick => "$('#invite_form').modal()"} Invite
         %ul.nav.pull-right    
           %li.divider-vertical  
           %li.dropdown

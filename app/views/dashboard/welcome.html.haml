@@ -1,13 +1,14 @@
-.hero-unit
-  %h1 Welcome to YentaFriend!
-  %p.lead
-    Take a few minutes to set up your new profile.
-    
-%section
-  .page-header
-  .row
-    .span8.offset2#profile_form
-      = form_for :profile, :url => initialize_profile_path, :class => 'form form-inline' do |f|
-        = f.label :_type, "I am a..."
-        = f.select :_type, options_for_select([["Yenta","Yentum"], ["Friend", "Chickstud"]])
-        = f.submit "Confirm"
+%header.jumbotron.masthead
+  .inner
+    .well
+      = image_tag "logo_large.jpg", :width => "100%"    
+      .hero-unit
+        %h1
+          Which type of profile would you like to create?
+        .row
+          = form_for :profile, :url => initialize_profile_path, :class => 'form form-vertical' do |f|
+            .span8.offset2#profile_form.control-group
+              .controls
+                .input-append
+                  = f.select :_type, options_for_select([["Yenta (match your friends!)","Yentum"], ["Catch (get matched!) ", "Chickstud"]]), :class =>'input input-xlarge span3', :size=>"60"
+                  = f.submit "Go", :class => "btn btn-primary"

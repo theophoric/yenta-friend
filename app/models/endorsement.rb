@@ -5,8 +5,23 @@ class Endorsement
   belongs_to :yentum
   belongs_to :chickstud
   
+  default_scope where(:is_active => true)
+  
   field :primary, :default => false
-  field :active, :default => true
+  field :is_active, :default => true
   field :message
+  
+  def active?
+    
+  end
+  
+  class << self
+    def active
+      where(:is_active => true)
+    end
+    
+  end
+  
+  
   
 end

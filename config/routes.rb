@@ -22,11 +22,12 @@ YentaFriend::Application.routes.draw do
     match "contacts"
     match "browse"
     match "inbox"
-    match "catchbook"
+    match "matchbook"
     match "initialize_profile"
     match "send_invite"
     match "add_catch"
     match "message"
+    match "endorsements"
   end
   
   scope :controller => :conversations do

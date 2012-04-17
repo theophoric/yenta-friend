@@ -41,8 +41,12 @@ class DashboardController < ApplicationController
     Notifier.send_invite(current_profile, invite[:email], invite[:name], invite[:message]).deliver
     flash[:notice] = "Invitation to #{invite[:name]} (#{invite[:email]}) has been sent!"
   end
-  
-  def catchbook
+
+  def endorsements
+    
+  end
+
+  def matchbook
     @endorsements = current_profile.endorsements
   end
   

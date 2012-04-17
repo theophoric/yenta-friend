@@ -2,7 +2,7 @@
   .inner
     .well
       = image_tag "logo_large.jpg", :width => "100%"    
-.hero-unit
-  %h1 Join Yenta-Friend
-  %p=link_to "Log In With Facebook Connect", user_omniauth_authorize_path(:facebook), :class => 'connect_with_facebook_button'
+    .hero-unit
+      %h1 Join Yenta-Friend
+      %p=link_to "Log In With Facebook Connect", user_omniauth_authorize_path(:facebook), :class => 'btn btn-primary'
   
