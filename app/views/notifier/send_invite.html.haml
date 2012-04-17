@@ -1,4 +1,5 @@
-%p= image_tag "icon_large.png"
+%p
+  %img{:src => "#{root_url}assets/images/logo_large.png"}
 %p= "Hey #{@name}, someone thinks you should join Yenta-Friend"
 %p= "\"#{@message}\""
 %p= link_to 'Click Here!', root_url
