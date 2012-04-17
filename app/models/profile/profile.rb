@@ -50,13 +50,15 @@ class Profile
   
   validates_inclusion_of :privacy, :in => %w{public private}
   
+  validates_presence_of [:first_name, :last_name]
+  
   set_callback(:create, :before) do |document|
     document.create_inbox
-    document.build_profile_preview(self.attributes.extract!("name", "first_name","last_name","gender").merge(:image_url => image_url))
+    document.build_profile_preview("name"=>name, "first_name" => first_name,"last_name" => last_name,"gender" => gender, :image_url => image_url)
   end
   
   set_callback(:save, :after) do |document|
-    document.profile_preview.update_fields
+    # document.profile_preview.update_fields
   end
   
   def yenta_links
