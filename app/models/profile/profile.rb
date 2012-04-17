@@ -57,7 +57,14 @@ class Profile
   set_callback(:save, :after) do |document|
     document.profile_preview.update_fields
   end
-
+  
+  def yenta_links
+    links.where(:_type => "Yentum")
+  end
+  
+  def chickstud_links
+    links.where(:_type => "Chickstud")
+  end
 
   def image_url(size = "square")
     "https://graph.facebook.com/#{fb_uid}/picture?type=#{size}"

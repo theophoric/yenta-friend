@@ -1,0 +1,15 @@
+.modal#invite_form.hide
+  = form_for :invite, :url => send_invite_path, :remote => true do |f|
+    .modal-header
+      %a.close{"data-dismiss" => "modal"}x
+      %h3 Invite a Friend to Yenta!
+    .modal-body
+      = f.label :name
+      = f.text_field :name
+      = f.label :email
+      = f.email_field :email
+      = f.label :message
+      = f.text_field :message
+    .modal-footer
+      %a.btn.close{"data-dismiss" => "modal"} Cancel
+      = f.submit "Send", :class => "btn btn-primary"

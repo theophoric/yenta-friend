@@ -23,6 +23,10 @@ class DashboardController < ApplicationController
     
   end
   
+  def contacts
+    
+  end
+  
   def browse
     
   end
@@ -32,14 +36,14 @@ class DashboardController < ApplicationController
   end
   
   def send_invite
-    email, message, name = params[:email], prams[:message], params[:name]
+    email, message, name = params[:email], params[:message], params[:name]
     current_user.invites.create(:email => email, :name => name, :message => message)
     Notifier.send_invite(email, name, message).deliver
     flash[:notice] = "Invitation to #{email} has been sent!"
   end
   
   def catchbook
-    @catchbook = current_profile.endorsements
+    @endorsements = current_profile.endorsements
   end
   
   def initialize_profile

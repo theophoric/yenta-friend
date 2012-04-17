@@ -2,41 +2,48 @@
   %h1 Catchbook
   %p.lead
     you currently have
-    %span{:class => "badge #{"badge-info" if @catchbook.count > 1 }"}= "#{@catchbook.count}/5"
+    %span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
     friends in your catchbook
       
 = content_for :subnav do
-  %ul
-= content_for :main do
-  %section
-    .page-header
-      %h3="You have #{@catchbook.count} catches in your matchbook"
-    .row  
-      - for endorsement in @catchbook do
-        - profile = endorsement.chickstud
-        %span10.offset1[endorsement]
-          = link_to profile do
-            %span2=image_tag profile.image_url("normal")
-            %span8
-              .row
-                .span8
-                  %h1= profile.name
-                .span8
-                  %blockquote
-                    = endorsement.message
-                    %small
-                      = endorsement.created_at
-        %hr
-      - for i in (@catchbook.count..4).to_a
-        %span10.offset1.alert-info[endorsement]
-          %span2
-          %span8
-            .row
-              .span8
-                %h1 Empty Endorsement
-              .span8
-                %blockquote
-                  Endorsement goes here
-                  %small
-                    date goes here
+  .subnav
+    %ul.nav.nav-pills
+      - @endorsements.collect(&:chickstud).compact.each_with_index do |chickstud, index|
+        %li= link_to chickstud.first_name, "chickstud_#{chickstud._id}", :class => "anchorLink"
+      - for i in (@endorsements.count..4).to_a
+        %li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>""
+          
     
+= content_for :main do
+  - for endorsement in @endorsements do
+    - chickstud = endorsement.chickstud
+    - partner_connections = chickstud.partner_connections
+    %section[chickstud]
+      .page-header
+        %h2
+          = link_to profile_path(chickstud) do            
+            = image_tag chickstud.image_url("large"), :width => "100px"
+            = chickstud.name
+          %small
+            = "#{chickstud.first_name} has #{chickstud.partner_connections.count} connections"
+      .row-fluid
+        %hr
+= content_for :modal do
+  .modal#add_catch
+    .modal-header
+    .modal-body
+      = form_for :add_catch, :url => add_catch_path do |f|
+        .row
+          .span4
+            - for chickstud in current_profile.chickstud_links
+              .span4
+                %h4
+                  = image_tag chickstud.image_url, :width => "25px"
+                  = chickstud.name
+                .pull-right
+                  = link_to_function "Select", "$('#selected_catch').html('#{escape_javascript()}')", :class => "btn"
+          .span6
+            %h2#selected_catch
+            
+          
+          

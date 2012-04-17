@@ -19,11 +19,13 @@ YentaFriend::Application.routes.draw do
     match "login"
     match "dashboard"
     match "welcome"
+    match "contacts"
     match "browse"
     match "inbox"
     match "catchbook"
     match "initialize_profile"
     match "send_invite"
+    match "add_catch"
   end
   
   resources :connections

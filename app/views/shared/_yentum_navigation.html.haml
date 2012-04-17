@@ -24,11 +24,11 @@
                     = image_tag profile.default_image_url, :size => "25x25"
                     = profile.name
           %li{}
-            = link_to 'browse', browse_path
+            = link_to 'contacts', contacts_path
           %li{}
             = link_to 'inbox', inbox_path
           %li
-            %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal"} Invite
+            %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal", :onclick => "$('#invite_form').modal()"} Invite
         %ul.nav.pull-right    
           %li.divider-vertical  
           %li.dropdown
