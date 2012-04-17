@@ -38,7 +38,7 @@ class DashboardController < ApplicationController
   def send_invite
     invite = params[:invite]
     current_user.invites.create(invite)
-    Notifier.send_invite(invite[:email], invite[:name], invite[:message]).deliver
+    Notifier.send_invite(current_profile, invite[:email], invite[:name], invite[:message]).deliver
     flash[:notice] = "Invitation to #{invite[:name]} (#{invite[:email]}) has been sent!"
   end
   
