@@ -2,7 +2,7 @@
   %h1 Contacts
   %p.lead
     you currently have 
-    %span{:class => "badge #{"badge-info" if @current_profile.links.count > 1 }"}= "#{@endorsements.count}/150"
+    %span{:class => "badge #{"badge-info" if current_profile.links.count > 1 }"}= "#{current_profile.links.count}/150"
     connections in your Yenta Network
       
 = content_for :subnav do
@@ -17,25 +17,22 @@
         yenta connections
         %small
           connect with other yentas and set up matches!
-    .row
-    
-  
-= content_for :modal do
-  .modal#add_catch
-    .modal-header
-    .modal-body
-      = form_for :add_catch, :url => add_catch_path do |f|
-        .row
-          .span4
-            - for chickstud in current_profile.chickstud_links
-              .span4
-                %h4
-                  = image_tag chickstud.image_url, :width => "25px"
-                  = chickstud.name
-                .pull-right
-                  = link_to_function "Select", "$('#selected_catch').html('#{escape_javascript()}')", :class => "btn"
-          .span6
-            %h2#selected_catch
-            
+    .row-fluid
+      - for yentum in current_profile.yenta_links
+        .span3{:height=>"75px"}
+          = link_to profile_path(yentum) do
+            = image_tag yentum.image_url("large")
+            = yentum.name
+  %section#chickstud_connections
+    .page-header
+      %h1
+        catch connections
+        %small
+    .row-fluid
+      - for chickstud in current_profile.chickstud_links
+        .span3{:height=>"75px"}
+          = link_to profile_path(chickstud) do
+            = image_tag chickstud.image_url("large")
+            = chickstud.name                
           
-          
+      

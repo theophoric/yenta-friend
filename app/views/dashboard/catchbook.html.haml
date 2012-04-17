@@ -11,9 +11,7 @@
       - @endorsements.collect(&:chickstud).compact.each_with_index do |chickstud, index|
         %li= link_to chickstud.first_name, "chickstud_#{chickstud._id}", :class => "anchorLink"
       - for i in (@endorsements.count..4).to_a
-        %li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>""
-          
-    
+        %li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>"", :onclick => "$('#add_catch').modal();"
 = content_for :main do
   - for endorsement in @endorsements do
     - chickstud = endorsement.chickstud
@@ -29,21 +27,30 @@
       .row-fluid
         %hr
 = content_for :modal do
-  .modal#add_catch
+  .modal#add_catch.hide
     .modal-header
+      Pick a friend to add to your catchbook
     .modal-body
-      = form_for :add_catch, :url => add_catch_path do |f|
-        .row
-          .span4
-            - for chickstud in current_profile.chickstud_links
-              .span4
-                %h4
-                  = image_tag chickstud.image_url, :width => "25px"
-                  = chickstud.name
-                .pull-right
-                  = link_to_function "Select", "$('#selected_catch').html('#{escape_javascript()}')", :class => "btn"
-          .span6
-            %h2#selected_catch
+      - chickstud_links = current_profile.chickstud_links
+      - if chickstud_links.any?
+        = form_for :add_catch, :url => add_catch_path do |f|
+          = f.hidden_field :chickstud_id
+          .row
+            .span4
+              - for chickstud in chickstud_links
+                .span4
+                  %h4
+                    = image_tag chickstud.image_url, :width => "25px"
+                    = chickstud.name
+                  .pull-right
+                    = link_to_function "Select", "$('#add_catch_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}'); ", :class => "btn"
+            .span6
+              %h2#selected_catch
+              = f.label :endorsement
+              = f.text_field :endorsement
+              = f.submit
+      - else 
+        %h2 You don't have any friends =(
             
           
           

@@ -85,5 +85,7 @@
         = yield :subnav
       %span#notice_wrapper= render :partial => 'shared/flash'
       = yield :main
+      = yield :modal
       = render :partial => 'shared/invite_form'
+      
       = javascript_include_tag "application"

@@ -17,7 +17,7 @@ class ProfilesController < ApplicationController
       redirect_to dashboard_path 
     else
       respond_to do |format|
-        format.html {render "profiles/#{profile._type.tableize}/show"}
+        format.html {render "profiles/show"}
         format.json { render :json => @profile }
       end
     end

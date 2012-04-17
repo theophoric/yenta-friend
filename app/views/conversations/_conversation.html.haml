@@ -5,4 +5,4 @@
         %h1= conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
       .span8.well
         .span1= conversation.message.last.from_icon
-        %p= conversation.message.body
+        %p= conversation.message.last.body

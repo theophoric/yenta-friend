@@ -5,5 +5,7 @@
   %ul
 = content_for :main do
   %section#conversations
+    .page-header
+      %h1= "Listing #{@conversations.count} conversations"
     - for conversation in @conversations do
       = render :partial => 'conversations/conversation', :locals => {:converstation => conversation}
