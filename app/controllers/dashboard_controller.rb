@@ -48,6 +48,7 @@ class DashboardController < ApplicationController
   
   def suggest_match
     
+    redirect_to :back
   end
   
   def approve_match
