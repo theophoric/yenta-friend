@@ -2,6 +2,9 @@ class ProfilesController < ApplicationController
   helper_method :profile, :profiles, :connections
   # GET /profiles
   # GET /profiles.json
+  
+  
+  
   def index
     @profiles = Profile.all
     respond_to do |format|

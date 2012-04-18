@@ -26,6 +26,8 @@ YentaFriend::Application.routes.draw do
     match "initialize_profile"
     match "send_invite"
     match "add_catch"
+    match "suggest_match"
+    match "approve_match"
     match "message"
     match "endorsements"
   end

@@ -46,7 +46,7 @@ class User
   end
   
   def get_fb_friend_list
- JSON.parse(Typhoeus::Request.get("https://graph.facebook.com/#{fb_uid}/friends?access_token=#{fb_token}").body)["data"]
+    JSON.parse(Typhoeus::Request.get("https://graph.facebook.com/#{fb_uid}/friends?access_token=#{fb_token}").body)["data"]
   end
   
   def get_linked_profiles
@@ -56,6 +56,7 @@ class User
       Profile.where(:fb_uid.in => fb_friend_list.data.collect{|i| i["id"]})
     end
   end
+
   ## Encryptable
   # field :password_salt, :type => String
 
@@ -104,9 +105,8 @@ class User
       if profile = Profile.where(:fb_uid => fb_uid).first
         profile.update_attributes(:user => user, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education, :name => data.name, :first_name => data.first_name, :last_name => data.last_name )
       else
-        profile = user.create_profile(:email => data.email, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
+        profile = user.create_profile(:email => data.email, :name => data.name, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
       end
-      profile.notices.create!(:header => "Welcome to Yenta Friend!",:icon_url => "http://1.bp.blogspot.com/_fTT9xlgZ9CU/TKSlErJ3M8I/AAAAAAAAsdc/CnpK30FNqtQ/s1600/Sylvia+Weinstock+Pic.jpg", :body => "Explore the site to see how it all works")
       return user
     end
     

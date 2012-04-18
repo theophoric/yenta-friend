@@ -14,35 +14,34 @@
       - if usertype == "Yentum"
         %li= link_to "catch connections", '#chickstud_connections', :class => 'anchorLink'  
 = content_for :main do
-  %section#endorsement_connections
-    .page-header
-      %h1
-        endorsements
-        %small
-          [copy here]
-    .row-fluid
-      - for endorsement in current_profile.endorsements
-        - yentum = endorsement.yentum
+  - if usertype == "Chickstud"
+    %section#endorsement_connections
+      .page-header
         %h1
-          = link_to profile_path(yentum) do
-            = image_tag yentum.image_url
-            %blockquote
-              %p= endorsement.message
-              %small  
-                = yentum.name
-              
-
+          endorsements
+          %small
+      .row-fluid
+        - for endorsement in current_profile.endorsements
+          - yentum = endorsement.yentum
+          %h1
+            = link_to profile_path(yentum) do
+              %blockquote
+                %em
+                  = image_tag yentum.image_url
+                  = endorsement.message
+                %small  
+                  = yentum.name
   %section#yenta_connections
     .page-header
       %h1
         yenta connections
         %small
-          [copy here]
-    .row-fluid
+          check out their catches
+    .row
       - for yentum in current_profile.yenta_links
-        .span3.thumbnail
+        .span2.thumbnail
           = link_to profile_path(yentum) do
-            = image_tag yentum.image_url("large")
+            = image_tag yentum.image_url, :size => "170x170"
             %h3= yentum.name
   - if usertype == "Yentum"          
     %section#chickstud_connections
@@ -50,12 +49,12 @@
         %h1
           catch connections
           %small
-            [copy here]
+            find them some matches
       .row-fluid
         - for chickstud in current_profile.chickstud_links
-          .span3{:height=>"75px"}
+          .span2{:height=>"75px"}
             = link_to profile_path(chickstud) do
-              = image_tag chickstud.image_url("large")
-              = chickstud.name                
+              = image_tag chickstud.image_url, :size => "170x170"
+              %h3= chickstud.name                
           
       

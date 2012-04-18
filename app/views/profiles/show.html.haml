@@ -33,8 +33,28 @@
   .modal.hide#suggest_match
     .modal-header
       Who would you like to match?
-    
-      
+      = form_for :match, :url => suggest_match_path do |f|
+        = f.fields_for :approval do |approval_fields|
+          = approval_fields.hidden_field :profile_id, :value => profile._id
+        = fields_for :chickstuds do |chickstud_fields|
+          = chickstud_fields.hidden_field :partner1
+          = chickstud_fields.hidden_field :partner2
+      .span2.partner1_selection
+      .span1 +
+      .span2.partner2_selection
+    .row
+      .span4
+        - for chickstud in profile.endorsements.collect(&:chickstud)
+          %h4
+            = image_tag chickstud.image_url
+            = chickstud.name
+            = link_to_function "Select", "$('#suggestion_match .partner1_selection').html('#{chickstud.first_name}');$('#')"
+      .span4
+        - for chickstud in current_profile.endorsements.collect(&:chickstud)
+          %h4
+            = image_tag chickstud.image_url
+            = chickstud.name
+            = link_to_function "Select", "$('#suggestion_match .partner2_selection').html('#{chickstud.first_name}');$('#')"
   .modal.hide#select_catch
     .modal-header
       Select a profile from your matchbook to share.

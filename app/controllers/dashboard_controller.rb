@@ -31,6 +31,13 @@ class DashboardController < ApplicationController
     
   end
   
+  def refresh_connections
+    
+    current_us
+    
+    redirect_to :back
+  end
+  
   def add_catch
     @endorsement = Endorsement.new(params[:endorsement])
     @endorsement.yentum = current_profile
@@ -40,6 +47,14 @@ class DashboardController < ApplicationController
       flash[:error] = "There was a problem in adding #{@endorsement.chickstud.name} to your matchbook..."
     end
     redirect_to :back
+  end
+  
+  def suggest_match
+    
+  end
+  
+  def approve_match
+    
   end
   
   def inbox
@@ -67,9 +82,9 @@ class DashboardController < ApplicationController
     @linked_profiles = current_user.get_linked_profiles
     @profile.links << @linked_profiles
     @profile.save
-    @profile.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type}.")
+    @profile.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type[/Yentum/] ? "Yenta" : "Catch" }.", :icon_url => @profile.image_url)
     if @linked_profiles.any?
-      @profile.notices.create(:header => "You have friends on Yenta!", :message => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => contacts_url)
+      @profile.notices.create(:header => "You have friends on Yenta!", :message => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => contacts_url, :icon_url => 'logo_large.png')
       @linked_profiles.each do |profile|
         profile.links << @profile
         profile.notices.create(:header => "#{@profile.name} has joined the site as a #{@profile._type[/Yentum/] ? "Yenta" : "Catch" }", :message => "Check out #{@profile.pronoun_poss} profile!", :href => profile_url(@profile), :icon_url => @profile.image_url)
