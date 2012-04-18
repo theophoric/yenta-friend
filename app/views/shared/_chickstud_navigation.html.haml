@@ -23,6 +23,19 @@
                     = link_to profile_path(profile) do
                       = image_tag profile.default_image_url, :size => "25x25"
                       = profile.name
+          - if current_profile.connections.any?            
+            %li.dropdown{}
+              = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
+                matches
+                %b.caret
+              %ul.dropdown-menu
+                %li.divider
+                - for connection in current_profile.connections
+                  - profile = (connection.partners - current_profile.to_a).first
+                  %li
+                    = link_to connection_path(connection) do
+                      = image_tag profile.default_image_url, :size => "25x25"
+                      = profile.name
                 
           %li{}
             = link_to 'contacts', contacts_path

@@ -15,7 +15,11 @@ class Connection
   field :privacy, :default => "private"
   
   set_callback(:create, :after) do |document|
-    Conversation.create(:conversable => self, :participants => partners)
+    document.generate_conversation
+  end
+  
+  def generate_conversation
+    create_conversation(:participants => partners)
     partners.each do |partner|
       partner.notices.create(:header => "You have a new match!", :body => "Click on the link to find out more!", :href => connections_path(_id))
     end
