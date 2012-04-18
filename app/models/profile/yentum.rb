@@ -1,8 +1,8 @@
 class Yentum < Profile
   
   has_many :chickstuds
-  has_many :suggestions
-  has_many :endorsements
+  has_many :suggestions, :dependent => "destroy"
+  has_many :endorsements, :dependent => "destroy"
   field :privacy, :default => "public"
   
   

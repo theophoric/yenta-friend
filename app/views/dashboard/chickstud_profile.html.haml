@@ -1,0 +1,54 @@
+= content_for :pageheader do
+  %h1
+    = profile.name
+  %p.lead
+    = "Catch since #{timestamp_readable(profile.created_at)}"
+= content_for :subnav do
+  .subnav
+    %ul.nav.nav-pills
+      %li= link_to_function 'about', "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"
+      %li= link_to 'endorsements', "#endorsements", :class => 'anchorLink'
+      %li= link_to 'conversation', "#conversation_#{@conversation._id}", :class => 'anchorLink'
+      %li= link_to 'new message', "#new_message", :class => 'anchorLink'
+= content_for :main do
+  %section#endorsements
+  .page-header
+    %h1
+      endorsements
+      %small
+        = "#{profile.first_name} has #{profile.endorsements.count} endorsements."
+  .row-fluid
+    - for endorsement in profile.endorsements
+      - yentum = endorsement.yentum
+      %h1
+        = link_to profile_path(yentum) do
+          %blockquote
+            %em
+              = image_tag yentum.image_url
+              = endorsement.message
+            %small  
+              = yentum.name
+  %section[@conversation]
+    .page-header
+      %h2
+        Conversation History
+        %small="Your conversation with #{profile.first_name}"
+      .row-fluid.message_wrapper
+        - for message in @conversation.messages do
+          = render :partial => 'conversations/messages/message', :locals => {:message => message}
+  %section#new_message
+    .page-header
+      %h1 New Message
+    .row
+      = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
+        = hidden_field_tag :conversation_id, @conversation._id
+        = f.hidden_field :messageable_type
+        = f.hidden_field :messageable_id
+        / message will always be sent from the current user...
+        - if usertype == "Yentum"  
+          .span3
+            = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
+        .span3
+          = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
+        = f.submit "Send"
+

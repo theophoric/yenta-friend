@@ -55,11 +55,10 @@
   - if usertype == "Yentum"
     .modal.hide#suggest_match
       = form_for :match, :url => suggest_match_path do |f|    
-        = hidden_field_tag :conversation_id, @conversation._id
         .modal-header
           %a.close{"data-dismiss" => "modal"}x
           %h2 Who would you like to match?
-          = f.fields_for :approvals do |approval_fields|
+          = f.fields_for :approval do |approval_fields|
             = approval_fields.hidden_field :profile_id, :value => profile._id
           = fields_for :chickstuds do |chickstud_fields|
             = chickstud_fields.hidden_field :partner1

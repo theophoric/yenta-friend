@@ -28,8 +28,10 @@ YentaFriend::Application.routes.draw do
     match "add_catch"
     match "suggest_match"
     match "approve_match"
+    match "reject_match"
     match "message"
     match "endorsements"
+    match "account"
   end
   
   scope :controller => :conversations do
