@@ -1,9 +1,9 @@
 - profile ||= @profile
-.page-header 
-  %h1
-    Information
-    %small
-  %hr.soften
+.modal-header
+  %a.close{"data-dismiss" => "modal"}x
+  %h3
+    = "About #{profile.first_name}"
+.modal-body
   %table.table.table-striped
     %tbody
       %tr
@@ -18,9 +18,10 @@
         %td
           %b Gender
         %td= profile.gender
-      %tr
-        %td
-          %b Interested In
-        %td= profile.interested_in
+      - unless profile.about.nil?
+        %tr
+          %td
+            %b About
+          %td= profile.about
       %tr{:colspan => 2}
         %td= link_to "View more information", "http://facebook.com/#{profile.fb_uid}", :target => "_blank"
