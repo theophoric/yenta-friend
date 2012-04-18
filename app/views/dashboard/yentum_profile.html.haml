@@ -46,6 +46,7 @@
         - if usertype == "Yentum"  
           .span3
             = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
+            %h3.send_profile_preview
           .span3
             = link_to "Suggest a Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
         .span3
@@ -101,7 +102,7 @@
                     = image_tag chickstud.image_url, :width => "25px"
                     = chickstud.name
                   .pull-right
-                    = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile'); ", :class => "btn"
+                    = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile');$('.send_profile_preview').text('#{chickstud.name}');$('.modal').close(); ", :class => "btn btn-primary"
             .span6
               %h2#selected_catch
         - else 
