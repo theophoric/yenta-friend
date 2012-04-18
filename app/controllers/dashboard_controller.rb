@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
   
   # actions
   def login
-    
+    redirect_to dashboard_path if (user_signed_in? && current_profile && current_profile.active)
   end
   
   def dashboard
@@ -32,9 +32,6 @@ class DashboardController < ApplicationController
   end
   
   def refresh_connections
-    
-    current_us
-    
     redirect_to :back
   end
   

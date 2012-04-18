@@ -18,10 +18,11 @@
         = f.hidden_field :messageable_type
         = f.hidden_field :messageable_id
         / message will always be sent from the current user...
+        - if usertype == "Yentum"  
+          .span3
+            = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
         .span3
-          = f.text_field :body, :class => "input-xlarge search-query"
-        .span3
-          = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
+          = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
         = f.submit "Send"
 = content_for :modal do
   .modal.hide#select_catch
