@@ -33,7 +33,7 @@
     .modal-body
       - chickstud_links = current_profile.chickstud_links
       - if chickstud_links.any?
-        = form_for :add_catch, :url => add_catch_path do |f|
+        = form_for :endorsement, :url => add_catch_path do |f|
           = f.hidden_field :chickstud_id
           .row
             .span4
@@ -43,11 +43,11 @@
                     = image_tag chickstud.image_url, :width => "25px"
                     = chickstud.name
                   .pull-right
-                    = link_to_function "Select", "$('#add_catch_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}'); ", :class => "btn"
+                    = link_to_function "Select", "$('#endorsement_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}'); ", :class => "btn"
             .span6
               %h2#selected_catch
-              = f.label :endorsement
-              = f.text_field :endorsement
+              = f.label :message, "Endorsement"
+              = f.text_field :message
               = f.submit
       - else 
         %h2 You don't have any friends =(
