@@ -34,8 +34,11 @@ class DashboardController < ApplicationController
   def add_catch
     @endorsement = Endorsement.new(params[:endorsement])
     @endorsement.yentum = current_profile
-    @endorsement.save
-    flash[:notice] = "#{@endorsement.chickstud.name} has been added to your matchbook!"
+    if @endorsement.save
+      flash[:notice] = "#{@endorsement.chickstud.name} has been added to your matchbook!"
+    else
+      flash[:error] = "There was a problem in adding #{@endorsement.chickstud.name} to your matchbook..."
+    end
     redirect_to :back
   end
   

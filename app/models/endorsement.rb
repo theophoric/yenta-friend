@@ -11,8 +11,10 @@ class Endorsement
   field :is_active, :default => true
   field :message
   
+  validates_uniqueness_of :chickstud_id, :scope => :yentum_id
+  
   def active?
-    
+    is_active
   end
   
   class << self

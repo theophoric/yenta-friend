@@ -31,7 +31,7 @@
     .modal-header
       Pick a friend to add to your matchbook
     .modal-body
-      - chickstud_links = current_profile.chickstud_links
+      - chickstud_links = (current_profile.chickstud_links - @endorsements.collect(&:chickstud).compact.to_a)
       - if chickstud_links.any?
         = form_for :endorsement, :url => add_catch_path do |f|
           = f.hidden_field :chickstud_id
@@ -50,7 +50,7 @@
               = f.text_field :message
               = f.submit
       - else 
-        %h2 You don't have any friends =(
+        %h2 No unendorsed friends were found.
             
           
           
