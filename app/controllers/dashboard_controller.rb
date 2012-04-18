@@ -78,6 +78,10 @@ class DashboardController < ApplicationController
     @match.save
     if @match.approvals.pending.none?
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
+      @match.chickstuds.map do profile
+        profile.links << (@match.chickstuds - profile.to_a)
+        profile.save
+      end
     end
     redirect_to :back
   end
