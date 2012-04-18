@@ -1,0 +1,108 @@
+= content_for :pageheader do
+  %h1
+    = profile.name
+  %p.lead
+    = "Yenta since #{timestamp_readable(profile.created_at)}"
+= content_for :subnav do
+  .subnav
+    %ul.nav.nav-pills
+      %li= link_to_function 'about', "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"    
+      %li= link_to 'matchbook', "#matchbook", :class => 'anchorLink'
+      %li= link_to 'conversation', "#conversation_#{@conversation._id}", :class => 'anchorLink'
+      %li= link_to 'new message', "#new_message", :class => 'anchorLink'
+= content_for :main do
+  %section#matchbook
+    .page-header
+      %h1
+        Matchbook
+        %small
+          ="#{profile.first_name} has #{profile.endorsements.count} catches in #{profile.pronoun_poss} matchbook"
+          - if usertype == "Yentum"
+            .pull-right
+              = link_to "Suggest a Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
+    .row-fluid
+      - for chickstud in profile.endorsements.collect(&:chickstud).compact
+        .span2{:height=>"75px"}
+          = link_to profile_path(chickstud) do
+            = image_tag chickstud.image_url, :size => "170x170"
+            %h3= chickstud.name
+  %section[@conversation]
+    .page-header
+      %h2
+        Conversation History
+        %small="Your conversation with #{profile.first_name}"
+      .row-fluid.message_wrapper
+        - for message in @conversation.messages do
+          = render :partial => 'conversations/messages/message', :locals => {:message => message}
+  %section#new_message
+    .page-header
+      %h1 New Message
+    .row
+      = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
+        = hidden_field_tag :conversation_id, @conversation._id
+        = f.hidden_field :messageable_type
+        = f.hidden_field :messageable_id
+        / message will always be sent from the current user...
+        - if usertype == "Yentum"  
+          .span3
+            = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
+          .span3
+            = link_to "Suggest a Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
+        .span3
+          = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
+        = f.submit "Send"
+= content_for :modal do
+  - if usertype == "Yentum"
+    .modal.hide#suggest_match
+      = form_for :match, :url => suggest_match_path do |f|    
+        .modal-header
+          %a.close{"data-dismiss" => "modal"}x
+          %h2 Who would you like to match?
+          = f.fields_for :approval do |approval_fields|
+            = approval_fields.hidden_field :profile_id, :value => profile._id
+          = fields_for :chickstuds do |chickstud_fields|
+            = chickstud_fields.hidden_field :partner1
+            = chickstud_fields.hidden_field :partner2
+          .well    
+            %h3
+              %span.partner1_selection
+              \ + 
+              %span.partner2_selection
+        .modal-body.row-fluid
+          .span12
+            .row
+              .well
+                %h2= "#{profile.name}'s matchbook"
+                - for chickstud in profile.endorsements.collect(&:chickstud)
+                  %h4
+                    = image_tag chickstud.image_url
+                    = chickstud.name
+                    = link_to_function "Select", "$('#suggest_match .partner1_selection').html('#{chickstud.first_name}');$('#chickstuds_partner1').val('#{chickstud._id}')"
+              .well
+                %h2 Your matchbook
+                - for chickstud in current_profile.endorsements.collect(&:chickstud)
+                  %h4
+                    = image_tag chickstud.image_url
+                    = chickstud.name
+                    = link_to_function "Select", "$('#suggest_match .partner2_selection').html('#{chickstud.first_name}');$('#chickstuds_partner2').val('#{chickstud._id}')"
+        .modal-footer
+          = f.submit "Match!", :class => 'btn btn-primary'
+    .modal.hide#select_catch
+      .modal-header
+        Select a profile from your matchbook to share.
+      .modal-body
+        - chickstud_links = current_profile.chickstud_links
+        - if chickstud_links.any?
+          .row
+            .span4
+              - for chickstud in chickstud_links
+                .span4
+                  %h4
+                    = image_tag chickstud.image_url, :width => "25px"
+                    = chickstud.name
+                  .pull-right
+                    = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile'); ", :class => "btn"
+            .span6
+              %h2#selected_catch
+        - else 
+          %h2 You don't have any profiles in your matchbook
