@@ -23,7 +23,7 @@ class Profile
   has_and_belongs_to_many :partner_connections, :inverse_of => :partner, :class_name => "Connection"
 
 
-	embeds_many :pictures
+	# embeds_many :pictures
   embeds_one :profile_preview
   
   # friendship / connection links
@@ -68,11 +68,11 @@ class Profile
     # document.profile_preview.update_fields
   end
   
-	def process_profile_picture
-		remote_url = Typhoeus::Request.get(fb_image_url("large")).headers_hash["Location"]
-		puts remote_url
-		pictures.create(:remote_source_url => remote_url)
-	end
+	# def process_profile_picture
+	# 	remote_url = Typhoeus::Request.get(fb_image_url("large")).headers_hash["Location"]
+	# 	puts remote_url
+	# 	pictures.create(:remote_source_url => remote_url)
+	# end
 
   def update_linked_profiles
     new_linked_profiles = user.get_linked_profiles.to_a - links.to_a

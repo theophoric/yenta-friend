@@ -62,18 +62,18 @@ body {
 // LISTS
 // ------
 
-.playlist, .account-stream, .userlist {
+.list, .account-stream, .userlist {
 	list-style: none;
 	margin: 0;
 	
 	button {font-weight: bold; font-size: 12px;}
 }
 
-.account-stream, .playlist {
+.account-stream, .list {
 	padding: 18px;
 }
 
-.playlist > li {
+.list > li {
 	#gradient > .vertical(@listColorLight, @listColorDark);
 	border: 1px solid @listBorder;
 	padding: 0px 14px 9px 2px;
@@ -84,7 +84,7 @@ body {
   .box-shadow(@shadow);
 }
 
-.playlist > li > img {
+.list > li > img {
 	float: left;
 	margin: 7px 10px 5px 7px;
 	width: 40px;
@@ -92,11 +92,11 @@ body {
 	border: 1px solid @listBorder;
 }
 
-.playlist > li > h4 {
+.list > li > h4 {
 	padding-top: 9px;
 }
 
-.playlist > li > p {
+.list > li > p {
 	margin: -3px 0 0 0;
 	font-size: 12px;
 	font-style: italic;
@@ -193,9 +193,9 @@ body {
 	a:hover {text-decoration: none;}
 }
 .userlist {
-	border-top: 1px solid @listBorder;
+/*	border-top: 1px solid @listBorder;
 	border-right: 1px solid @listBorder;
-	border-left: 1px solid @listBorder;  
+	border-left: 1px solid @listBorder;  */
 }
 
 .userlist > li {
@@ -268,7 +268,9 @@ body {
   height: auto;
 }
 
-
+.divider-vertical{
+	width:1px;
+}
 // Brand, links, text, and buttons
 .navbar {
   // Hover and active states
@@ -276,22 +278,7 @@ body {
     text-decoration: none;
   }
   // Website or project name
-  .brand {
-	float: left;
-	display: block;
-	padding: 4px 4px 6px 6px;
-	margin-left: -20px; // negative indent to left-align the text down the page
-	font-size: 20px;
-	font-weight: 200;
-	line-height: 1;
-	color: @white;
-	height: 34px;
-	width: 72px;
-	text-indent: -9999em;
-	background: image-url("app/logo.png") no-repeat center center;
-	border-right: 1px solid rgba(0, 0, 0, .45);
-	.box-shadow(1px 0 0 rgba(255,255,255,.1));
-  }
+
 	//Login for navbar
 	.login {
 		float: right;
@@ -425,7 +412,7 @@ body {
   display: block;
   float: left;
 	min-width: 30px;
-	max-width: 52px;
+	max-width: 200;
 }
 
 // Links
@@ -482,7 +469,7 @@ body {
 	.active > a {border-top: 3px solid @mainBlue;}
 }
 
-.navbar .nav .current-playlist {
+.navbar .nav .current-list {
 	background: image-url("icons/icons-white/221-recordplayer.png") no-repeat center center;
 	height: 43px;
 	width: 65px;

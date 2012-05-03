@@ -274,6 +274,7 @@ GEM
       ffi (~> 1.0)
       multi_json (~> 1.0)
       rubyzip
+    settingslogic (2.0.8)
     signature (0.1.2)
       ruby-hmac
     sprockets (2.1.2)
@@ -335,6 +336,7 @@ DEPENDENCIES
   rails (= 3.2.2)
   rails_admin!
   sass-rails (~> 3.2.3)
+  settingslogic
   twitter-bootstrap-rails!
   typhoeus
   uglifier (>= 1.0.3)

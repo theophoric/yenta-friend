@@ -1,5 +1,5 @@
 - message ||= @message
-.span12[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ "}
+%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ "}
 	.row-fluid
 		.span2
 			= image_tag message.icon_url, :size => "100x100"

@@ -65,3 +65,4 @@ gem "aws-sdk"
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'pusher'
 gem 'activemerchant'
+gem 'settingslogic'

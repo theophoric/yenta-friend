@@ -1,4 +1,4 @@
-.span12[message_reference]{:class => "type-#{message_reference.content_type}", :rel => "tooltip", :title => "@ #{timestamp_readable_with_time(message_reference.created_at)}"}
+%li[message_reference]{:class => "type-#{message_reference.content_type}", :rel => "tooltip", :title => "@ #{timestamp_readable_with_time(message_reference.created_at)}"}
   .row-fluid
     .span2
       = image_tag message_reference.icon_url, :size => "100x100"
