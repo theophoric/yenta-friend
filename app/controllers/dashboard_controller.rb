@@ -92,6 +92,7 @@ class DashboardController < ApplicationController
     #     end
     #     @match.save
   end
+  
   def inbox
     @conversations = current_profile.conversations
   end

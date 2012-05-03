@@ -1,0 +1,30 @@
+- yenta = conversation.participants.where(:_type => "Yentum")
+.modal.hide#suggest_match
+	.modal-header
+		%a.close{"data-dismiss" => "modal"}x
+		Who would you like to match?
+		= form_for :match, :url => suggest_match_path do |f|
+			= f.fields_for :approval do |approval_fields|
+				- (yenta - current_profile.to_a).each do |yentum|
+					= approval_fields.hidden_field "#{yentum._id}", :value => profile._id
+			= fields_for :chickstuds do |chickstud_fields|
+				- (1..yenta.count).to_a.each do |i|
+					= chickstud_fields.hidden_field "partner#{i}".to_sym
+		.span2.partner1_selection
+		.span1 +
+		.span2.partner2_selection
+	.row
+		- yenta.each_with_index do |yentum, index|
+			.span4.well
+				%ul.userlist
+					- for chickstud in yentum.endorsements.collect(&:chickstud).compact
+						%li
+							%h4
+								= image_tag chickstud.image_url
+								= chickstud.name
+								= link_to_function "Select", "$('#suggestion_match .partner1_selection').html('#{chickstud.first_name}');$('#')", :class => 'btn'
+						
+						
+						
+						
+						

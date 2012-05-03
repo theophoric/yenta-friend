@@ -2,45 +2,5 @@
   %h1= @conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
   %p.lead
 = content_for :main do
-  %section[@conversation]
-    .page-header
-      %h2
-        Conversation History
-      .row-fluid.message_wrapper
-        - for message in @conversation.messages do
-          = render :partial => 'conversations/messages/message', :locals => {:message => message}
-  %section#new_message
-    .page-header
-      %h1 New Message
-    .row
-      = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
-        = hidden_field_tag :conversation_id, @conversation._id
-        = f.hidden_field :messageable_type
-        = f.hidden_field :messageable_id
-        / message will always be sent from the current user...
-        - if usertype == "Yentum"  
-          .span3
-            = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
-        .span3
-          = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
-        = f.submit "Send"
-= content_for :modal do
-  .modal.hide#select_catch
-    .modal-header
-      Select a profile from your matchbook to share.
-    .modal-body
-      - chickstud_links = current_profile.chickstud_links
-      - if chickstud_links.any?
-        .row
-          .span4
-            - for chickstud in chickstud_links
-              .span4
-                %h4
-                  = image_tag chickstud.image_url, :width => "25px"
-                  = chickstud.name
-                .pull-right
-                  = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile'); $('#new_message form').submit()", :class => "btn"
-          .span6
-            %h2#selected_catch
-      - else 
-        %h2 You don't have any profiles in your matchbook
+  = render :partial => 'conversations/history', :locals => {:conversation => @conversation}
+  = render :partial => 'conversations/main', :locals => {:conversation => @conversation}

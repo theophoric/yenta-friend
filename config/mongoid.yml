@@ -8,7 +8,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  uri: mongodb://admin:yentaballs@flame.mongohq.com:27058/yenta-development
+  # uri: mongodb://admin:yentaballs@flame.mongohq.com:27058/yenta-development
+  uri: mongodb://heroku:e2ac170b7e3f6489f591d11108389b60@staff.mongohq.com:10014/app4106841
   # uri: mongodb://yenta:yentaballs@staff.mongohq.com:10079/yenta-staging
 
 test:

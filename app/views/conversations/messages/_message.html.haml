@@ -1,14 +1,14 @@
 - message ||= @message
-.span12[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{timestamp_readable_with_time(message.created_at)}"}
-  .row-fluid
-    .span2
-      = image_tag message.icon_url, :size => "100x100"
-    .span8 
-      - if messageable = message.messageable
-        = render :partial => "conversations/messages/#{message.messageable_type.underscore}_message", :locals => {:messageable => messageable}       
-      - else
-        %p= message.body
-    .span2
-      .span1.pull-right
-        %i.icon-chevron-right
+.span12[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ "}
+	.row-fluid
+		.span2
+			= image_tag message.icon_url, :size => "100x100"
+		.span8 
+			- if messageable = message.messageable
+				= render :partial => "conversations/messages/#{message.messageable_type.underscore}_message", :locals => {:messageable => messageable}			 
+			- else
+				%p= message.body
+		.span2
+			.span1.pull-right
+				%i.icon-chevron-right
 %hr.soften

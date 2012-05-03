@@ -10,17 +10,12 @@
 -------------------------------------------------- */
 body {
   position: relative;
-  padding-top: 90px;
-  background-color: #fff;
-  background-image: url(../img/grid-18px-masked.png);
-  background-repeat: repeat-x;
-  background-position: 0 40px;
 }
 
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
-.navbar-fixed-top .brand {
+/*.navbar-fixed-top .brand {
   padding-right: 0;
   padding-left: 0;
   margin-right: 20px;
@@ -33,7 +28,7 @@ body {
 }
 .navbar-fixed-top .brand:hover {
   text-decoration: none;
-}
+}*/
 
 
 /* Space out sub-sections more
@@ -740,7 +735,6 @@ form.well {
     z-index: auto;
     width: auto;
     height: auto;
-    background: #fff; /* whole background property since we use a background-image for gradient */
     -webkit-box-shadow: none;
        -moz-box-shadow: none;
             box-shadow: none;

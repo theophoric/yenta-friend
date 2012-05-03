@@ -21,7 +21,9 @@ class Profile
   # connections
   has_and_belongs_to_many :observer_connections, :inverse_of => :observer, :class_name => "Connection"
   has_and_belongs_to_many :partner_connections, :inverse_of => :partner, :class_name => "Connection"
-  embeds_many :pictures
+
+
+	embeds_many :pictures
   embeds_one :profile_preview
   
   # friendship / connection links
@@ -57,8 +59,27 @@ class Profile
     document.build_profile_preview("name"=>name, "first_name" => first_name,"last_name" => last_name,"gender" => gender, :image_url => image_url)
   end
   
+  set_callback(:create, :after) do |document|
+    document.update_linked_profiles
+  end
+  
   set_callback(:save, :after) do |document|
+    
     # document.profile_preview.update_fields
+  end
+  
+	def process_profile_picture
+		remote_url = Typhoeus::Request.get(fb_image_url("large")).headers_hash["Location"]
+		puts remote_url
+		pictures.create(:remote_source_url => remote_url)
+	end
+
+  def update_linked_profiles
+    new_linked_profiles = user.get_linked_profiles.to_a - links.to_a
+    links << new_linked_profiles
+    new_linked_profiles.each do |linked_profile|
+      linked_profile.links << self
+    end
   end
   
   def yenta_links
@@ -69,7 +90,7 @@ class Profile
     links.where(:_type => "Chickstud")
   end
 
-  def image_url(size = "square")
+  def fb_image_url(size = "square")
     "https://graph.facebook.com/#{fb_uid}/picture?type=#{size}"
   end
   

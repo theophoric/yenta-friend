@@ -1,0 +1,19 @@
+# config/application.yml
+defaults: &defaults
+    s3:
+        access_key_id: AKIAICZOJNDMXYASZLUA
+        secret_access_key: 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
+        bucket: yenta-friend-development
+    paypal:
+        login: Yentafriend_api1.gmail.com
+        password: REK2JBW54PQKYMZ6
+        signature: AGEeG0rXbzJX3sh.zO4D6wwDmt8SAfI-P29TEhxchIaBRjEgqnaS1aaB
+    
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

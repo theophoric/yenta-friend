@@ -20,11 +20,16 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    @conversation = Conversation.find_or_create_by(:participant_ids => [current_profile._id, profile._id])
-    respond_to do |format|
-      format.html {render "profiles/#{profile._type.underscore}_show"}
-      format.json { render :json => @profile }
-    end
+		begin
+			profile = Profile.find(params[:id])
+	    @conversation = Conversation.find_or_create_by(:participant_ids => [current_profile._id, profile._id])
+	    respond_to do |format|
+	      format.html {render "profiles/#{profile._type.underscore}_show"}
+	      format.json { render :json => @profile }
+	    end
+		rescue
+			render "profiles/not_found"
+		end
   end
 
   # GET /profiles/new

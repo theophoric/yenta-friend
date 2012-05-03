@@ -7,73 +7,11 @@
     %ul.nav.nav-pills
       %li= link_to 'conversation', "#conversation_#{@conversation._id}", "data-toggle" => "modal", :class => 'anchorLink'
 = content_for :main do
-  %section[@conversation]
-    .page-header
-      %h2
-        Conversation History
-        %small="Your conversation with #{profile.first_name}"
-      .row-fluid.message_wrapper
-        - for message in @conversation.messages do
-          = render :partial => 'conversations/messages/message', :locals => {:message => message}
-  %section#new_message
-    .page-header
-      %h1 New Message
-    .row
-      = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
-        = hidden_field_tag :conversation_id, @conversation._id
-        = f.hidden_field :messageable_type
-        = f.hidden_field :messageable_id
-        / message will always be sent from the current user...
-        .span3
-          = f.text_field :body, :class => "input-xlarge search-query"
-        .span3
-          = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
-        = f.submit "Send"
+  
 = content_for :modal do
-  .modal.hide#suggest_match
-    .modal-header
-      Who would you like to match?
-      = form_for :match, :url => suggest_match_path do |f|
-        = f.fields_for :approval do |approval_fields|
-          = approval_fields.hidden_field :profile_id, :value => profile._id
-        = fields_for :chickstuds do |chickstud_fields|
-          = chickstud_fields.hidden_field :partner1
-          = chickstud_fields.hidden_field :partner2
-      .span2.partner1_selection
-      .span1 +
-      .span2.partner2_selection
-    .row
-      .span4
-        - for chickstud in profile.endorsements.collect(&:chickstud)
-          %h4
-            = image_tag chickstud.image_url
-            = chickstud.name
-            = link_to_function "Select", "$('#suggestion_match .partner1_selection').html('#{chickstud.first_name}');$('#')"
-      .span4
-        - for chickstud in current_profile.endorsements.collect(&:chickstud)
-          %h4
-            = image_tag chickstud.image_url
-            = chickstud.name
-            = link_to_function "Select", "$('#suggestion_match .partner2_selection').html('#{chickstud.first_name}');$('#')"
-  .modal.hide#select_catch
-    .modal-header
-      Select a profile from your matchbook to share.
-    .modal-body
-      - chickstud_links = current_profile.chickstud_links
-      - if chickstud_links.any?
-        .row
-          .span4
-            - for chickstud in chickstud_links
-              .span4
-                %h4
-                  = image_tag chickstud.image_url, :width => "25px"
-                  = chickstud.name
-                .pull-right
-                  = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile'); ", :class => "btn"
-          .span6
-            %h2#selected_catch
-      - else 
-        %h2 You don't have any profiles in your matchbook
+  = render :partial => 'shared/modal/suggest_match', :locals => {:profile => profile}
+  = render :partial => 'shared/modal/select_catch'
+  
 
 / = content_for :main do
 /   - model_class = @profile.class
