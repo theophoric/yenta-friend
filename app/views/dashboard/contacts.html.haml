@@ -27,7 +27,7 @@
             = link_to profile_path(yentum) do
               %blockquote
                 %em
-                  = image_tag yentum.image_url
+                  = image_tag yentum.fb_image_url
                   = endorsement.message
                 %small  
                   = yentum.name
@@ -41,7 +41,7 @@
       - for yentum in current_profile.yenta_links
         .span2.thumbnail
           = link_to profile_path(yentum) do
-            = image_tag yentum.image_url, :size => "170x170"
+            = image_tag yentum.fb_image_url, :size => "170x170"
             %h3= yentum.name
   - if usertype == "Yentum"          
     %section#chickstud_connections
@@ -54,7 +54,7 @@
         - for chickstud in current_profile.chickstud_links
           .span2{:height=>"75px"}
             = link_to profile_path(chickstud) do
-              = image_tag chickstud.image_url, :size => "170x170"
+              = image_tag chickstud.fb_image_url, :size => "170x170"
               %h3= chickstud.name                
           
       

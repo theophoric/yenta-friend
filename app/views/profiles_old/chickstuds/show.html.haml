@@ -34,7 +34,7 @@
       .page-body
         .row
           .span3
-            = image_tag profile.image_url("large")
+            = image_tag profile.fb_image_url("large")
           .span9
             %table.span9.table-striped
               %tbody
@@ -96,7 +96,7 @@
         %tbody#stable 
           - for _profile in (current_stable - [profile]) do
             %tr[_profile]{:class => "gender-#{_profile.gender} privacy-#{_profile.privacy}"}
-              %td= image_tag _profile.image_url, :size => "40x40"
+              %td= image_tag _profile.fb_image_url, :size => "40x40"
               %td{:colspan => 2}
                 %h4= _profile.name
               %td

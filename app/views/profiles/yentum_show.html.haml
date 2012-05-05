@@ -24,7 +24,7 @@
       - for chickstud in profile.endorsements.collect(&:chickstud).compact
         .span2{:height=>"75px"}
           = link_to profile_path(chickstud) do
-            = image_tag chickstud.image_url, :size => "170x170"
+            = image_tag chickstud.fb_image_url, :size => "170x170"
             %h3= chickstud.name
   = render :partial => 'conversations/history', :locals => {:conversation => @conversation}
   = render :partial => 'conversations/main', :locals => {:conversation => @conversation}

@@ -20,7 +20,7 @@
       .page-header
         %h2
           = link_to profile_path(chickstud) do            
-            = image_tag chickstud.image_url("large"), :width => "100px"
+            = image_tag chickstud.fb_image_url("large"), :width => "100px"
             = chickstud.name
           %small
             = "#{chickstud.first_name} has #{chickstud.partner_connections.count} connections"
@@ -40,7 +40,7 @@
               - for chickstud in chickstud_links
                 .span4
                   %h4
-                    = image_tag chickstud.image_url, :width => "25px"
+                    = image_tag chickstud.fb_image_url, :width => "25px"
                     = chickstud.name
                   .pull-right
                     = link_to_function "Select", "$('#endorsement_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}'); ", :class => "btn"

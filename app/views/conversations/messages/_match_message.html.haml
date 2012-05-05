@@ -1,11 +1,11 @@
 - match ||= messageable
 %li[match]
   .span2
-    = image_tag match.chickstuds[0].image_url
+    = image_tag match.chickstuds[0].fb_image_url
     = match.chickstuds[0].first_name
   .span1 + 
   .span2
-    = image_tag match.chickstuds[1].image_url
+    = image_tag match.chickstuds[1].fb_image_url
     = match.chickstuds[1].first_name
   .pull-right
     - if match.approvals.pending.any?

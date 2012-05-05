@@ -24,7 +24,7 @@
       - for chickstud in profile.endorsements.collect(&:chickstud).compact
         .span2{:height=>"75px"}
           = link_to profile_path(chickstud) do
-            = image_tag chickstud.image_url, :size => "170x170"
+            = image_tag chickstud.fb_image_url, :size => "170x170"
             %h3= chickstud.name
   %section[@conversation]
     .page-header
@@ -76,14 +76,14 @@
                 %h2= "#{profile.name}'s matchbook"
                 - for chickstud in profile.endorsements.collect(&:chickstud)
                   %h4
-                    = image_tag chickstud.image_url
+                    = image_tag chickstud.fb_image_url
                     = chickstud.name
                     = link_to_function "Select", "$('#suggest_match .partner1_selection').html('#{chickstud.first_name}');$('#chickstuds_partner1').val('#{chickstud._id}')"
               .well
                 %h2 Your matchbook
                 - for chickstud in current_profile.endorsements.collect(&:chickstud)
                   %h4
-                    = image_tag chickstud.image_url
+                    = image_tag chickstud.fb_image_url
                     = chickstud.name
                     = link_to_function "Select", "$('#suggest_match .partner2_selection').html('#{chickstud.first_name}');$('#chickstuds_partner2').val('#{chickstud._id}')"
         .modal-footer
@@ -99,7 +99,7 @@
               - for chickstud in chickstud_links
                 .span4
                   %h4
-                    = image_tag chickstud.image_url, :width => "25px"
+                    = image_tag chickstud.fb_image_url, :width => "25px"
                     = chickstud.name
                   .pull-right
                     = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile');$('.send_profile_preview').text('#{chickstud.name}');$('.modal').close(); ", :class => "btn btn-primary"

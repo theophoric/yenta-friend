@@ -1,4 +1,4 @@
 .portthumb.span3[profile]{:class => "gender-#{profile.gender}"}
   = link_to profile_path(profile), :rel => "tooltip", :title => "#{profile.chickstuds.count} Chickstuds!", :class => "thumbnail" do
-    = image_tag( profile.image_url("large"), :height => "160")
+    = image_tag( profile.fb_image_url("large"), :height => "160")
     %h2= profile.first_name

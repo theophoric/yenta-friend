@@ -30,7 +30,7 @@
             - for chickstud in current_profile.chickstud_links
               .span4
                 %h4
-                  = image_tag chickstud.image_url, :width => "25px"
+                  = image_tag chickstud.fb_image_url, :width => "25px"
                   = chickstud.name
                 .pull-right
                   = link_to_function "Select", "$('#selected_catch').html('#{escape_javascript()}')", :class => "btn"

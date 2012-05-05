@@ -47,7 +47,7 @@
           %li.divider-vertical  
           %li.dropdown
             = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
-              = image_tag current_user.image_url, :size => "25x25"
+              = image_tag current_user.fb_image_url, :size => "25x25"
               = current_user.first_name + " " + current_user.last_name
               %b.caret
             %ul.dropdown-menu

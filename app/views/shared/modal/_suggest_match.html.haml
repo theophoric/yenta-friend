@@ -20,7 +20,7 @@
 					- for chickstud in yentum.endorsements.collect(&:chickstud).compact
 						%li
 							%h4
-								= image_tag chickstud.image_url
+								= image_tag chickstud.fb_image_url
 								= chickstud.name
 								= link_to_function "Select", "$('#suggestion_match .partner1_selection').html('#{chickstud.first_name}');$('#')", :class => 'btn'
 						
