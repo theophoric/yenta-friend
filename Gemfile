@@ -56,13 +56,12 @@ gem 'typhoeus'
 gem 'coffee-filter'
 gem 'geocoder'
 gem 'fb_graph'
-gem 'mini_magick'
 gem 'carrierwave'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem "fog", "~> 1.3.1"
 gem "aws-s3",            :require => "aws/s3"
 gem "aws-sdk"
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails'
 gem 'pusher'
 gem 'activemerchant'
 gem 'settingslogic'

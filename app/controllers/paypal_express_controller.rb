@@ -15,7 +15,7 @@ class PaypalExpressController < ApplicationController
       @gateway ||= PaypalExpressGateway.new(
         :login => PaypalLogin.login,
         :password => PaypalLogin.password,
-        :signature => PaypalLogin.signature,
+        :signature => PaypalLogin.signature
       )
     end
 end

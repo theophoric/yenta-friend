@@ -4,17 +4,8 @@
 
 @import "twitter/bootstrap/responsive";
 
-@bg_color: #f2ffef;
-body {
-	padding-top: 50px;
-	padding-bottom: 60px;
-	background: url('bg-slice.png') repeat-x top @bg_color;
-}
 
-.well{	
-	background:#f2ffef;
-	border:1px solid #fefffa;
-}
+
 // Set the correct sprite paths
 @iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
@@ -35,6 +26,84 @@ body {
 @blue_light: #6ca7d1;
 @white: #fefffa;
 @bodyBackground: #fefffa;
+
+
+@bg_color: #f2ffef;
+body {
+	padding-top: 50px;
+	padding-bottom: 60px;
+	background: url('bg-slice.png') repeat-x top @bg_color;
+}
+
+.well{	
+
+	border:1px solid #fefffa;
+}
+
+.center{float:center;}
+.right{float:right;}
+.left{float:left;}
+.sidelink{
+	height:100%;
+	border-left:1px solid @blue_light;
+	padding-top:10px;
+	font-size: 1.5em;
+	font-weight:bold;
+	text-align:center;
+}
+ul{
+	list-style:none !important;
+}
+
+#new_match{
+	background:@blue_light;
+	#gradient > .vertical(@listColorLight, @listColorDark);
+	border: 1px solid @listBorder;
+	padding: 0px 14px 9px 2px;
+	margin-bottom: 5px;
+	opacity: 0.8;
+	.border-radius(8px);
+  @shadow: inset 2px 2px 0 rgba(255,255,255,.2), 2px 1px 2px rgba(0,0,0,.05);
+  .box-shadow(@shadow);
+	ul{
+		li{
+			display:inline;
+		}
+	}
+}
+.match-suggestion{
+	height:80px;
+	width:80px;
+	background:@white;
+}
+
+.profile{
+	.name{
+		text-align:center;
+	}
+	.image_wrapper{
+		overflow:hidden;
+		#gradient > .vertical(@listColorLight, @listColorDark);
+		border: 1px solid @listBorder;
+		padding: 0px 14px 9px 2px;
+		margin-bottom: 5px;
+		opacity: 0.8;
+		.border-radius(6px);
+	  @shadow: inset 2px 2px 0 rgba(255,255,255,.2), 2px 1px 2px rgba(0,0,0,.05);
+	  .box-shadow(@shadow);
+	}
+	.profile-male{
+		background-color: @orange_light;
+	}
+	.profile-female{
+		background-color:@green_light;
+	}
+	.profile-yentum{
+		background-color:@blue_light;
+	}
+}
+
+
 
 #scroll-content {
     position:absolute;

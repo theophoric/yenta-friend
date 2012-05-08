@@ -1,30 +1,90 @@
 = content_for :pageheader do
-  %h1
-    = profile.name
-  %p.lead
-    = "Yenta since #{timestamp_readable(profile.created_at)}"
+	%h1
+		= profile.name
+	%p.lead
+		= "Yenta since #{timestamp_readable(profile.created_at)}"
 = content_for :subnav do
-  .subnav
-    %ul.nav.nav-pills
-      %li= link_to_function 'about', "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"    
-      %li= link_to 'matchbook', "#matchbook", :class => 'anchorLink'
-      %li= link_to 'conversation', "#conversation_#{@conversation._id}", :class => 'anchorLink'
-      %li= link_to 'new message', "#new_message", :class => 'anchorLink'
+	.subnav
+		%ul.nav.nav-pills
+			%li= link_to_function 'about', "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
+			%li= link_to 'matchbook', "#matchbook", :class => 'anchorLink'
+			%li= link_to 'conversation', "#history", :class => 'anchorLink'
+			%li= link_to 'new message', "#new_message", :class => 'anchorLink'
 = content_for :main do
-  %section#matchbook
-    .page-header
-      %h1
-        Matchbook
-        %small
-          ="#{profile.first_name} has #{profile.endorsements.count} catch#{"es" unless profile.endorsements.count == 1} in #{profile.pronoun_poss} matchbook"
-          - if usertype == "Yentum"
-            .pull-right
-              = link_to "Suggest a Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
-    .row-fluid
-      - for chickstud in profile.endorsements.collect(&:chickstud).compact
-        .span2{:height=>"75px"}
-          = link_to profile_path(chickstud) do
-            = image_tag chickstud.fb_image_url, :size => "170x170"
-            %h3= chickstud.name
-  = render :partial => 'conversations/history', :locals => {:conversation => @conversation}
-  = render :partial => 'conversations/main', :locals => {:conversation => @conversation}
+	- if yenta_user?
+		%section#matches.well
+			.row
+				.span12
+					.row-fluid
+						.span4
+							%h1
+								Match your catches:
+						#new_match.span8
+							%ul
+								- [profile, current_profile].each do |yenta_profile|
+									%li{:id => "yenta_suggestion_#{yenta_profile._id}"}
+										.image_wrapper
+										%h2.name
+				%h4.soften						
+				.span12
+					.row-fluid
+						#profile_matchbook.span6
+							%h3
+								= "#{profile.first_name}'s Matchbook"
+								%small.right
+									="#{profile.first_name} has "
+									%span.badge.badge-info="#{profile.endorsements.count}"
+									= " catch#{"es" unless profile.endorsements.count == 1} in #{profile.pronoun_poss} matchbook"
+							%ul.list
+								- for endorsement in profile.endorsements
+									- chickstud = endorsement.chickstud
+									%li[endorsement]
+										.row-fluid
+											.span2=image_tag chickstud.fb_image_url, :size => "100x100"
+											.span8
+												%h1
+													= link_to_function chickstud.name, "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
+												%blockquote
+													%p= endorsement.message
+													%small= timestamp_readable(endorsement.created_at)
+											.span2.sidelink
+												= link_to "Match", "#"
+						#current_matchbook.span6
+							%h3
+								= "Your Matchbook"
+								%small.right
+									You have 
+									%span.badge.badge-info= "#{current_profile.endorsements.count}"
+									= " catch#{"es" unless current_profile.endorsements.count == 1} in your matchbook"												
+							%ul.list
+								- for endorsement in current_profile.endorsements
+									- chickstud = endorsement.chickstud
+									%li[endorsement]
+										.row-fluid
+											.span2=image_tag chickstud.fb_image_url, :size => "100x100"
+											.span8
+												%h1
+													= link_to_function chickstud.name, "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
+												%blockquote
+													%p= endorsement.message
+													%small= timestamp_readable(endorsement.created_at)
+											.span2.sidelink
+												= link_to "Match", "#"
+	- else
+		%section#target_matchbook
+			.page-header
+				%h1
+					Matchbook
+					%small
+						="#{profile.first_name} has #{profile.endorsements.count} catch#{"es" unless profile.endorsements.count == 1} in #{profile.pronoun_poss} matchbook"
+						- if usertype == "Yentum"
+							.pull-right
+								= link_to "Suggest a Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
+			.row-fluid
+				- for chickstud in profile.endorsements.collect(&:chickstud).compact
+					.span2{:height=>"75px"}
+						= link_to profile_path(chickstud) do
+							= image_tag chickstud.fb_image_url, :size => "170x170"
+							%h3= chickstud.name
+	= render :partial => 'conversations/history', :locals => {:conversation => @conversation}
+	= render :partial => 'conversations/main', :locals => {:conversation => @conversation}

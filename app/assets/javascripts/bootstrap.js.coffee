@@ -1,5 +1,4 @@
 jQuery ->
   $("a[rel=popover]").popover()
-  $('.dropdown-toggle').dropdown()
+  $(".tooltip").tooltip()
   $("a[rel=tooltip]").tooltip()
-

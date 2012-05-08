@@ -118,7 +118,7 @@ class DashboardController < ApplicationController
     @linked_profiles = current_user.get_linked_profiles
     @profile.links << @linked_profiles
     @profile.save
-    @profile.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type[/Yentum/] ? "Yenta" : "Catch" }.", :icon_url => @profile.image_url)
+    @profile.notices.create(:header => "Welcome to Yenta Friend", :body => "You have signed up as a #{@profile._type[/Yentum/] ? "Yenta" : "Catch" }.", :icon_url => @profile.fb_image_url)
     if @linked_profiles.any?
       @profile.notices.create(:header => "You have friends on Yenta!", :message => "We have found #{@linked_profiles.count} of your friends already on YentaFriend.  Click on your Contacts tab to view their profiles.", :href => contacts_path, :icon_url => 'icon_large.png')
       @linked_profiles.each do |profile|

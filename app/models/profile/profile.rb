@@ -23,7 +23,7 @@ class Profile
   has_and_belongs_to_many :partner_connections, :inverse_of => :partner, :class_name => "Connection"
 
 
-	# embeds_many :pictures
+	embeds_many :pictures
   embeds_one :profile_preview
   
   # friendship / connection links
@@ -93,7 +93,8 @@ class Profile
   def fb_image_url(size = "square")
     "https://graph.facebook.com/#{fb_uid}/picture?type=#{size}"
   end
-  
+  alias :image_url :fb_image_url
+
   def member_since
     "#{Date::MONTHNAMES[created_at.month]} #{created_at.mday}, #{created_at.year}"
   end
