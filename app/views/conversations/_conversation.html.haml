@@ -1,4 +1,5 @@
-.span12[conversation]{}
+- conversation ||= @conversation
+%li[conversation]
   = link_to conversation_path(conversation) do
     .row-fluid
       .span10

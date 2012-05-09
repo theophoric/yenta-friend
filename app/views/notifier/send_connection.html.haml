@@ -1,0 +1,8 @@
+.hero-unit
+	%h1
+ 		You have a new connection on YentaFriend!
+		%small
+			%p
+				= "One of your YentaFriends has decided to connect you with #{matched_profile.name}."
+	%hr.soften
+	%p= link_to 'Click here view your connection', connection_url(connection._id), :class => 'btn btn-primary btn-large'

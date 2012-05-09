@@ -70,7 +70,7 @@ class DashboardController < ApplicationController
         profile.links << (@match.chickstuds - profile.to_a)
 				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
 				
-				Notifier.send_connection(matched_profile, profile.email, connection, profile.first_name).deliver
+				Notifier.send_connection(matched_profile, profile.email, request.host_with_port, connection, profile.first_name).deliver
         profile.save
       end
     end
@@ -93,7 +93,7 @@ class DashboardController < ApplicationController
 				matched_profile (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
 				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
-				Notifier.send_connection(matched_profile, profile.email, connection, profile.first_name).deliver
+				Notifier.send_connection(matched_profile, profile.email, connection, request.host_with_port, profile.first_name).deliver
         profile.save
       end
     end
@@ -114,7 +114,7 @@ class DashboardController < ApplicationController
   def send_invite
     invite = params[:invite]
     current_user.invites.create(invite)
-    Notifier.send_invite(current_profile, invite[:email], invite[:name], invite[:message]).deliver
+    Notifier.send_invite(current_profile, invite[:email],request.host_with_port, invite[:name], invite[:message]).deliver
     flash[:notice] = "Invitation to #{invite[:name]} (#{invite[:email]}) has been sent!"
   end
 

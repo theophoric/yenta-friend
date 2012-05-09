@@ -8,7 +8,6 @@
 				friends in your Matchbook
 		- unless current_profile.subscriber?
 			.span4
-				= debug ENV
 				.alert.text-center
 					%h2 Want more connections?
 					= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do

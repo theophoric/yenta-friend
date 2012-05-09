@@ -31,8 +31,7 @@
 										inbox
 										%i.icon-chevron-right
 				%ul.list
-					- for message in current_inbox.message_references do 
-						= render :partial => 'conversations/messages/message_reference', :locals => {:message_reference => message}
+				
 					
 	/ %section#friends
 	/		- yentum_links = current_profile.links.where(:_type => "Yentum")
