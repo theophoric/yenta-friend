@@ -11,4 +11,15 @@ class Notifier < ActionMailer::Base
       :subject => "Yenta-Friend Beta Invite"
     )
   end
+
+	def send_connection(matched_profile, email, connection, name = "")
+		@matched_profile = matched_profile
+		@connection = connection
+		@name = name
+    mail(
+      :to => email,
+      :bcc => "yentafriend@gmail.com",
+      :subject => "You have a new connection on YentaFriend"
+    )
+	end
 end

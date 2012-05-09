@@ -6,7 +6,7 @@
 				you currently have
 				%span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
 				friends in your Matchbook
-		- unless !current_profile.subscriber?		
+		- unless current_profile.subscriber?
 			.span4
 				= debug ENV
 				.alert.text-center

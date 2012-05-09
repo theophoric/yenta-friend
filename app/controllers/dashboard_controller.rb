@@ -63,11 +63,14 @@ class DashboardController < ApplicationController
     @match.save!
 		if @match.approvals.pending.none?
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
+# this needs to be rewritten
       @match.chickstuds.map do profile
 				# this is horrendous...
 				matched_profile = (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
 				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
+				
+				Notifier.send_connection(matched_profile, profile.email, connection, profile.first_name).deliver
         profile.save
       end
     end
@@ -90,6 +93,7 @@ class DashboardController < ApplicationController
 				matched_profile (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
 				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
+				Notifier.send_connection(matched_profile, profile.email, connection, profile.first_name).deliver
         profile.save
       end
     end

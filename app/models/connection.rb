@@ -16,6 +16,9 @@ class Connection
   
   set_callback(:create, :after) do |document|
     document.generate_conversation
+		document.partners.each do |partner|
+			# Notifier
+		end
   end
   
   def generate_conversation
