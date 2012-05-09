@@ -1,11 +1,13 @@
 = content_for :pageheader do
-  %h1 Inbox
-  %p.lead See your correspondence with other users
+  %h1{:style => 'font-size:36px;margin-top:15px'}
+    Inbox
+    %span.lead see your chats with others
 = content_for :subheader do
   %ul
 = content_for :main do
-  %section#conversations
-    .page-header
-      %h1= "Listing #{@conversations.count} conversations"
-    - for conversation in @conversations do
-      = render :partial => 'conversations/conversation', :locals => {:conversation => conversation}
+  %section#conversations{:style=>'padding-top:0px'}
+    .well{:style=>'overflow:hidden'}
+      .page-header
+        %h3= "Listing #{@conversations.count} conversations"
+      - for conversation in @conversations do
+        = render :partial => 'conversations/conversation', :locals => {:conversation => conversation}

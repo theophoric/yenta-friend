@@ -1,6 +1,6 @@
 %header.jumbotron.subhead.well
-	= image_tag 'logo-full.png'
-
 	%p.well.text-center#login
-		=link_to "Log In With Facebook Connect", user_omniauth_authorize_path(:facebook), :class => 'btn btn-primary btn-large'
+		=image_tag 'logo-full.png', :width => '350', :style => 'margin-bottom:15px'
+		%br
+		=link_to "Log In With Facebook", user_omniauth_authorize_path(:facebook), :class => 'btn btn-primary btn-large'
 	

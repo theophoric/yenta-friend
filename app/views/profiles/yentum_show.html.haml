@@ -1,8 +1,8 @@
 = content_for :pageheader do
-	%h1
+	%h1{:style => 'font-size:36px;margin-top:15px'}
 		= profile.name
-	%p.lead
-		= "Yenta since #{timestamp_readable(profile.created_at)}"
+		%span.lead
+			= "Yenta since #{timestamp_readable(profile.created_at)}"
 = content_for :subnav do
 	.subnav
 		%ul.nav.nav-pills
@@ -14,12 +14,11 @@
 	- if yenta_user?
 		%section#matches.well
 			.row
-				#new_match_wrapper.span12.hero-unit
-					.row-fluid
-						.span4
-							%h1.large
-								Match your catches:
-						.new_match.span7
+				#new_match_wrapper.span12
+					.span5.information
+						%h1{:style => "font-size:40px;margin-bottom:10px"}
+							Match your catches:
+						.new_match.row-fluid
 							= form_for :match, :url => suggest_match_path do |f|
 								= hidden_field_tag :conversation_id, @conversation._id
 								= f.fields_for :approvals do |approval_fields|
@@ -28,20 +27,20 @@
 									%ul
 										= chickstud_fields.hidden_field "yenta_#{profile._id}_selection"
 										= chickstud_fields.hidden_field "yenta_#{current_profile._id}_selection"
-										%li.profile.profile-square{:id => "yenta_#{profile._id}_selection"}
+										%li.profile.profile-square.thumbnail{:id => "yenta_#{profile._id}_selection"}
 											.span3.view
 												= render :partial => "match_selection"
 										%li
-											.span2.well
-												%h1 +
-										%li.profile.profile-square{:id => "yenta_#{current_profile._id}_selection"}
+											.span1{:style => "margin-left:10px;"}
+												%h1{:style => "margin-top:20px;"} +
+										%li.profile.profile-square.thumbnail{:id => "yenta_#{current_profile._id}_selection"}
 											.span3.view
 												= render :partial => "match_selection"
 										%li
-											.span2.well
-												%h1 =
+											.span1{:style => "margin-left:10px;"}
+												%h1{:style => "margin-top:20px;"} =
 										%li
-											.span2.well{:style => "margin-top:15px;"}
+											.span2{:style => "margin-top:25px;"}
 												= f.submit "Match!", :class => 'btn btn-primary btn-large'
 										
 				%hr.soften						
@@ -63,9 +62,9 @@
 										- chickstud = endorsement.chickstud
 										%li[endorsement]
 											.row-fluid
-												.span2=image_tag chickstud.fb_image_url, :size => "100x100"
+												.span2=image_tag chickstud.fb_image_url, :size => "50x50", :class => 'thumbnail'
 												.span8
-													%h1
+													%h2
 														= link_to_function chickstud.name, "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => chickstud})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
 													%blockquote
 														%p= endorsement.message

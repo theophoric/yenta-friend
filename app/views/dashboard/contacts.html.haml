@@ -1,5 +1,5 @@
 = content_for :pageheader do
-  %h1 Contacts
+  %h1{:style => 'font-size:36px;margin-top:15px'} Contacts
   %p.lead
     you currently have 
     %span{:class => "badge #{"badge-info" if current_profile.links.count > 1 }"}= "#{current_profile.links.count}/150"
@@ -15,7 +15,7 @@
         %li= link_to "catch connections", '#chickstud_connections', :class => 'anchorLink'  
 = content_for :main do
   - if usertype == "Chickstud"
-    %section#endorsement_connections
+    %section#endorsement_connections{:style=>'padding-top:0px'}
       .page-header
         %h1
           endorsements
@@ -31,7 +31,7 @@
                   = endorsement.message
                 %small  
                   = yentum.name
-  %section#yenta_connections
+  %section#yenta_connections{:style=>'padding-top:0px'}
     .page-header
       %h1
         yenta connections
@@ -39,10 +39,12 @@
           check out their catches
     .row
       - for yentum in current_profile.yenta_links
-        .span2.thumbnail
+        .span2
           = link_to profile_path(yentum) do
-            = image_tag yentum.fb_image_url, :size => "170x170"
-            %h3= yentum.name
+            .thumbnail
+              = image_tag yentum.fb_image_url, :size => "150x150"
+              .caption
+                %h5= yentum.name
   - if usertype == "Yentum"          
     %section#chickstud_connections
       .page-header

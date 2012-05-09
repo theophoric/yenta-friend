@@ -1,14 +1,15 @@
 - notice ||= @notice
 %li[notice]{:class => "type-#{notice.notice_type}"}
 	.row-fluid
-		.span4.well= image_tag notice.icon_url, :size => "100x100"
-		.span8
+		.span2= image_tag notice.icon_url, :size => "50x50", :class => 'thumbnail'
+		.span10
 			.row-fluid
-				.span10
-					%h2= notice.header
-					%p= notice.body
-				.span2.pull-right.sidelink
+				.span10{:style=>'margin-top:5px'}
+					%p{:style=>'font-size:16px'}= notice.header
+					%p{:style=>'color:#999999'}= notice.body
+				.span2.pull-right{:style=>'margin-top:5px'}
 					- if notice.href
 						= link_to notice.href do
-							%i.icon-chevron-right
+							%span.badge.badge-info{:style=>'font-size:12px;padding-top:4px;padding-bottom:4px'}
+								%i.icon-chevron-right
 %hr.soften
