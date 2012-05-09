@@ -1,9 +1,9 @@
 module PaypalExpressHelper
   def get_setup_purchase_params(request)
-    return to_cents(total), {
+    return {
       :ip => request.remote_ip,
       :return_url => url_for(:action => 'review', :only_path => false),
-      :cancel_return_url => home_url,
+      :cancel_return_url => request.referrer,
       :subtotal => 100,
       :shipping => 0,
       :handling => 0,
