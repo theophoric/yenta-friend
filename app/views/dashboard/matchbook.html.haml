@@ -13,7 +13,10 @@
 			- for i in (@endorsements.count..4).to_a
 				%li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>"", :onclick => "$('#add_catch').modal();"
 			%li.pull-right
-				= link_to "Upgrade Membership", paypal_express_checkout_path
+				= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
+					%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
+					%input{:name => "hosted_button_id", :type => "hidden", :value => "VPG75UVSXQHR6"}
+					= submit_tag "Upgrade to a Premium Account", :class => "btn btn-primary"
 = content_for :main do
 	- for endorsement in @endorsements do
 		- chickstud = endorsement.chickstud

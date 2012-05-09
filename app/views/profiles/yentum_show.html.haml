@@ -42,20 +42,22 @@
 												%h1 =
 										%li
 											.span2.well
-												= f.submit "Match!", :class => 'btn btn-primary'
+												= f.submit "Match!", :class => 'btn btn-primary btn-large'
 										
 				%hr.soften						
 				.span12
 					.row-fluid
 						- [profile, current_profile].each do |yenta_profile|
 							- is_current = (yenta_profile == current_profile)
-							.span6{:id => "yenta_#{yenta_profile._id}_matchbook"}
+							.span6.alert{:id => "yenta_#{yenta_profile._id}_matchbook"}
+							
 								%h3
 									= "#{is_current ? "Your" : yenta_profile.first_name + "'s"} Matchbook"
-									%small.right
-										="#{is_current ? "You have" : yenta_profile.first_name + " has"}  "
-										%span.badge.badge-info="#{yenta_profile.endorsements.count}"
-										= " catch#{"es" unless yenta_profile.endorsements.count == 1} in #{yenta_profile.pronoun_poss} matchbook"
+								%small
+									="#{is_current ? "You have" : yenta_profile.first_name + " has"}  "
+									%span.badge.badge-info="#{yenta_profile.endorsements.count}"
+									= " catch#{"es" unless yenta_profile.endorsements.count == 1} in #{is_current ? "your" : yenta_profile.pronoun_poss} matchbook"
+								%hr
 								%ul.list
 									- for endorsement in yenta_profile.endorsements
 										- chickstud = endorsement.chickstud
@@ -69,7 +71,9 @@
 														%p= endorsement.message
 														%small= timestamp_readable(endorsement.created_at)
 												.span2.sidelink
-													= link_to_function "Select", "$('#yenta_#{yenta_profile._id}_selection .view').html('#{escape_javascript(render :partial => 'match_selection', :locals => {:profile => chickstud})}');$('#match_chickstuds_yenta_#{yenta_profile._id}_selection').val('#{chickstud._id}')"
+													%button.btn.btn-primary.btn-mini{:href => '#', :onclick => "$('#yenta_#{yenta_profile._id}_selection .view').html('#{escape_javascript(render :partial => 'match_selection', :locals => {:profile => chickstud})}');$('#match_chickstuds_yenta_#{yenta_profile._id}_selection').val('#{chickstud._id}')"} 
+														Select
+														
 
 	- else
 		%section#target_matchbook
