@@ -13,7 +13,7 @@ class Profile
   belongs_to :user
   has_many :notices, :dependent => "destroy"
   has_one :inbox
-  
+  embeds_one :subscription
   
   has_many :suggestions, :as => :owner
   
@@ -49,6 +49,8 @@ class Profile
   field :privacy, :default => 'private'
   field :default_image_url
   field :active, :default => false
+
+	
   
   validates_inclusion_of :privacy, :in => %w{public private}
   

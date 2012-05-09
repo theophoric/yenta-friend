@@ -14,10 +14,10 @@
 	- if yenta_user?
 		%section#matches.well
 			.row
-				#new_match_wrapper.span12
+				#new_match_wrapper.span12.hero-unit
 					.row-fluid
 						.span4
-							%h1
+							%h1.large
 								Match your catches:
 						.new_match.span7
 							= form_for :match, :url => suggest_match_path do |f|
@@ -41,7 +41,7 @@
 											.span2.well
 												%h1 =
 										%li
-											.span2.well
+											.span2.well{:style => "margin-top:15px;"}
 												= f.submit "Match!", :class => 'btn btn-primary btn-large'
 										
 				%hr.soften						

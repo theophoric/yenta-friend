@@ -1,10 +1,18 @@
 = content_for :pageheader do
-	%h1 Matchbook
-	%p.lead
-		you currently have
-		%span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
-		friends in your Matchbook
-			
+	.row
+		.span8
+			%h1 Matchbook
+			%p.lead
+				you currently have
+				%span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
+				friends in your Matchbook
+		.span4
+			.alert.text-center
+				%h2 Want more connections?
+				= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
+					%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
+					%input{:name => "hosted_button_id", :type => "hidden", :value => "VPG75UVSXQHR6"}
+					= submit_tag "Upgrade to a Premium Account", :class => "btn btn-primary"
 = content_for :subnav do
 	.subnav
 		%ul.nav.nav-pills
@@ -12,11 +20,6 @@
 				%li= link_to chickstud.first_name, "chickstud_#{chickstud._id}", :class => "anchorLink"
 			- for i in (@endorsements.count..4).to_a
 				%li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>"", :onclick => "$('#add_catch').modal();"
-			%li.pull-right
-				= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
-					%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
-					%input{:name => "hosted_button_id", :type => "hidden", :value => "VPG75UVSXQHR6"}
-					= submit_tag "Upgrade to a Premium Account", :class => "btn btn-primary"
 = content_for :main do
 	- for endorsement in @endorsements do
 		- chickstud = endorsement.chickstud

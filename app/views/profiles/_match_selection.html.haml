@@ -1,7 +1,7 @@
 - profile ||= nil
 .image_wrapper
 	- if profile.nil?
-		%h3.center [empty]
+		%h3.center{:style => "margin-top:20px;"} [empty]
 	- else
 		= image_tag profile.fb_image_url, :size => "85x85"
 
