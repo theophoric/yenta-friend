@@ -7,7 +7,8 @@ YentaFriend::Application.routes.draw do
   mount RailsAdmin::Engine => '/manage', :as => 'rails_admin'
 
   get "paypal_express/checkout"
-	get "paypal_express/review"
+	post "paypal_express/handle_response"
+	get "paypal_express/authenticate_redirect"
 
   match '/fb_handler/request_callback/:profile_type' => 'fb_handler#request_callback', :as => 'fb_callback'
 

@@ -10,7 +10,7 @@
       / message will always be sent from the current user...
       - if usertype == "Yentum"  
         .span3
-          = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
+          = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();", :class => 'btn btn-large'
           = render :partial => 'shared/modal/select_catch'
       .span3
         = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"

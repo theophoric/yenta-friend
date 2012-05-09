@@ -1,2 +1,2 @@
-$('#conversation_#{@conversation._id} .message_wrapper').append("#{escape_javascript(render :partial => 'conversations/messages/message')}");
+$('#conversation_#{@conversation._id}_history .message_wrapper').prepend("#{escape_javascript(render :partial => 'conversations/messages/message')}");
 $('#message_body').val("");

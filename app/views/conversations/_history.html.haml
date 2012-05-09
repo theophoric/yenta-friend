@@ -1,12 +1,13 @@
 - conversation ||= @conversation
 .well
-	%section#history
-		.page-header
-			%h2
-				Conversation History
-			.row-fluid.message_wrapper
-				- for message in conversation.messages do
-					= render :partial => 'conversations/messages/message', :locals => {:message => message}
+	%section.conversation_history{:id => "conversation_#{conversation._id}_history"}
+		/ .page-header
+		/ 	%h2
+		/ 		Conversation History
+				
+		%ul.row-fluid.message_wrapper
+			- for message in conversation.messages do
+				= render :partial => 'conversations/messages/message', :locals => {:message => message}
 :javascript
 	$(function(){
 		alert(pusher);

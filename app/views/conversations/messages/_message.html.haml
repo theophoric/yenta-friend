@@ -3,7 +3,7 @@
 - link ||= nil
 %li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{message.created_at.to_date}"}
 	.row-fluid
-		.span2= image_tag message.icon_url, :size => "50x50", :class => "thumbnail"
+		.span1= image_tag message.icon_url, :size => "50x50", :class => "thumbnail"
 		.span10
 			.row-fluid
 				.span12{:style=>'margin-top:5px'}
@@ -35,13 +35,12 @@
 											%h3.alert-info Match has been approved!
 						-elsif messageable.is_a? Profile
 							= link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => messageable})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
-								.span4.profile.profile-square
+								.span2.profile.profile-square
 									= image_tag messageable.fb_image_url, :size => "50x50", :class => "thumbnail"
-								.span6
-									%h2= messageable.name
+								.span6	
+									%h2{:style => "margin-top:10px;"}= messageable.name
 					- else
-						%p= message.body
-
-		.span12.pull-right
+						%p.alert= message.body
+		.span10.pull-right
 			%h5.badge.pull-right= "Sent by #{message.from} at #{timestamp_readable_with_time(message.created_at)}"
 %hr.soften

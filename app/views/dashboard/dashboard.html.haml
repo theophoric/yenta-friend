@@ -12,7 +12,7 @@
 						%small
 							see what's important
 							.pull-right{:style => 'margin-top:3px;'}
-								%span.badge.badge-important{:style => 'font-size:16px'}= current_user_notices.count
+								%span.badge.badge-info{:style => 'font-size:16px'}= current_user_notices.count
 								= "notice#{"s" unless current_user_notices.count == 1}"
 				%ul
 					- for notice in current_user_notices do
@@ -34,8 +34,6 @@
 					- current_profile.conversations.where(:messages.ne => nil).each do |conversation|
 						- last_message = conversation.messages.first
 						= render :partial => 'conversations/messages/message_abbr', :locals => {:message => last_message}
-				
-					
 	/ %section#friends
 	/		- yentum_links = current_profile.links.where(:_type => "Yentum")
 	/		.page-header

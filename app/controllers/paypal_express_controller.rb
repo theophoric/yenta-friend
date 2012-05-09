@@ -14,12 +14,32 @@ class PaypalExpressController < ApplicationController
     setup_response = @gateway.setup_purchase({})
     redirect_to @gateway.redirect_url_for(setup_response.token)
   end
-
-	def review
+	
+	def authenticate_redirect
+		puts "!! AuthenticateRedirect"
+		current_profile.update_attributes(
+			:subscription => {
+				:completed => true,
+				:order_info => @order_info,
+				:completed_at => Time.now
+			},
+			:matchbook_limit => 12
+		)
+		current_profile.notices.create(
+			:header => "Thank you for purchasing a subscription to YentaFriend",
+			:body => "Your matchbook limit has been increased to 12",
+			:href => matchbook_path
+		)
+		flash[:notice] = "Your account has been upgraded"
+		redirect_to matchbook_path
+	end
+	
+	
+	def handle_response
+		puts "!!! Handling response from PayPal"
 		pp params
     if params[:token].nil?
-			puts "f1"
-      redirect_to root_url, :notice => 'Woops! Something went wrong!' 
+      redirect_to root_url, :notice => 'Woops! Something went wrong!'
       return
     end
 
@@ -41,9 +61,15 @@ class PaypalExpressController < ApplicationController
 			},
 			:matchbook_limit => 12
 		)
-		
+		current_profile.notices.create(
+			:header => "Thank you for purchasing a subscription to YentaFriend",
+			:body => "Your matchbook limit has been increased to 12",
+			:href => matchbook_path
+		)
+		flash[:notice] = "Your account has been upgraded"
+		redirect_to matchbook_path
   end
-
+	
 
   private
     def assigns_gateway
