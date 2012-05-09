@@ -1,5 +1,5 @@
 = content_for :pageheader do
-  %h1{:style => 'font-size:36px;margin-top:15px'} Contacts
+  %h1{:style => 'font-size:36px;margin-top:15px'} contacts
   %p.lead
     you currently have 
     %span{:class => "badge #{"badge-info" if current_profile.links.count > 1 }"}= "#{current_profile.links.count}/150"
