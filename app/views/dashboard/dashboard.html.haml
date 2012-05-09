@@ -13,7 +13,7 @@
 							.pull-right
 								%span.badge= current_user_notices.count
 								= "notice#{"s" unless current_user_notices.count == 1}"
-				%ul.list
+				%ul
 					- for notice in current_user_notices do
 						= render :partial => 'shared/notice', :locals => {:notice => notice}
 				

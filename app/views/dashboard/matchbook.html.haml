@@ -6,59 +6,70 @@
 				you currently have
 				%span{:class => "badge #{"badge-info" if @endorsements.count > 1 }"}= "#{@endorsements.count}/5"
 				friends in your Matchbook
-		.span4
-			.alert.text-center
-				%h2 Want more connections?
-				= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
-					%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
-					%input{:name => "hosted_button_id", :type => "hidden", :value => "VPG75UVSXQHR6"}
-					= submit_tag "Upgrade to a Premium Account", :class => "btn btn-primary"
+		- unless !current_profile.subscriber?		
+			.span4
+				= debug ENV
+				.alert.text-center
+					%h2 Want more connections?
+					= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
+						%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
+						%input{:name => "hosted_button_id", :type => "hidden", :value => paypal_link_id}
+						= submit_tag "Upgrade to a Premium Account for  $1.00", :class => "btn btn-primary"
+					
 = content_for :subnav do
 	.subnav
 		%ul.nav.nav-pills
 			- @endorsements.collect(&:chickstud).compact.each_with_index do |chickstud, index|
 				%li= link_to chickstud.first_name, "chickstud_#{chickstud._id}", :class => "anchorLink"
-			- for i in (@endorsements.count..4).to_a
+			- for i in (@endorsements.count..[current_profile.matchbook_limit, 5].max).to_a
 				%li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>"", :onclick => "$('#add_catch').modal();"
 = content_for :main do
 	- for endorsement in @endorsements do
 		- chickstud = endorsement.chickstud
 		- partner_connections = chickstud.partner_connections
-		%section[chickstud]
+		%section.profile[chickstud]
 			.page-header
 				%h2
-					= link_to profile_path(chickstud) do						
-						= image_tag chickstud.fb_image_url("large"), :width => "100px"
+					= link_to profile_path(chickstud) do
+						.image_wrapper
+							= image_tag chickstud.fb_image_url("large"), :size => "100x100"
 						= chickstud.name
 					%small
 						= "#{chickstud.first_name} has #{chickstud.partner_connections.count} connections"
 			.row-fluid
+			
 				%hr
 = content_for :modal do
 	.modal#add_catch.hide
-		.modal-header
-			Pick a friend to add to your matchbook
-		.modal-body
-			- chickstud_links = (current_profile.chickstud_links - @endorsements.collect(&:chickstud).compact.to_a)
-			- if chickstud_links.any?
-				= form_for :endorsement, :url => add_catch_path do |f|
-					= f.hidden_field :chickstud_id
-					.row
-						.span4
-							- for chickstud in chickstud_links
-								.span4
-									%h4
-										= image_tag chickstud.fb_image_url, :width => "25px"
-										= chickstud.name
-									.pull-right
-										= link_to_function "Select", "$('#endorsement_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}'); ", :class => "btn"
-						.span6
-							%h2#selected_catch
-							= f.label :message, "Endorsement"
-							= f.text_field :message
-							= f.submit
-			- else 
-				%h2 No unendorsed friends were found.
+		= form_for :endorsement, :url => add_catch_path do |f|
+			= f.hidden_field :chickstud_id	
+			.modal-header
+				%a.close{"data-dismiss" => "modal"}x
+				%h2
+					Pick a friend to add to your matchbook
+					%hr
+					.well.alert
+						%h2#selected_catch
+						= f.label :message, "Endorsement"
+						= f.text_field :message, :class => 'input-xlarge'
+						= f.submit "Confirm Endorsement", :class => 'btn btn-large btn-primary'										
+			.modal-body
+				- chickstud_links = (current_profile.chickstud_links - @endorsements.collect(&:chickstud).compact.to_a)
+				- if chickstud_links.any?
+					%hr						
+					.well{:style => "max-height:300px;y-overflow:scroll;"}
+						%ul.list
+							- chickstud_links.each do |chickstud|
+								%li
+									.row-fluid
+										.span4=image_tag chickstud.fb_image_url, :size => "100x100"
+										.span6
+											%h1
+												= chickstud.name
+										.span2.sidelink
+											%button.btn.btn-primary.btn-large{:style => "padding:10px;",:href => '#', :onclick => "$('#endorsement_chickstud_id').val('#{chickstud._id}');$('#selected_catch').html('#{escape_javascript(chickstud.name)}');return false"} Select
+				- else 
+					%h2 No friends were found.
 						
 					
 					
