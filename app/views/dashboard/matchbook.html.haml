@@ -19,8 +19,8 @@
 	.subnav
 		%ul.nav.nav-pills
 			- @endorsements.collect(&:chickstud).compact.each_with_index do |chickstud, index|
-				%li= link_to chickstud.first_name, "chickstud_#{chickstud._id}", :class => "anchorLink"
-			- for i in (@endorsements.count..[current_profile.matchbook_limit, 5].max).to_a
+				%li= link_to chickstud.first_name, "#chickstud_#{chickstud._id}", :class => "anchorLink"
+			- for i in (@endorsements.count..[current_profile.matchbook_limit, 4].max).to_a
 				%li= link_to "[add catch]", '#add_catch', "data-toggle" => "modal", :class =>"", :onclick => "$('#add_catch').modal();"
 = content_for :main do
 	- for endorsement in @endorsements do

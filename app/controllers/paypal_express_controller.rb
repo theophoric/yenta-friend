@@ -30,7 +30,7 @@ class PaypalExpressController < ApplicationController
 
     @order_info = get_order_info gateway_response
 		
-		current_user.update_attributes(
+		current_profile.update_attributes(
 			:subscription => {
 				:completed => gateway_response.success?,
 				:order_info => @order_info,
