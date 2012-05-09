@@ -29,7 +29,8 @@
 									inbox
 									%i.icon-chevron-right
 				%ul.list
-					- for message in current_inbox.message_references do 
+					- for conversation in current_inbox.conversations do 
+						
 						= render :partial => 'conversations/messages/message_reference', :locals => {:message_reference => message}
 					
 	/ %section#friends
