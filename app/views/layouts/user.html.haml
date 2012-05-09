@@ -26,59 +26,59 @@
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 	%body{"data-spy" => "scroll", "data-target" => ".subnav", "data-offset" => 100}
-		#fb-root
-		:javascript
-			var attachInviteButton, fbRequestCallback, sendRequestViaMultiFriendSelector;
-			window.fbAsyncInit = function() {
-			var _ref;
-			FB.init({
-			appId: "#{Rails.env.production? ? '344670002256425': '323215734404423'}",
-			channelUrl: "#{request.host_with_port}" + "/channel.html",
-			frictionlessRequests: true,
-			status: true,
-			cookie: true,
-			xfbml: true
-			});
-			attachInviteButton();
-			};
-			(function(d) {
-			var id, js, ref;
-			js = void 0;
-			id = "facebook-jssdk";
-			ref = d.getElementsByTagName("script")[0];
-			if (d.getElementById(id)) {
-			return;
-			}
-			js = d.createElement("script");
-			js.id = id;
-			js.async = true;
-			js.src = "//connect.facebook.net/en_US/all.js";
-			return ref.parentNode.insertBefore(js, ref);
-			})(document);
-			attachYentaInviteButton = function() {
-			return $("a.yenta_invite").click(sendYentaRequestViaMultiFriendSelector());
-			};
-			attachChickstudInviteButton = function() {
-			return $("a.chickstud_invite").click(sendChickstudRequestViaMultiFriendSelector());
-			};
-			sendYentaRequestViaMultiFriendSelector = function() {
-			return FB.ui({
-			method: "apprequests",
-			message: "Invite your friends!"
-			}, fbRequestCallback);
-			};
-			fbYentaRequestCallback = function(response) {
-			return $.post("/fb_handler/request_callback/yentum", response);
-			};
-			sendChickstudRequestViaMultiFriendSelector = function() {
-			return FB.ui({
-			method: "apprequests",
-			message: "Invite your friends!"
-			}, fbChickstudRequestCallback);
-			};
-			fbChickstudRequestCallback = function(response) {
-			return $.post("/fb_handler/request_callback/chickstud", response);
-			};
+		/ #fb-root
+		/ 	:javascript
+		/ 		var attachInviteButton, fbRequestCallback, sendRequestViaMultiFriendSelector;
+		/ 		window.fbAsyncInit = function() {
+		/ 		var _ref;
+		/ 		FB.init({
+		/ 		appId: "#{Rails.env.production? ? '344670002256425': '323215734404423'}",
+		/ 		channelUrl: "#{request.host_with_port}" + "/channel.html",
+		/ 		frictionlessRequests: true,
+		/ 		status: true,
+		/ 		cookie: true,
+		/ 		xfbml: true
+		/ 		});
+		/ 		attachInviteButton();
+		/ 		};
+		/ 		(function(d) {
+		/ 		var id, js, ref;
+		/ 		js = void 0;
+		/ 		id = "facebook-jssdk";
+		/ 		ref = d.getElementsByTagName("script")[0];
+		/ 		if (d.getElementById(id)) {
+		/ 		return;
+		/ 		}
+		/ 		js = d.createElement("script");
+		/ 		js.id = id;
+		/ 		js.async = true;
+		/ 		js.src = "//connect.facebook.net/en_US/all.js";
+		/ 		return ref.parentNode.insertBefore(js, ref);
+		/ 		})(document);
+		/ 		attachYentaInviteButton = function() {
+		/ 		return $("a.yenta_invite").click(sendYentaRequestViaMultiFriendSelector());
+		/ 		};
+		/ 		attachChickstudInviteButton = function() {
+		/ 		return $("a.chickstud_invite").click(sendChickstudRequestViaMultiFriendSelector());
+		/ 		};
+		/ 		sendYentaRequestViaMultiFriendSelector = function() {
+		/ 		return FB.ui({
+		/ 		method: "apprequests",
+		/ 		message: "Invite your friends!"
+		/ 		}, fbRequestCallback);
+		/ 		};
+		/ 		fbYentaRequestCallback = function(response) {
+		/ 		return $.post("/fb_handler/request_callback/yentum", response);
+		/ 		};
+		/ 		sendChickstudRequestViaMultiFriendSelector = function() {
+		/ 		return FB.ui({
+		/ 		method: "apprequests",
+		/ 		message: "Invite your friends!"
+		/ 		}, fbChickstudRequestCallback);
+		/ 		};
+		/ 		fbChickstudRequestCallback = function(response) {
+		/ 		return $.post("/fb_handler/request_callback/chickstud", response);
+		/ 		};
 		= render :partial => "shared/#{usertype.underscore}_navigation"
 		.container
 			%header.jumbotron.subhead
