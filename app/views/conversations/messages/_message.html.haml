@@ -1,16 +1,47 @@
 - message ||= @message
+- conversation = message.conversation
 - link ||= nil
-%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ "}
+%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{message.created_at.to_date}"}
 	.row-fluid
-		.span2.profile.profile-square
-			.image_wrapper= image_tag message.icon_url, :size => "85x85"
-			%b= message.from
-		.span8 
-			- if messageable = message.messageable
-				= render :partial => "conversations/messages/#{message.messageable_type.underscore}_message", :locals => {:messageable => messageable}			 
-			- else
-				%p= message.body
-		.span2
-			.span1.pull-right
-				%i.icon-chevron-right
+		.span2= image_tag message.icon_url, :size => "50x50", :class => "thumbnail"
+		.span10
+			.row-fluid
+				.span12{:style=>'margin-top:5px'}
+					- if messageable = message.messageable
+						- if messageable.is_a? Match
+							%ul
+								%li.profile.profile-square
+									.span3.view
+										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[0]}
+								%li
+									.span2.well
+										%h1 +
+								%li.profile.profile-square
+									.span3.view
+										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[1]}
+								%li
+									.span2.well
+										%h1 =
+								%li
+									.span2.well
+										- if match.approvals.pending.any?
+											- if match.approvals.pending.collect(&:profile).include?(current_profile)
+												= form_tag(approve_match_path) do
+													= hidden_field_tag :match_id, match._id
+													= submit_tag "Approve this match!", :class => "btn btn-primary"
+											- else
+												= submit_tag "Waiting for approval", :disabled=>true
+										- else 
+											%h3.alert-info Match has been approved!
+						-elsif messageable.is_a? Profile
+							= link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => messageable})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
+								.span4.profile.profile-square
+									= image_tag messageable.fb_image_url, :size => "50x50", :class => "thumbnail"
+								.span6
+									%h2= messageable.name
+					- else
+						%p= message.body
+
+		.span12.pull-right
+			%h5.badge.pull-right= "Sent by #{message.from} at #{timestamp_readable_with_time(message.created_at)}"
 %hr.soften

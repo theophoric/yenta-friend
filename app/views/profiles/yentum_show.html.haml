@@ -15,9 +15,10 @@
 		%section#matches.well
 			.row
 				#new_match_wrapper.span12
-					.span5.information
-						%h1{:style => "font-size:40px;margin-bottom:10px"}
+					.span4.information
+						%h1{:style => "font-size:40px;margin-top:30px"}
 							Match your catches:
+					.span6
 						.new_match.row-fluid
 							= form_for :match, :url => suggest_match_path do |f|
 								= hidden_field_tag :conversation_id, @conversation._id
@@ -31,13 +32,13 @@
 											.span3.view
 												= render :partial => "match_selection"
 										%li
-											.span1{:style => "margin-left:10px;"}
+											.span2{:style => "margin-left:20px;"}
 												%h1{:style => "margin-top:20px;"} +
 										%li.profile.profile-square.thumbnail{:id => "yenta_#{current_profile._id}_selection"}
 											.span3.view
 												= render :partial => "match_selection"
 										%li
-											.span1{:style => "margin-left:10px;"}
+											.span2{:style => "margin-left:20px;"}
 												%h1{:style => "margin-top:20px;"} =
 										%li
 											.span2{:style => "margin-top:25px;"}
