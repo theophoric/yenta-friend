@@ -5,7 +5,7 @@ module ApplicationHelper
   end
   
   def timestamp_readable_with_time(timestamp)
-        "#{Date::MONTHNAMES[timestamp.month] + " "+ timestamp.mday unless timestamp.to_date == Date.today }#{(", " + timestamp.year unless timestamp.year == Date.today.year)}, #{timestamp.hour}:#{timestamp.min}"
+        "#{Date::MONTHNAMES[timestamp.month] + " "+ timestamp.mday + ", " unless timestamp.to_date == Date.today }#{(timestamp.year + ", " unless timestamp.year == Date.today.year)} #{timestamp.hour}:#{timestamp.min}"
   end
 
 	def paypal_link_id

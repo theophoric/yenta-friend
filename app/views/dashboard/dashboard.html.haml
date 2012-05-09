@@ -30,7 +30,7 @@
 									%span.badge.badge-info{:style=>'font-size:14px;padding-top:4px;padding-bottom:4px'}
 										inbox
 										%i.icon-chevron-right
-				%ul.list
+				%ul
 					- current_profile.conversations.where(:messages.ne => nil).each do |conversation|
 						- last_message = conversation.messages.first
 						= render :partial => 'conversations/messages/message_abbr', :locals => {:message => last_message}
