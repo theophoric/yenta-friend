@@ -22,7 +22,7 @@ class ProfilesController < ApplicationController
   def show
 		# begin
 			profile = Profile.find(params[:id])
-	    @conversation = Conversation.find_or_create_by(:participant_ids => [current_profile._id, profile._id])
+	    @conversation = current_profile.find_conversation(profile)
 	    respond_to do |format|
 	      format.html {render "profiles/#{profile._type.underscore}_show"}
 	      format.json { render :json => @profile }

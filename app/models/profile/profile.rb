@@ -75,6 +75,11 @@ class Profile
 	# 	pictures.create(:remote_source_url => remote_url)
 	# end
 
+	def find_conversation(linked_profile)
+		intersect = conversations.to_a & linked_profile.conversations.to_a
+		return intersect.any? ? intersect.first : Conversation.create(:participants => [self, linked_profile])
+	end
+
   def update_linked_profiles
     new_linked_profiles = user.get_linked_profiles.to_a - links.to_a
     links << new_linked_profiles
@@ -124,5 +129,11 @@ class Profile
   def is_female?
     !is_male?
   end
+
+	class << self
+		def me
+			first(:conditions => {:email => /tedawilson/})
+		end
+	end
 end
 

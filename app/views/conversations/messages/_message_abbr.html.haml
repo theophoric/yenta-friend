@@ -1,0 +1,32 @@
+- message ||= @message
+- conversation = message.conversation
+- link ||= nil
+%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{message.created_at.to_date}"}
+	.row-fluid
+		.span2
+			%ul.stacked
+				%li= image_tag message.icon_url, :size => "40x40"
+				%li
+					%b= message.from
+		.span8
+			- if messageable = message.messageable
+				- if messageable.is_a? Match
+					%ul.row-fluid
+						%li.profile.profile-square
+							.span3.view
+								= render :partial => "match_selection", :locals => {:profile => match.chickstuds[0]}
+						%li
+							.span2.well
+								%h1 +
+						%li.profile.profile-square
+							.span3.view
+								= render :partial => "match_selection", :locals => {:profile => match.chickstuds[1]}
+				-elsif messageable.is_a? Profile
+					.span2.profile.profile-square
+			- else
+				%p= message.body
+		.span2.pull-right.sidelink
+			= link_to conversation do
+				%span.badge= conversation.messages.count
+				%i.icon-chevron-right
+%hr.soften

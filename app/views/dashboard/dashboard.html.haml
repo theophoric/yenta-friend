@@ -29,6 +29,9 @@
 									inbox
 									%i.icon-chevron-right
 				%ul.list
+					- current_profile.conversations.where(:messages.ne => nil).each do |conversation|
+						- last_message = conversation.messages.first
+						= render :partial => 'conversations/messages/message_abbr', :locals => {:message => last_message}
 				
 					
 	/ %section#friends
