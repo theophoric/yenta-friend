@@ -1,0 +1,9 @@
+- profile ||= nil
+.image_wrapper
+	- if profile.nil?
+		%h3.center [empty]
+	- else
+		= image_tag profile.fb_image_url, :size => "85x85"
+
+%h1.name
+	=  profile.first_name unless profile.nil?

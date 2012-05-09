@@ -52,7 +52,7 @@ class DashboardController < ApplicationController
   
   def suggest_match
     match = params[:match]
-    @chickstuds = Profile.find(params[:chickstuds].collect{|c| c[1]})
+    @chickstuds = Profile.find(match[:chickstuds].collect{|c| c[1]})
     approval_ids = match[:approvals].to_a.collect{|a| a[1]}
     @approval_profiles = Profile.find(approval_ids)
     @match = Match.new(:owner => current_profile, :chickstuds => @chickstuds)

@@ -55,7 +55,7 @@ ul{
 	list-style:none !important;
 }
 
-#new_match{
+.new_match{
 	background:@blue_light;
 	#gradient > .vertical(@listColorLight, @listColorDark);
 	border: 1px solid @listBorder;
@@ -81,28 +81,41 @@ ul{
 	.name{
 		text-align:center;
 	}
+	
 	.image_wrapper{
+		text-align:center;
 		overflow:hidden;
+		float:left;
+		
 		#gradient > .vertical(@listColorLight, @listColorDark);
 		border: 1px solid @listBorder;
-		padding: 0px 14px 9px 2px;
+		padding: 5px 10px;
 		margin-bottom: 5px;
+		width:80px;
+		height:80px;
 		opacity: 0.8;
 		.border-radius(6px);
 	  @shadow: inset 2px 2px 0 rgba(255,255,255,.2), 2px 1px 2px rgba(0,0,0,.05);
 	  .box-shadow(@shadow);
 	}
-	.profile-male{
+	&.profile-male{
 		background-color: @orange_light;
 	}
-	.profile-female{
+	&.profile-female{
 		background-color:@green_light;
 	}
-	.profile-yentum{
+	&.profile-yentum{
 		background-color:@blue_light;
+	}
+	&.profile-square{
+		width: 100px;
+		height:200px;
 	}
 }
 
+#new_match_wrapper{
+	padding:20px 10px;
+}
 
 
 #scroll-content {

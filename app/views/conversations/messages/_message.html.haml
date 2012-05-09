@@ -1,8 +1,9 @@
 - message ||= @message
 %li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ "}
 	.row-fluid
-		.span2
-			= image_tag message.icon_url, :size => "100x100"
+		.span2.profile.profile-square
+			.image_wrapper= image_tag message.icon_url, :size => "85x85"
+			%b= message.from
 		.span8 
 			- if messageable = message.messageable
 				= render :partial => "conversations/messages/#{message.messageable_type.underscore}_message", :locals => {:messageable => messageable}			 

@@ -1,22 +1,29 @@
 - match ||= messageable
-%li[match]
-  .span2
-    = image_tag match.chickstuds[0].fb_image_url
-    = match.chickstuds[0].first_name
-  .span1 + 
-  .span2
-    = image_tag match.chickstuds[1].fb_image_url
-    = match.chickstuds[1].first_name
-  .pull-right
-    - if match.approvals.pending.any?
-      / = form_tag(reject_match_path) do
-      /   = hidden_field_tag :match_id, match._id
-      /   = submit_tag "Reject", :class => "btn"
-      - if match.approvals.pending.collect(&:profile).include?(current_profile)
-        = form_tag(approve_match_path) do
-          = hidden_field_tag :match_id, match._id
-          = submit_tag "Approve this match!", :class => "btn btn-primary"
-      - else
-        = submit_tag "Waiting for approval", :disabled=>true
-    - else 
-      %h3.alert-info Match has been approved!
+
+.new_match.span12[match]
+	%ul
+		%li.profile.profile-square
+			.span3.view
+				= render :partial => "match_selection", :locals => {:profile => match.chickstuds[0]}
+		%li
+			.span2.well
+				%h1 +
+		%li.profile.profile-square
+			.span3.view
+				= render :partial => "match_selection", :locals => {:profile => match.chickstuds[1]}
+		%li
+			.span2.well
+				%h1 =
+		%li
+			.span2.well
+				- if match.approvals.pending.any?
+					- if match.approvals.pending.collect(&:profile).include?(current_profile)
+						= form_tag(approve_match_path) do
+							= hidden_field_tag :match_id, match._id
+							= submit_tag "Approve this match!", :class => "btn btn-primary"
+					- else
+						= submit_tag "Waiting for approval", :disabled=>true
+				- else 
+					%h3.alert-info Match has been approved!
+
+	 

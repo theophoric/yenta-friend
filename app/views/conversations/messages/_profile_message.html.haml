@@ -1,4 +1,2 @@
 - profile ||= messageable
 = link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
-  .span2=image_tag profile.fb_image_url
-  .span3= profile.name

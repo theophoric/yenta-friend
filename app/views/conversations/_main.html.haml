@@ -2,7 +2,7 @@
 %section#new_message
   .page-header
     %h1 New Message
-  .row
+  .row-fluid
     = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
       = hidden_field_tag :conversation_id, conversation._id
       = f.hidden_field :messageable_type
@@ -12,9 +12,6 @@
         .span3
           = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
           = render :partial => 'shared/modal/select_catch'
-        .span3
-          = link_to "Suggest Match", '#suggest_match', "data-toggle" => "modal", :onclick => "$('#suggest_match').modal();"
-          = render :partial => 'shared/modal/suggest_match', :locals => {:conversation => conversation}
       .span3
         = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
       = f.submit "Send"

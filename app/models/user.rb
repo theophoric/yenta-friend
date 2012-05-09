@@ -104,9 +104,9 @@ class User
         user.save!
       end
       if profile = Profile.where(:fb_uid => fb_uid).first
-        profile.update_attributes(:user => user, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education, :name => data.name, :first_name => data.first_name, :last_name => data.last_name )
+        profile.update_attributes(:user => user, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education, :name => "#{data.first_name} #{data.last_name.first}.", :first_name => data.first_name, :last_name => data.last_name )
       else
-        profile = user.create_profile(:email => data.email, :name => data.name, :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
+        profile = user.create_profile(:email => data.email, :name => "#{data.first_name} #{data.last_name.first}.", :first_name => data.first_name, :last_name => data.last_name,  :fb_uid => fb_uid, :default_image_url => info.image, :location => location, :hometown => hometown, :gender => data.gender, :about => data.about, :relationship_status => data.relationship, :education => data.education)
       end
       return user
     end
