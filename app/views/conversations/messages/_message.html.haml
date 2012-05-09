@@ -24,10 +24,10 @@
 										%h1 =
 								%li
 									.span2.well
-										- if match.approvals.pending.any?
-											- if match.approvals.pending.collect(&:profile).include?(current_profile)
+										- if messageable.approvals.pending.any?
+											- if messageable.approvals.pending.collect(&:profile).include?(current_profile)
 												= form_tag(approve_match_path) do
-													= hidden_field_tag :match_id, match._id
+													= hidden_field_tag :match_id, messageable._id
 													= submit_tag "Approve this match!", :class => "btn btn-primary"
 											- else
 												= submit_tag "Waiting for approval", :disabled=>true
