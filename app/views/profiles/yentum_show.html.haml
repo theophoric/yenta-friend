@@ -57,14 +57,14 @@
 										%span.badge.badge-info="#{yenta_profile.endorsements.count}"
 										= " catch#{"es" unless yenta_profile.endorsements.count == 1} in #{yenta_profile.pronoun_poss} matchbook"
 								%ul.list
-									- for endorsement in profile.endorsements
+									- for endorsement in yenta_profile.endorsements
 										- chickstud = endorsement.chickstud
 										%li[endorsement]
 											.row-fluid
 												.span2=image_tag chickstud.fb_image_url, :size => "100x100"
 												.span8
 													%h1
-														= link_to_function chickstud.name, "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
+														= link_to_function chickstud.name, "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => chickstud})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
 													%blockquote
 														%p= endorsement.message
 														%small= timestamp_readable(endorsement.created_at)
