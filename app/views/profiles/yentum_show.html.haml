@@ -22,7 +22,7 @@
 						.new_match.span7
 							= form_for :match, :url => suggest_match_path do |f|
 								= hidden_field_tag :conversation_id, @conversation._id
-								= f.fields_for :approval do |approval_fields|
+								= f.fields_for :approvals do |approval_fields|
 									= approval_fields.hidden_field "#{profile._id}", :value => profile._id
 								= f.fields_for :chickstuds do |chickstud_fields|			
 									%ul

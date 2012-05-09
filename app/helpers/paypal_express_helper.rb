@@ -9,33 +9,13 @@ module PaypalExpressHelper
       :handling => 0,
       :tax =>      0,
       :allow_note =>  true,
-      :items => get_items(cart),
+      :items => {
+				:name => "YentaFriend Subscription", 
+				:number => 1, 
+				:quantity => 1, 
+				:amount => 100
+			}
     }
-  end
-
-  def get_shipping(cart)
-    # define your own shipping rule based on your cart here
-    # this method should return an integer
-  end
-
-  def get_items(cart)
-    cart.line_items.collect do |line_item|
-      product = line_item.product
-
-      {
-        :name => product.title, 
-        :number => product.serial_number, 
-        :quantity => line_item.quantity, 
-        :amount => to_cents(product.price), 
-      }
-    end
-  end
-
-  def get_totals(cart)
-    subtotal = cart.subtotal
-    shipping = get_shipping(cart)
-    total = subtotal + shipping
-    return subtotal, shipping, total
   end
 
   def to_cents(money)

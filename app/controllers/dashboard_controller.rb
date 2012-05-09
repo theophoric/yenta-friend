@@ -61,12 +61,19 @@ class DashboardController < ApplicationController
     end
     @match.approvals.build(:profile => current_profile, :approved_at => Time.now)
     @match.save!
+		if @match.approvals.pending.none?
+      @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
+      @match.chickstuds.map do profile
+				# this is horrendous...
+				matched_profile = (@match.chickstuds - profile.to_a).first
+        profile.links << (@match.chickstuds - profile.to_a)
+				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
+        profile.save
+      end
+    end
     @conversation = Conversation.find(params[:conversation_id])
     @conversation.messages.create(:messageable => @match, :from => current_profile.name, :icon_url => current_profile.image_url)
     redirect_to :back
-    # respond_to do |format|
-    #   format.html 
-    # end
 
   end
   
@@ -79,7 +86,10 @@ class DashboardController < ApplicationController
     if @match.approvals.pending.none?
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
       @match.chickstuds.map do profile
+				# this is horrendous...
+				matched_profile (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
+				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
         profile.save
       end
     end
