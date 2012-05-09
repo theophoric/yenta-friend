@@ -56,8 +56,8 @@ gem 'typhoeus'
 gem 'coffee-filter'
 gem 'geocoder'
 gem 'fb_graph'
-gem 'carrierwave'
-gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+# gem 'carrierwave'
+# gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem "fog", "~> 1.3.1"
 gem "aws-s3",            :require => "aws/s3"
 gem "aws-sdk"

@@ -1,6 +1,6 @@
 module PaypalExpressHelper
   def get_setup_purchase_params(request)
-    return {
+    return 100, {
       :ip => request.remote_ip,
       :return_url => url_for(:action => 'review', :only_path => false),
       :cancel_return_url => request.referrer,

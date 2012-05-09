@@ -5,8 +5,10 @@ class PaypalExpressController < ApplicationController
   include PaypalExpressHelper
 
   def checkout
-    setup_purchase_params = get_setup_purchase_params request
-    setup_response = @gateway.setup_purchase(setup_purchase_params)
+    setup_purchase_params = get_setup_purchase_params(request)
+		pp setup_purchase_params
+		pp @gateway
+    setup_response = @gateway.setup_purchase(100, setup_purchase_params)
     redirect_to @gateway.redirect_url_for(setup_response.token)
   end
 
