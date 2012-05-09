@@ -1,17 +1,18 @@
 = content_for :pageheader do
-	%h1 Dashboard
-	%p.lead Where things happen
+	%h1{:style => 'font-size:36px;margin-top:15px'}
+		Dashboard  
+		%span.lead see what's happening
 = content_for :main do
 	.row-fluid
 		.span6#notices
 			.well
-				.page-header
-					%h1
+				.page-header{:style=>'margin-top:0px'}
+					%h2
 						notices
 						%small
 							see what's important
-							.pull-right
-								%span.badge= current_user_notices.count
+							.pull-right{:style => 'margin-top:3px;'}
+								%span.badge.badge-important{:style => 'font-size:16px'}= current_user_notices.count
 								= "notice#{"s" unless current_user_notices.count == 1}"
 				%ul
 					- for notice in current_user_notices do
@@ -19,15 +20,16 @@
 				
 		.span6#messages
 			.well
-				.page-header
-					%h1 
+				.page-header{:style=>'margin-top:0px'}
+					%h2 
 						messages
 						%small
 							stay connected
-							%span.pull-right
+							%span.pull-right{:style => 'margin-top:3px;'}
 								= link_to inbox_path do
-									inbox
-									%i.icon-chevron-right
+									%span.badge.badge-info{:style=>'font-size:14px;padding-top:4px;padding-bottom:4px'}
+										inbox
+										%i.icon-chevron-right
 				%ul.list
 					- current_profile.conversations.where(:messages.ne => nil).each do |conversation|
 						- last_message = conversation.messages.first
