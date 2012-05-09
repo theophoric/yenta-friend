@@ -24,7 +24,7 @@ class Connection
   def generate_conversation
     create_conversation(:participants => partners)
     partners.each do |partner|
-      partner.notices.create(:header => "You have a new match!", :body => "Click on the link to find out more!", :href => connections_path(_id))
+      partner.notices.create(:header => "You have a new match!", :body => "Click on the link to find out more!", :href => connection_path(_id))
     end
   end
   

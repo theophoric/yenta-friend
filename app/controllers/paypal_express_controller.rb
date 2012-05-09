@@ -1,6 +1,6 @@
 class PaypalExpressController < ApplicationController
   before_filter :assigns_gateway
-
+	skip_before_filter :authenticate_user!
   include ActiveMerchant::Billing
   include PaypalExpressHelper
 
@@ -16,14 +16,17 @@ class PaypalExpressController < ApplicationController
   end
 
 	def review
+		pp params
     if params[:token].nil?
+			puts "f1"
       redirect_to root_url, :notice => 'Woops! Something went wrong!' 
       return
     end
 
     gateway_response = @gateway.details_for(params[:token])
-
+		pp gateway_response
     unless gateway_response.success?
+			puts "f2"
       redirect_to root_url, :notice => "Sorry! Something went wrong with the Paypal purchase. Here's what Paypal said: #{gateway_response.message}" 
       return
     end

@@ -10,7 +10,7 @@
 			.span4
 				.alert.text-center
 					%h2 Want more connections?
-					= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post" do
+					= form_tag "https://www.paypal.com/cgi-bin/webscr", :method => "post", :target => "_blank" do
 						%input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}
 						%input{:name => "hosted_button_id", :type => "hidden", :value => paypal_link_id}
 						= submit_tag "Upgrade to a Premium Account for  $1.00", :class => "btn btn-primary"

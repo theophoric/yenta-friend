@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
 	def paypal_link_id
-		ENV['PAYPAL_LINK_ID'] || "AXYTVYBSLDG3A"
+		ENV['PAYPAL_LINK_ID'] || "UZGL3DCMP4RUU"
 	end
   
 end

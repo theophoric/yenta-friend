@@ -87,10 +87,11 @@ class DashboardController < ApplicationController
     end
     @match.save
     if @match.approvals.pending.none?
+			# make sure that the connection does not already exist
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
       @match.chickstuds.map do profile
 				# this is horrendous...
-				matched_profile (@match.chickstuds - profile.to_a).first
+				matched_profile =  (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
 				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_icon_url)
 				Notifier.send_connection(matched_profile, profile.email, connection, request.host_with_port, profile.first_name).deliver
