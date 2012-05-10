@@ -64,7 +64,7 @@ class DashboardController < ApplicationController
 		if @match.approvals.pending.none?
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
 # this needs to be rewritten
-      @match.chickstuds.map do profile
+      @match.chickstuds.each do |profile|
 				# this is horrendous...
 				matched_profile = (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
@@ -89,7 +89,7 @@ class DashboardController < ApplicationController
     if @match.approvals.pending.none?
 			# make sure that the connection does not already exist
       @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
-      @match.chickstuds.map do profile
+      @match.chickstuds.each do |profile|
 				# this is horrendous...
 				matched_profile =  (@match.chickstuds - profile.to_a).first
         profile.links << (@match.chickstuds - profile.to_a)
