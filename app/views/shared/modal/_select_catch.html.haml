@@ -1,23 +1,25 @@
 .modal.hide#select_catch
-  .modal-header
-    %a.close{"data-dismiss" => "modal"}x
-    Select a profile from your matchbook to share.
-  .modal-body
-    - chickstud_links = current_profile.chickstud_links
-    - if chickstud_links.any?
-      .row
-        .span4
-          - for chickstud in chickstud_links
-            .span4
-              %h4
-                = image_tag chickstud.fb_image_url, :width => "25px"
-                = chickstud.name
-              .pull-right
-                = link_to_function "Select", "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile');$('#new_message form').submit(); ", :class => "btn"
-        .span6
-          %h2#selected_catch
-    - else 
-      %h2
-        You don't have any profiles in your 
-        = link_to "matchbook", matchbook_path
-        
+	.modal-header
+		%a.close{"data-dismiss" => "modal"}x
+		Select a profile from your matchbook to share.
+	.modal-body.row-fluid
+		- if current_profile.endorsements.any?
+			- current_profile.endorsements.each do |endorsement|
+				- chickstud = endorsement.chickstud
+				.span2
+					=image_tag chickstud.fb_image_url, :size => "50x50", :class => 'thumbnail'
+				.span8
+					%h2= chickstud.name
+					%blockquote
+						%p= endorsement.message
+						%small= timestamp_readable(endorsement.created_at)
+				.span2.sidelink
+					%button.btn.btn-primary.btn-mini{:href => '#', :onclick => "$('#message_messageable_id').val('#{chickstud._id}');$('#message_messageable_type').val('Profile');$('#new_message form').submit();$('a.close').click()", :class => "btn"} 
+						Select
+					.span6
+						%h2#selected_catch
+		- else 
+			%h2
+				You don't have any profiles in your 
+				= link_to "matchbook", matchbook_path
+				

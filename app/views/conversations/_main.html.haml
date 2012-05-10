@@ -1,19 +1,16 @@
 - conversation ||= @conversation
 %section#new_message
-  .page-header
-    %h1 New Message
-  .row-fluid
-    = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
-      = hidden_field_tag :conversation_id, conversation._id
-      = f.hidden_field :messageable_type
-      = f.hidden_field :messageable_id
-      / message will always be sent from the current user...
-      - if usertype == "Yentum"  
-        .span3
-          = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();", :class => 'btn btn-large'
-          = render :partial => 'shared/modal/select_catch'
-      .span3
-        = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
-      = f.submit "Send"
+	.page-header
+		%h1 conversation
+	.row-fluid
+		= form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
+			= hidden_field_tag :conversation_id, conversation._id
+			= f.hidden_field :messageable_type
+			= f.hidden_field :messageable_id
+			= f.text_field :body, :class => "input-xlarge search-query btn-large" , :placeholder => "Send a message"
+			= f.submit "Send", :class =>	"btn btn-large btn-primary"
+			- if usertype == "Yentum"	
+				= link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();", :class => 'btn btn-large '
+= render :partial => 'shared/modal/select_catch'
 
 

@@ -9,7 +9,7 @@
 				.span12{:style=>'margin-top:5px'}
 					- if messageable = message.messageable
 						- if messageable.is_a? Match
-							%ul
+							%ul.alert
 								%li.profile.profile-square
 									.span3.view
 										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[0]}
@@ -40,7 +40,7 @@
 								.span6	
 									%h2{:style => "margin-top:10px;"}= messageable.name
 					- else
-						%p.alert= message.body
+						%p= message.body
 		.span10.pull-right
 			%h5.badge.pull-right= "Sent by #{message.from} at #{timestamp_readable_with_time(message.created_at)}"
 %hr.soften

@@ -87,5 +87,6 @@
 						= link_to profile_path(chickstud) do
 							= image_tag chickstud.fb_image_url, :size => "170x170"
 							%h3= chickstud.name
-	= render :partial => 'conversations/main', :locals => {:conversation => @conversation}							
-	= render :partial => 'conversations/history', :locals => {:conversation => @conversation}
+	.well
+		= render :partial => 'conversations/main', :locals => {:conversation => @conversation}							
+		= render :partial => 'conversations/history', :locals => {:conversation => @conversation}
