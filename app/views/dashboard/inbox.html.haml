@@ -1,13 +1,22 @@
 = content_for :pageheader do
-  %h1{:style => 'font-size:36px;margin-top:15px'}
-    inbox
-    %span.lead see your chats with others
+	%h1{:style => 'font-size:36px;margin-top:15px'}
+		inbox
+		%span.lead see your chats with others
 = content_for :subheader do
-  %ul
+	%ul
 = content_for :main do
-  %section#conversations{:style=>'padding-top:0px'}
-    .well{:style=>'overflow:hidden'}
-      .page-header
-        %h3= "Listing #{@conversations.count} conversations"
-      - for conversation in @conversations do
-        = render :partial => 'conversations/conversation', :locals => {:conversation => conversation}
+	%section#conversations{:style=>'padding-top:0px'}
+		.well{:style=>'overflow:hidden'}
+			.page-header
+				%h1
+					= "Listing #{@conversations.count} conversations"
+					%small
+						stay connected
+						%span.pull-right{:style => 'margin-top:3px;'}
+							%span.badge.badge-info{:style=>'font-size:14px;padding-top:4px;padding-bottom:4px'}
+								inbox
+								%i.icon-chevron-right
+			%ul
+				- current_profile.conversations.where(:messages.ne => nil).each do |conversation|
+					- conversation.messages[0..4].each do |message|
+						= render :partial => 'conversations/messages/message', :locals => {:message => message}

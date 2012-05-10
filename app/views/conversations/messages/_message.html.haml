@@ -9,7 +9,7 @@
 				.span12{:style=>'margin-top:5px'}
 					- if messageable = message.messageable
 						- if messageable.is_a? Match
-							%ul.alert
+							%ul
 								%li.profile.profile-square
 									.span3.view
 										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[0]}

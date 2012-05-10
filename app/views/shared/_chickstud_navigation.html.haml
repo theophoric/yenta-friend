@@ -39,8 +39,8 @@
                 
           %li{}
             = link_to 'contacts', contacts_path
-          %li{}
-            = link_to 'inbox', inbox_path
+          / %li{}
+          /   = link_to 'inbox', inbox_path
           %li
             %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal", :onclick => "$('#invite_form').modal()"} Invite
         %ul.nav.pull-right    
