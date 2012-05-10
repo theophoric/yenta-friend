@@ -65,3 +65,4 @@ gem 'twitter-bootstrap-rails'
 gem 'pusher'
 gem 'activemerchant'
 gem 'settingslogic'
+gem "sentry-raven", :git => "https://github.com/coderanger/raven-ruby.git"
