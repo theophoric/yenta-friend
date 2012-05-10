@@ -1,38 +1,39 @@
 - message ||= @message
 - conversation = message.conversation
+- alter = (conversation.participants - current_profile.to_a).first
 - link ||= nil
-%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{message.created_at.to_date}"}
-	.row-fluid
-		.span2= image_tag message.icon_url, :size => "50x50", :class => "thumbnail"
-		.span10
-			.row-fluid
-				.span10{:style=>'margin-top:5px'}
-					- if messageable = message.messageable
-						- if messageable.is_a? Match
-							%ul
-								%li.profile.profile-square
-									.span3.view
-										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[0]}
-								%li
-									.span2.well
-										%h1 +
-								%li.profile.profile-square
-									.span3.view
-										= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[1]}
-						-elsif messageable.is_a? Profile
-							= link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => messageable})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
-								.span4.profile.profile-square
-									= image_tag messageable.fb_image_url, :size => "50x50", :class => "thumbnail"
-								.span6
-									%h2= messageable.name
-					- else
-						%p= message.body
-				.span2.pull-right{:style=>'margin-top:5px'}
-					= link_to conversation do
-						%span.badge.badge-info{:style => 'font-size:12px;padding-top:4px;padding-bottom:4px'}
-							/ = messageable.name
-							= conversation.messages.count
-							%i.icon-chevron-right
-		.span12.pull-right
-			%h5.badge.pull-right= "Sent by #{message.from} at #{timestamp_readable_with_time(message.created_at)}"
-%hr.soften
+- if alter
+	%li[message]{:class => "type-#{message.content_type}", :rel => "tooltip", :title => "sent @ #{message.created_at.to_date}"}
+		.row-fluid
+			.span2= image_tag message.icon_url, :size => "50x50", :class => "thumbnail"
+			.span10
+				.row-fluid
+					.span10{:style=>'margin-top:5px'}
+						- if messageable = message.messageable
+							- if messageable.is_a? Match
+								%ul
+									%li.profile.profile-square
+										.span3.view
+											= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[0]}
+									%li
+										.span2.well
+											%h1 +
+									%li.profile.profile-square
+										.span3.view
+											= render :partial => "profiles/match_selection", :locals => {:profile => messageable.chickstuds[1]}
+							-elsif messageable.is_a? Profile
+								= link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => messageable})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
+									.span4.profile.profile-square
+										= image_tag messageable.fb_image_url, :size => "50x50", :class => "thumbnail"
+									.span6
+										%h2= messageable.name
+						- else
+							%p= message.body
+					.span2.pull-right{:style=>'margin-top:5px'}
+						= link_to conversation do
+							%span.badge.badge-info{:style => 'font-size:12px;padding-top:4px;padding-bottom:4px'}
+								= alter.first_name
+								%i.icon-chevron-right
+			.span12.pull-right
+				%h5.badge.pull-right= "Sent by #{message.from} at #{timestamp_readable_with_time(message.created_at)}"
+	%hr.soften
