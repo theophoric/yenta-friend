@@ -13,7 +13,7 @@ YentaFriend::Application.configure do
   config.assets.compress = true
 
   config.assets.compile = true
-  config.action_mailer.default_url_options = { :host => 'http://beta.yenta-friend.com' }  
+  config.action_mailer.default_url_options = { :host => 'beta.yenta-friend.com' }  
 
   config.assets.digest = true
   config.action_dispatch.x_sendfile_header = nil # for heroku
