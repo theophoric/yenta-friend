@@ -5,4 +5,4 @@
 			%p
 				= "One of your YentaFriends has decided to connect you with #{@matched_profile.name}."
 	%hr.soften
-	%p= link_to 'Click here view your connection', connection_url(@connection._id, :host => @host), :class => 'btn btn-primary btn-large'
+	%p= link_to 'Click here view your connection', connection_url(@connection._id, :host => @host)

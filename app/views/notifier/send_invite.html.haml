@@ -1,3 +1,8 @@
-%p= "Hey #{@name}, someone thinks you should join Yenta-Friend"
-%p= "\"#{@message}\""
-%p= link_to 'Click here to sign up!', root_url(:host => @host)
+.hero-unit
+	%h1
+		= "Hey #{@name}, someone thinks you should join Yenta-Friend"
+		%small
+			%p
+				%h4= "\"#{@message}\""
+	%hr.soften
+	%p= link_to 'Click here to sign up!', root_url(:host => @host)
