@@ -1,55 +1,53 @@
 .navbar.navbar-fixed-top
-  .navbar-inner
-    .container
-      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to "Yenta Friend", root_path, :class => "brand"
-      .nav-collapse
-        %ul.nav
-          %li{}
-            = link_to "dashboard", dashboard_path
-
-          - if current_profile.endorsements.any?            
-            %li.dropdown{}
-              = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
-                endorsements 
-                %b.caret
-              %ul.dropdown-menu
-                %li.divider
-                - for profile in current_profile.endorsements.collect(&:yentum)
-                  %li
-                    = link_to profile_path(profile) do
-                      = image_tag profile.default_image_url, :size => "25x25"
-                      = profile.name
-          - if current_profile.connections.any?            
-            %li.dropdown{}
-              = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
-                matches
-                %b.caret
-              %ul.dropdown-menu
-                %li.divider
-                - for connection in current_profile.connections
-                  - profile = (connection.partners - current_profile.to_a).first
-                  %li
-                    = link_to connection_path(connection) do
-                      = image_tag profile.default_image_url, :size => "25x25"
-                      = profile.name
-                
-          %li{}
-            = link_to 'contacts', contacts_path
-          / %li{}
-          /   = link_to 'inbox', inbox_path
-          %li
-            %a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal", :onclick => "$('#invite_form').modal()"} Invite
-        %ul.nav.pull-right    
-          %li.divider-vertical  
-          %li.dropdown
-            = link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
-              = image_tag current_user.image_url, :size => "25x25"
-              = current_user.first_name + " " + current_user.last_name
-              %b.caret
-            %ul.dropdown-menu
-              = link_to 'profile', profile_path(current_user.profile)
-              = link_to "logout", '#', {:id => "logout_link"}
+	.navbar-inner
+		.container
+			%a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+				%span.icon-bar
+				%span.icon-bar
+				%span.icon-bar
+			= link_to "Yenta Friend", root_path, :class => "brand"
+			.nav-collapse
+				%ul.nav
+					%li{}
+						= link_to "dashboard", dashboard_path
+					- if current_profile.endorsements.any?						
+						%li.dropdown{}
+							= link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
+								endorsements 
+								%b.caret
+							%ul.dropdown-menu
+								%li.divider
+								- for profile in current_profile.endorsements.collect(&:yentum)
+									%li
+										= link_to profile_path(profile) do
+											= image_tag profile.default_image_url, :size => "25x25"
+											= profile.name
+					- if current_profile.connections.any?						
+						%li.dropdown{}
+							= link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
+								matches
+								%b.caret
+							%ul.dropdown-menu
+								%li.divider
+								- for connection in current_profile.connections
+									- profile = (connection.partners - current_profile.to_a).first
+									%li
+										= link_to connection_path(connection) do
+											= image_tag profile.default_image_url, :size => "25x25"
+											= profile.name
+								
+					%li{}
+						= link_to 'contacts', contacts_path
+					/ %li{}
+					/	 = link_to 'inbox', inbox_path
+					%li
+						%a#invite{:href=>"#invite_form", "data-toggle".to_sym => "modal", :onclick => "$('#invite_form').modal()"} Invite
+				%ul.nav.pull-right		
+					%li.divider-vertical	
+					%li.dropdown
+						= link_to '#',{ :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} do
+							= image_tag current_user.image_url, :size => "25x25"
+							= current_user.first_name + " " + current_user.last_name
+							%b.caret
+						%ul.dropdown-menu
+							= link_to "logout", '#'
