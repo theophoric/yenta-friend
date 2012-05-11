@@ -1,26 +1,26 @@
 = content_for :pageheader do
-  %h1= @conversation.participants.only(:first_name).collect(&:first_name).join(" + ")
-  %p.lead
+	.row
+		%h1
+			%ul
+				%li
+					.view.span2
+						= render :partial => "profiles/match_selection", :locals => {:profile => @connection.partners[0]}
+				%li.span1{:style => "margin-left:-10px;margin-top:20px"}
+					%h1 +
+				%li
+					.view.span2
+						= render :partial => "profiles/match_selection", :locals => {:profile => @connection.partners[0]}
+			.small.lead
+				%span.badge= "#{@conversation.messages.count}"
+				= " messages since #{timestamp_readable(@conversation.created_at)}"
+= content_for :subnav do
+	/ .subnav
+	/ 	%ul.nav.nav-pills
+	/ 		%li= link_to_function 'about', "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal"		
+	/ 		%li= link_to 'matchbook', "#matchbook", :class => 'anchorLink'
+	/ 		%li= link_to 'conversation', "#history", :class => 'anchorLink'
 = content_for :main do
-  %section[@conversation]
-    .page-header
-      %h2
-        Conversation History
-      .row-fluid.message_wrapper
-        - for message in @conversation.messages do
-          = render :partial => 'conversations/messages/message', :locals => {:message => message}
-  %section#new_message
-    .page-header
-      %h1 New Message
-    .row
-      = form_for :message, :class => "well form-search", :url => send_message_path, :remote => true do |f|
-        = hidden_field_tag :conversation_id, @conversation._id
-        = f.hidden_field :messageable_type
-        = f.hidden_field :messageable_id
-        / message will always be sent from the current user...
-        - if usertype == "Yentum"  
-          .span3
-            = link_to "Send Profile", '#select_catch', "data-toggle" => "modal", :onclick => "$('#select_catch').modal();"
-        .span3
-          = f.text_field :body, :class => "input-xlarge search-query", :placeholder => "Send a message"
-        = f.submit "Send"
+
+	.well
+		= render :partial => 'conversations/main', :locals => {:conversation => @conversation}							
+		= render :partial => 'conversations/history', :locals => {:conversation => @conversation}

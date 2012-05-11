@@ -52,30 +52,34 @@ class DashboardController < ApplicationController
   
   def suggest_match
     match = params[:match]
-    @chickstuds = Profile.find(match[:chickstuds].collect{|c| c[1]})
-    approval_ids = match[:approvals].to_a.collect{|a| a[1]}
-    @approval_profiles = Profile.find(approval_ids)
-    @match = Match.new(:owner => current_profile, :chickstuds => @chickstuds)
-    @approval_profiles.each do |profile|
-      @match.approvals.build(:profile => profile)
-    end
-    @match.approvals.build(:profile => current_profile, :approved_at => Time.now)
-    @match.save!
-		if @match.approvals.pending.none?
-      @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
-# this needs to be rewritten
-      @match.chickstuds.each do |profile|
-				# this is horrendous...
-				matched_profile = (@match.chickstuds - profile.to_a).first
-        profile.links << (@match.chickstuds - profile.to_a)
-				profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_image_url)
+    @chickstuds = Profile.find(match[:chickstuds].collect{|c| c[1]}).to_a.compact.uniq
+		if @chickstuds.many?
+    	approval_ids = match[:approvals].to_a.collect{|a| a[1]}
+	    @approval_profiles = Profile.find(approval_ids)
+	    @match = Match.new(:owner => current_profile, :chickstuds => @chickstuds)
+	    @approval_profiles.each do |profile|
+	      @match.approvals.build(:profile => profile)
+	    end
+	    @match.approvals.build(:profile => current_profile, :approved_at => Time.now)
+	    @match.save!
+			if @match.approvals.pending.none?
+	      @connection = Connection.create(:partners => @match.chickstuds, :observers => @match.approvals.collect(&:profile))
+	# this needs to be rewritten
+	      @match.chickstuds.each do |profile|
+					# this is horrendous...
+					matched_profile = (@match.chickstuds - profile.to_a).first
+	        profile.links << (@match.chickstuds - profile.to_a)
+					profile.notices.create(:header => "One of your Yentas has connected you with #{matched_profile.first_name}", :body => "Click on your Connections tab or the link to the right to view the connection", :href => connection_path(@connection._id), :icon_url => matched_profile.fb_image_url)
 				
-				Notifier.send_connection(matched_profile, profile.email, request.host_with_port, @connection, profile.first_name).deliver
-        profile.save
-      end
-    end
-    @conversation = Conversation.find(params[:conversation_id])
-    @conversation.messages.create(:messageable => @match, :from => current_profile.name, :icon_url => current_profile.image_url)
+					Notifier.send_connection(matched_profile, profile.email, request.host_with_port, @connection, profile.first_name).deliver
+	        profile.save
+	      end
+	    end
+	    @conversation = Conversation.find(params[:conversation_id])
+	    @conversation.messages.create(:messageable => @match, :from => current_profile.name, :icon_url => current_profile.image_url)
+		else
+			flash[:error] = "There was a problem"
+		end
     redirect_to :back
 
   end

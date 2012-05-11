@@ -3,7 +3,8 @@
 	- if profile.nil?
 		%h3.center{:style => "margin-top:20px;"} [empty]
 	- else
-		= image_tag profile.fb_image_url, :size => "85x85"
+		= link_to '#', :onclick => "$('#profile_information').html('#{escape_javascript(render :partial => 'profiles/info', :locals => {:profile => profile})}'); $('#profile_information').modal();", "data-toggle" => "modal" do
+			= image_tag profile.fb_image_url, :size => "85x85", :class => "thumbnail"
 
 %h1.name
 	=  profile.first_name unless profile.nil?
